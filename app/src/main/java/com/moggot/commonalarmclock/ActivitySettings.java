@@ -109,13 +109,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     db.addAlarm(alarm);
                 else
                     db.editAlarm(alarm);
-
-
-                Log.v(LOG_TAG, "day = " + alarm.getDays());
-                List<Alarm> alarms = db.getAllAlarms();
-                for (Alarm alarm : alarms) {
-                    Log.v(LOG_TAG, "days = " + alarm.getDays());
-                }
                 finish();
             }
         });
@@ -236,7 +229,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-        this.startActivityForResult(intent, Consts.RESULT_CODE_DEFAULT_RINGTONE);
+        this.startActivityForResult(intent, Consts.REQUEST_CODE_DEFAULT_RINGTONE);
     }
 
     private void showChooser() {
@@ -244,7 +237,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         Intent intent = Intent.createChooser(target,
                 getString(R.string.app_name));
         try {
-            startActivityForResult(intent, Consts.RESULT_CODE_FILE_CHOSER);
+            startActivityForResult(intent, Consts.REQUEST_CODE_FILE_CHOSER);
         } catch (ActivityNotFoundException e) {
         }
     }
@@ -276,7 +269,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
 
-            case Consts.RESULT_CODE_FILE_CHOSER:
+            case Consts.REQUEST_CODE_FILE_CHOSER:
                 // If the file selection was successful
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
@@ -299,7 +292,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     ((RadioButton) rgMusic.getChildAt(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType())).setChecked(true);
                 }
                 break;
-            case Consts.RESULT_CODE_DEFAULT_RINGTONE:
+            case Consts.REQUEST_CODE_DEFAULT_RINGTONE:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 

@@ -93,7 +93,6 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
         viewHolder.ivMusicType.setTag(alarms.get(position));
 
         alarm = getItem(position);
-        Log.v(LOG_TAG, "day = " + alarm.getDays());
         AlarmData alarmData = new AlarmData();
         AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
 
@@ -107,7 +106,7 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivitySettings.class);
                 intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-                ((Activity)context).startActivityForResult(intent, Consts.RESULT_CODE_ACTIVITY_SETTINGS);
+                ((Activity)context).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
             }
 
         });
@@ -127,7 +126,6 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Alarm alarm = getItem(position);
 
-                Log.v(LOG_TAG, "position = " + position);
             }
         });
 
