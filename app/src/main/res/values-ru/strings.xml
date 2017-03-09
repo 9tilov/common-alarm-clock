@@ -1,0 +1,40 @@
+<resources>
+
+    <string name="app_name">Обычный Будильник</string>
+    <string name="title_create_alarm">Создание будильника</string>
+    <string name="title_alarm_screen">Вставай!</string>
+    <string name="title_alarm_sound">Звук будильника</string>
+    <string name="title_alarm_math">Подсчитай!</string>
+    <string name="title_sounds_and_music">Звуки &amp; Музыка</string>
+    <string name="title_alarm_type">Тип будильника</string>
+    <string name="title_days_of_week">Дни недели</string>
+    <string name="title_set_time">Время</string>
+
+    <string name="sunday_short">Вс</string>
+    <string name="monday_short">Пн</string>
+    <string name="tuesday_short">Вт</string>
+    <string name="wednesday_short">Ср</string>
+    <string name="thursday_short">Чт</string>
+    <string name="friday_short">Пт</string>
+    <string name="saturday_short">Сб</string>
+
+    <string name="tomorrow">Будильник</string>
+    <string name="message">Название будильника</string>
+    <string name="no_internet_connection">Нет соединения с Интернетом</string>
+    <string name="stop_alarm">Стоп</string>
+    <string name="ok">Ок</string>
+    <string name="snooze">Отложить</string>
+    <string name="math">Математический пример</string>
+    <string name="internet_radio">Интернет радио</string>
+    <string name="music_file">Файл</string>
+    <string name="default_ringtones">Рингтоны</string>
+    <string name="time_difference">Будильник прозвенит через</string>
+    <string name="incorrect_unswer">Неправильный ответ</string>
+
+    <string name="not_music_file">Это не музыкальный файл</string>
+
+    <string name="dialog_title_remove">Удалить будильник?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+</resources>

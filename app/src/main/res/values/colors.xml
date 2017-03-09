@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#644036</color>
+    <color name="colorPrimaryDark">#644036</color>
+    <color name="colorAccent">#644036</color>
+
+    <color name="background">#C6AF89</color>
+    <color name="background_title">#644036</color>
+    <color name="background_button">#644036</color>
+    <color name="background_button_hide">#C6AF89</color>
+    <color name="background_button_snooze">#855D52</color>
+    <color name="text_checkbox">#644036</color>
+    <color name="text_radiobutton">#644036</color>
+
+    <color name="separator">#644036</color>
+    <color name="listview_divider">#644036</color>
+    <color name="text_hint">#644036</color>
+    <color name="text">#644036</color>
+    <color name="text_title">#C6AF89</color>
+</resources>

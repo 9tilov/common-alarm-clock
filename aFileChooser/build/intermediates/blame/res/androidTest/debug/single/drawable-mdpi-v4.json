@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_provider.png",
+        "source": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_provider.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_folder.png",
+        "source": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_folder.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_file.png",
+        "source": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_file.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_file.png",
+        "source": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_file.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_chooser.png",
+        "source": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_chooser.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_provider.png",
+        "source": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_provider.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_folder.png",
+        "source": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_folder.png"
+    },
+    {
+        "merged": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_chooser.png",
+        "source": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_chooser.png"
+    }
+]

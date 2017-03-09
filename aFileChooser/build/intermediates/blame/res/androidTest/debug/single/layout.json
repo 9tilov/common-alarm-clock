@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/res/merged/androidTest/debug/layout/file.xml",
+        "source": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/layout/file.xml"
+    },
+    {
+        "merged": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/res/merged/androidTest/debug/layout/file.xml",
+        "source": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/layout/file.xml"
+    }
+]

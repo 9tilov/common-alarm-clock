@@ -1,0 +1,434 @@
+[
+    {
+        "outputFile": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 41,
+                    "endOffset": 92
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 41,
+                        "endOffset": 92
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 97,
+                    "endColumn": 42,
+                    "endOffset": 135
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 97,
+                        "endColumn": 42,
+                        "endOffset": 135
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 140,
+                    "endColumn": 44,
+                    "endOffset": 180
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 140,
+                        "endColumn": 44,
+                        "endOffset": 180
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 185,
+                    "endColumn": 48,
+                    "endOffset": 229
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 185,
+                        "endColumn": 48,
+                        "endOffset": 229
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 234,
+                    "endColumn": 42,
+                    "endOffset": 272
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 234,
+                        "endColumn": 42,
+                        "endOffset": 272
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 277,
+                    "endColumn": 53,
+                    "endOffset": 326
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 277,
+                        "endColumn": 53,
+                        "endOffset": 326
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 331,
+                    "endColumn": 59,
+                    "endOffset": 386
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 59,
+                        "endOffset": 386
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 391,
+                    "endColumn": 69,
+                    "endOffset": 456
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 391,
+                        "endColumn": 69,
+                        "endOffset": 456
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 461,
+                    "endColumn": 61,
+                    "endOffset": 518
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 461,
+                        "endColumn": 61,
+                        "endOffset": 518
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 523,
+                    "endColumn": 77,
+                    "endOffset": 596
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 523,
+                        "endColumn": 77,
+                        "endOffset": 596
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 601,
+                    "endLine": 21,
+                    "endColumn": 12,
+                    "endOffset": 1120
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 601,
+                        "endLine": 21,
+                        "endColumn": 12,
+                        "endOffset": 1120
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 41,
+                    "endOffset": 92
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 41,
+                        "endOffset": 92
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 97,
+                    "endColumn": 42,
+                    "endOffset": 135
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 97,
+                        "endColumn": 42,
+                        "endOffset": 135
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 140,
+                    "endColumn": 44,
+                    "endOffset": 180
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 140,
+                        "endColumn": 44,
+                        "endOffset": 180
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 185,
+                    "endColumn": 48,
+                    "endOffset": 229
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 185,
+                        "endColumn": 48,
+                        "endOffset": 229
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 234,
+                    "endColumn": 42,
+                    "endOffset": 272
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 234,
+                        "endColumn": 42,
+                        "endOffset": 272
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 277,
+                    "endColumn": 53,
+                    "endOffset": 326
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 277,
+                        "endColumn": 53,
+                        "endOffset": 326
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 331,
+                    "endColumn": 59,
+                    "endOffset": 386
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 59,
+                        "endOffset": 386
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 391,
+                    "endColumn": 69,
+                    "endOffset": 456
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 391,
+                        "endColumn": 69,
+                        "endOffset": 456
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 461,
+                    "endColumn": 61,
+                    "endOffset": 518
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 461,
+                        "endColumn": 61,
+                        "endOffset": 518
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 523,
+                    "endColumn": 77,
+                    "endOffset": 596
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 523,
+                        "endColumn": 77,
+                        "endOffset": 596
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 601,
+                    "endLine": 21,
+                    "endColumn": 12,
+                    "endOffset": 1120
+                },
+                "from": {
+                    "file": "/home/toor/android/projects/AlarmToWork/aFileChooser/build/intermediates/bundles/debug/res/values/values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 601,
+                        "endLine": 21,
+                        "endColumn": 12,
+                        "endOffset": 1120
+                    }
+                }
+            }
+        ]
+    }
+]
