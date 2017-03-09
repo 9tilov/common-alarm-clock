@@ -41,6 +41,18 @@ public final class Consts {
             this.type = type;
         }
 
+        public static MUSIC_TYPE fromInteger(int x) {
+            switch(x) {
+                case 0:
+                    return MUSIC_FILE;
+                case 1:
+                    return RADIO;
+                case 2:
+                    return DEFAULT_RINGTONE;
+            }
+            return null;
+        }
+
         public int getType() {
             return this.type;
         }
@@ -48,9 +60,9 @@ public final class Consts {
 
     public final static String EXTRA_ID = "_id";
 
-    public final static int RESULT_CODE_DEFAULT_RINGTONE = 1;
-    public final static int RESULT_CODE_FILE_CHOSER = 2;
-    public final static int RESULT_CODE_ACTIVITY_SETTINGS = 3;
+    public final static int REQUEST_CODE_DEFAULT_RINGTONE = 1;
+    public final static int REQUEST_CODE_FILE_CHOSER = 2;
+    public final static int REQUEST_CODE_ACTIVITY_SETTINGS = 3;
 
     public final static String DATA_RADIO = "http://online.radiorecord.ru:8101/rr_128";
     public final static String DATA_DEFAULT_RINGTONE = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();

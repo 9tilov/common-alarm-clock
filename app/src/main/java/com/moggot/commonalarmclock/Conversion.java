@@ -44,7 +44,6 @@ public class Conversion {
 
     public static String getDaysAsString(Context ctx, int b_days) {
         List<String> days = getDaysList(ctx, b_days);
-        Log.v(LOG_TAG, "days = " + days);
         String days_str = "";
         for (int i = 0; i < days.size(); ++i) {
             if (i == days.size() - 1) {

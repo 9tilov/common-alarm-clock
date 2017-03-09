@@ -14,7 +14,7 @@ import java.util.List;
  * Created by toor on 01.03.17.
  */
 
-public class RepeateAlarmState implements AlarmType {
+public class RepeateAlarm implements AlarmType {
 
     public void setAlarm(AlarmContext alarmContext) {
         Context context = alarmContext.getActivityContext();

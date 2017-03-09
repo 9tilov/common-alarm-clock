@@ -6,6 +6,7 @@ package com.moggot.commonalarmclock.alarm;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.moggot.commonalarmclock.Consts;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -184,6 +185,10 @@ public class Alarm {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.getTimeInMillis();
+    }
+
+    public Consts.MUSIC_TYPE getMusicTypeEnum() {
+        return Consts.MUSIC_TYPE.fromInteger(musicType);
     }
 
     // KEEP METHODS END

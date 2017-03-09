@@ -59,7 +59,7 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
 
         View view = convertView;
         if (view == null) {
@@ -93,7 +93,6 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
         viewHolder.ivMusicType.setTag(alarms.get(position));
 
         alarm = getItem(position);
-        Log.v(LOG_TAG, "day = " + alarm.getDays());
         AlarmData alarmData = new AlarmData();
         AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
 
@@ -106,8 +105,9 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivitySettings.class);
+                Alarm alarm = getItem(position);
                 intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-                ((Activity)context).startActivityForResult(intent, Consts.RESULT_CODE_ACTIVITY_SETTINGS);
+                ((Activity) context).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
             }
 
         });
@@ -126,8 +126,12 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Alarm alarm = getItem(position);
-
-                Log.v(LOG_TAG, "position = " + position);
+                AlarmContext alarmContext = new AlarmContext(alarm, context);
+                AlarmManager alarmManager = new AlarmManager();
+                if (isChecked)
+                    alarmManager.setAlarm(alarmContext);
+                else
+                    alarmManager.cancelAlarm(alarmContext);
             }
         });
 
