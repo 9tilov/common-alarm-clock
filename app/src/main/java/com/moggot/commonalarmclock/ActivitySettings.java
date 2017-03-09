@@ -87,18 +87,38 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
         btnMusic = (ImageView) findViewById(R.id.btnMusic);
 
+        ImageView btnSave = (ImageView) findViewById(R.id.ivSaveAlarm);
+
         db = new DataBase(this);
 
-        long id = getIntent().getLongExtra(Consts.EXTRA_ID, 0);
-        if (id == 0) {
+        final long id = getIntent().getLongExtra(Consts.EXTRA_ID, 0);
+        if (id == 0)
             alarm = createAlarm();
-        } else
+        else
             alarm = db.getAlarm(id);
 
-        AlarmData alarmData = new AlarmData();
+        final AlarmData alarmData = new AlarmData();
         SettingsDisplay settingsDisplay = new SettingsDisplay(this, alarmData);
         alarmData.setAlarm(alarm);
         settingsDisplay.display();
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (id == 0)
+                    db.addAlarm(alarm);
+                else
+                    db.editAlarm(alarm);
+
+
+                Log.v(LOG_TAG, "day = " + alarm.getDays());
+                List<Alarm> alarms = db.getAllAlarms();
+                for (Alarm alarm : alarms) {
+                    Log.v(LOG_TAG, "days = " + alarm.getDays());
+                }
+                finish();
+            }
+        });
 
     }
 

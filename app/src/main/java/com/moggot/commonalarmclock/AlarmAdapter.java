@@ -37,7 +37,6 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
     }
 
     private Context context;
-    private int layoutResourceID;
     private List<Alarm> alarms;
     private ViewHolder viewHolder;
     private Alarm alarm;
@@ -47,7 +46,6 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
     public AlarmAdapter(Context context, int layoutResourceID, List<Alarm> alarms) {
         super(context, layoutResourceID, alarms);
         this.context = context;
-        this.layoutResourceID = layoutResourceID;
         this.alarms = alarms;
         viewHolder = new ViewHolder();
 
@@ -55,55 +53,61 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
 
     public void update(List<Alarm> alarms) {
         this.alarms = alarms;
+        clear();
+        addAll(alarms);
         notifyDataSetChanged();
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            view = inflater.inflate(layoutResourceID, parent, false);
+            view = inflater.inflate(R.layout.alarm_item, parent, false);
+            view.setTag(viewHolder);
+        } else
+            viewHolder = (ViewHolder) convertView.getTag();
 
-        }
-
-        final DataBase db = new DataBase(context);
-        db.getAllAlarms();
-
-
-//        alarm = db.getAlarm(id);
-
+        viewHolder.tgState = (ToggleButton) view
+                .findViewById(R.id.tgAdapterState);
+        viewHolder.tvDays = (TextView) view.findViewById(R.id.tvAdapterDays);
         viewHolder.tvTime = (TextView) view.findViewById(R.id.tvAdapterTime);
         viewHolder.tvName = (TextView) view.findViewById(R.id.tvAdapterName);
-        viewHolder.tvDays = (TextView) view.findViewById(R.id.tvAdapterDays);
-        viewHolder.ivMusicType = (ImageView) view.findViewById(R.id.ivAdapterMusicType);
-        viewHolder.ivSnooze = (ImageView) view.findViewById(R.id.ivAdapterSnooze);
-        viewHolder.ivMath = (ImageView) view.findViewById(R.id.ivAdapterMath);
-        viewHolder.ivDelete = (ImageView) view.findViewById(R.id.ivAdapterDelete);
-        viewHolder.tgState = (ToggleButton) view.findViewById(R.id.tgAdapterState);
+        viewHolder.ivDelete = (ImageView) view
+                .findViewById(R.id.ivAdapterDelete);
+        viewHolder.ivMath = (ImageView) view
+                .findViewById(R.id.ivAdapterMath);
+        viewHolder.ivSnooze = (ImageView) view
+                .findViewById(R.id.ivAdapterSnooze);
+        viewHolder.ivMusicType = (ImageView) view
+                .findViewById(R.id.ivAdapterMusicType);
 
-        view.setTag(viewHolder);
-        viewHolder.tvTime.setTag(alarms.get(position));
-        viewHolder.tvName.setTag(alarms.get(position));
-        viewHolder.tvDays.setTag(alarms.get(position));
-        viewHolder.ivMusicType.setTag(alarms.get(position));
-        viewHolder.ivSnooze.setTag(alarms.get(position));
-        viewHolder.ivMath.setTag(alarms.get(position));
-        viewHolder.ivDelete.setTag(alarms.get(position));
         viewHolder.tgState.setTag(alarms.get(position));
+        viewHolder.ivDelete.setTag(alarms.get(position));
+        viewHolder.tvTime.setTag(alarms.get(position));
+        viewHolder.tvDays.setTag(alarms.get(position));
+        viewHolder.tvName.setTag(alarms.get(position));
+        viewHolder.ivMath.setTag(alarms.get(position));
+        viewHolder.ivSnooze.setTag(alarms.get(position));
+        viewHolder.ivMusicType.setTag(alarms.get(position));
 
+        alarm = getItem(position);
+        Log.v(LOG_TAG, "day = " + alarm.getDays());
         AlarmData alarmData = new AlarmData();
         AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
 
         alarmData.setAlarm(alarm);
         adapterDisplay.display();
 
+        final DataBase db = new DataBase(context);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivitySettings.class);
                 intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-                context.startActivity(intent);
+                ((Activity)context).startActivityForResult(intent, Consts.RESULT_CODE_ACTIVITY_SETTINGS);
             }
 
         });
@@ -114,21 +118,21 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
                 Alarm alarm = getItem(position);
                 db.deleteAlarm(alarm);
                 alarms.remove(position);
-                notifyDataSetChanged();
+                update(alarms);
+            }
+        });
+
+        viewHolder.tgState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Alarm alarm = getItem(position);
+
+                Log.v(LOG_TAG, "position = " + position);
             }
         });
 
         return view;
 
     }
-
-    CompoundButton.OnCheckedChangeListener toggleListiner = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView,
-                                     boolean isChecked) {
-
-        }
-    };
-
 
 }

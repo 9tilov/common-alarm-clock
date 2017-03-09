@@ -35,9 +35,9 @@ public class MainGenerator {
         alarm.addBooleanProperty("isSnoozeEnable");
         alarm.addBooleanProperty("isMathEnable");
         alarm.addStringProperty("name");
-        alarm.addStringProperty("musicPath");
-        alarm.addIntProperty("musicType");
-        alarm.addBooleanProperty("state");
+        alarm.addStringProperty("musicPath").notNull();
+        alarm.addIntProperty("musicType").notNull();
+        alarm.addBooleanProperty("state").notNull();
 
         return alarm;
     }

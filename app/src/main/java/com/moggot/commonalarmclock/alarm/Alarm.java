@@ -185,6 +185,7 @@ public class Alarm {
         calendar.setTime(date);
         return calendar.getTimeInMillis();
     }
+
     // KEEP METHODS END
 
 }

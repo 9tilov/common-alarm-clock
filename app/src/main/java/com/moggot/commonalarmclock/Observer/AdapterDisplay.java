@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.moggot.commonalarmclock.Conversion;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -70,7 +71,8 @@ public class AdapterDisplay implements Observer {
     }
 
     private void displayDays() {
-//        ((TextView) view.findViewById(R.id.tvDays)).setText(Conversion.getDaysAsString(ctx, alarm.getDays()));
+        Log.v(LOG_TAG, "days_adapter = " + alarm.getDays());
+        ((TextView) view.findViewById(R.id.tvAdapterDays)).setText(Conversion.getDaysAsString(ctx, alarm.getDays()));
     }
 
 

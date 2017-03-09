@@ -22,26 +22,39 @@ public class MainActivity extends AppCompatActivity {
     private List<Alarm> alarms = new ArrayList<>();
     private AlarmAdapter adapter;
     private ListView listView;
-    Alarm alarm1;
-    DataBase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new DataBase(this);
-
         listView = (ListView) findViewById(R.id.lvAlarms);
         adapter = new AlarmAdapter(this, R.layout.alarm_item, alarms);
         listView.setAdapter(adapter);
+
+        updateListView();
+
     }
 
     public void onClickAdd(View view) {
         Log.v(LOG_TAG, "click");
 
         Intent intent = new Intent(this, ActivitySettings.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
 
+    private void updateListView() {
+        DataBase db = new DataBase(this);
+        alarms = db.getAllAlarms();
+        for (Alarm alarm : alarms) {
+            Log.v(LOG_TAG, "day = " + alarm.getDays());
+        }
+        adapter.update(alarms);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.v(LOG_TAG, "result");
+        updateListView();
     }
 }

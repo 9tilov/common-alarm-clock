@@ -2,6 +2,7 @@ package com.moggot.commonalarmclock.Observer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseArray;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -41,13 +43,13 @@ public class SettingsDisplay implements Observer {
         tvAlarmTime = (TextView) activity.findViewById(R.id.tvAlarmTime);
 
         tbDaysOfWeek = new SparseArray<>();
-        tbDaysOfWeek.put(R.id.tbMonday, (byte) 0b01000000);
-        tbDaysOfWeek.put(R.id.tbTuesday, (byte) 0b00100000);
-        tbDaysOfWeek.put(R.id.tbWednesday, (byte) 0b00010000);
-        tbDaysOfWeek.put(R.id.tbThursday, (byte) 0b00001000);
-        tbDaysOfWeek.put(R.id.tbFriday, (byte) 0b00000100);
-        tbDaysOfWeek.put(R.id.tbSaturday, (byte) 0b00000010);
-        tbDaysOfWeek.put(R.id.tbSunday, (byte) 0b00000001);
+        tbDaysOfWeek.put(R.id.tbMonday, Consts.DAYS.MONDAY.getCode());
+        tbDaysOfWeek.put(R.id.tbTuesday, Consts.DAYS.TUESDAY.getCode());
+        tbDaysOfWeek.put(R.id.tbWednesday, Consts.DAYS.WEDNESDAY.getCode());
+        tbDaysOfWeek.put(R.id.tbThursday, Consts.DAYS.THURSDAY.getCode());
+        tbDaysOfWeek.put(R.id.tbFriday, Consts.DAYS.FRIDAY.getCode());
+        tbDaysOfWeek.put(R.id.tbSaturday, Consts.DAYS.SATURDAY.getCode());
+        tbDaysOfWeek.put(R.id.tbSunday, Consts.DAYS.SUNDAY.getCode());
 
         checkBoxSnooze = (CheckBox) activity.findViewById(R.id.checkBoxSnooze);
         checkBoxMathExample = (CheckBox) activity.findViewById(R.id.checkBoxMath);
@@ -81,6 +83,7 @@ public class SettingsDisplay implements Observer {
     }
 
     private void displayDays() {
+        Log.v(LOG_TAG, "days_settings = " + alarm.getDays());
         for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
             int key = tbDaysOfWeek.keyAt(i);
             int temp = alarm.getDays() & tbDaysOfWeek.get(key);
