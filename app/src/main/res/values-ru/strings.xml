@@ -24,7 +24,7 @@
     <string name="stop_alarm">Стоп</string>
     <string name="ok">Ок</string>
     <string name="snooze">Отложить</string>
-    <string name="math">Математический пример</string>
+    <string name="math">Математический\nпример</string>
     <string name="internet_radio">Интернет радио</string>
     <string name="music_file">Файл</string>
     <string name="default_ringtones">Рингтоны</string>

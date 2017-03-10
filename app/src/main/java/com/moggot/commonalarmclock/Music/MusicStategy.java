@@ -1,6 +1,7 @@
 package com.moggot.commonalarmclock.Music;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 
 /**
  * Created by toor on 28.02.17.
@@ -8,5 +9,5 @@ import android.content.Context;
 
 public interface MusicStategy {
 
-    void play(Context ctx, String path);
+    MediaPlayer init(Context ctx, String path);
 }

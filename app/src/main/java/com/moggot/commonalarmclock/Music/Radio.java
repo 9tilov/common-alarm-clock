@@ -10,9 +10,9 @@ import java.io.IOException;
  * Created by toor on 28.02.17.
  */
 
-public class Stream {
+public class Radio implements MusicStategy {
 
-    public void play(Context ctx, String path) {
+    public MediaPlayer init(Context ctx, String path) {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -21,5 +21,6 @@ public class Stream {
             e.printStackTrace();
         }
         mediaPlayer.prepareAsync();
+        return mediaPlayer;
     }
 }

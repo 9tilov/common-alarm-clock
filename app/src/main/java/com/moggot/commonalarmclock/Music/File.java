@@ -13,10 +13,11 @@ import java.io.IOException;
 
 public class File implements MusicStategy {
 
-    public void play(Context ctx, String path) {
+    public MediaPlayer init(Context ctx, String path) {
+        MediaPlayer mediaPlayer = null;
         try {
             Uri uri = Uri.fromFile((new java.io.File(path)));
-            MediaPlayer mediaPlayer = MediaPlayer.create(ctx, uri);
+            mediaPlayer = MediaPlayer.create(ctx, uri);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setLooping(true);
             mediaPlayer.prepare();
@@ -24,5 +25,6 @@ public class File implements MusicStategy {
                 | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
+        return mediaPlayer;
     }
 }

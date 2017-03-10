@@ -2,6 +2,7 @@ package com.moggot.commonalarmclock.Music;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.RemoteControlClient;
 import android.media.RingtoneManager;
 import android.net.Uri;
 
@@ -13,11 +14,12 @@ import java.io.IOException;
 
 public class Ringtone implements MusicStategy {
 
-    public void play(Context ctx, String path) {
+    public MediaPlayer init(Context ctx, String path) {
+        MediaPlayer mediaPlayer = null;
         try {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             Uri alarm = Uri.parse(path);
-            MediaPlayer mediaPlayer = MediaPlayer.create(ctx, alarm);
+            mediaPlayer = MediaPlayer.create(ctx, alarm);
 
             mediaPlayer.setLooping(true);
             mediaPlayer.prepare();
@@ -25,5 +27,6 @@ public class Ringtone implements MusicStategy {
                 | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
+        return mediaPlayer;
     }
 }

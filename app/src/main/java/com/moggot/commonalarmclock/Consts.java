@@ -59,12 +59,15 @@ public final class Consts {
     }
 
     public final static String EXTRA_ID = "_id";
+    public final static String EXTRA_TYPE = "type";
+    public final static String EXTRA_PATH = "path";
 
     public final static int REQUEST_CODE_DEFAULT_RINGTONE = 1;
     public final static int REQUEST_CODE_FILE_CHOSER = 2;
     public final static int REQUEST_CODE_ACTIVITY_SETTINGS = 3;
 
-    public final static String DATA_RADIO = "http://online.radiorecord.ru:8101/rr_128";
+//    public final static String DATA_RADIO = "http://online.radiorecord.ru:8101/rr_128";
+    public final static String DATA_RADIO = "http://pulseedm.cdnstream1.com:8124/1373_128";
     public final static String DATA_DEFAULT_RINGTONE = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
 
 }

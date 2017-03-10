@@ -2,16 +2,16 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="twodp">2dp</dimen>
-    <dimen name="text_size_title">25sp</dimen>
+    <dimen name="text_size_title">30sp</dimen>
     <dimen name="text_size_title_time">65sp</dimen>
     <dimen name="text_size_button">50sp</dimen>
     <dimen name="text_size_math_example">45sp</dimen>
-    <dimen name="text_size_checkbox">20sp</dimen>
-    <dimen name="text_size_radiobutton">20sp</dimen>
+    <dimen name="text_size_checkbox">15sp</dimen>
+    <dimen name="text_size_radiobutton">15sp</dimen>
     <dimen name="text_size_adapter_time">35sp</dimen>
     <dimen name="text_size_adapter_days">12sp</dimen>
     <dimen name="text_size_adapter_alarm_name">15sp</dimen>
-    <dimen name="text_size">20sp</dimen>
+    <dimen name="text_size">15sp</dimen>
 
     <dimen name="toggle_button_size">45dip</dimen>
 

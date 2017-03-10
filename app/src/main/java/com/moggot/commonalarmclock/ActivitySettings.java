@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
+import com.moggot.commonalarmclock.Music.MusicService;
 import com.moggot.commonalarmclock.Observer.AlarmData;
 import com.moggot.commonalarmclock.Observer.SettingsDisplay;
 import com.moggot.commonalarmclock.alarm.Alarm;
@@ -52,6 +53,8 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
     private Alarm alarm;
     private DataBase db;
+
+    private boolean isMusicPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +223,16 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 showChooser();
                 break;
             case R.id.rbRadio:
+                Intent musicIntent = new Intent(this, MusicService.class);
+                musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
+                musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
+                if (isMusicPlaying) {
+                    isMusicPlaying = false;
+                    stopService(musicIntent);
+                } else {
+                    isMusicPlaying = true;
+                    startService(musicIntent);
+                }
                 break;
             case R.id.rbRingtones:
                 showRingtones();
@@ -311,5 +324,10 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 Toast.LENGTH_SHORT).show();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent musicIntent = new Intent(ActivitySettings.this, MusicService.class);
+        stopService(musicIntent);
+    }
 }

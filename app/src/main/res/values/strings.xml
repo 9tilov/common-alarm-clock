@@ -32,7 +32,7 @@
     <string name="stop_alarm">Stop</string>
     <string name="ok">Ok</string>
     <string name="snooze">Snooze</string>
-    <string name="math">Math example</string>
+    <string name="math">Math\nexample</string>
     <string name="internet_radio">Internet radio</string>
     <string name="music_file">Music file</string>
     <string name="default_ringtones">Default ringtones</string>
