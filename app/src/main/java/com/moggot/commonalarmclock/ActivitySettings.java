@@ -109,13 +109,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     db.addAlarm(alarm);
                 else
                     db.editAlarm(alarm);
-<<<<<<< HEAD
-
                 AlarmContext alarmContext = new AlarmContext(alarm, getBaseContext());
                 AlarmManager alarmManager = new AlarmManager();
                 alarmManager.setAlarm(alarmContext);
-=======
->>>>>>> db728ab60d9fb669b8bec736dd704a872375ee2d
                 finish();
             }
         });

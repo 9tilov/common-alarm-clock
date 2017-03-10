@@ -40,28 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateListView() {
         DataBase db = new DataBase(this);
         alarms = db.getAllAlarms();
-<<<<<<< HEAD
-        Log.v(LOG_TAG, "size = " + alarms.size());
-=======
->>>>>>> db728ab60d9fb669b8bec736dd704a872375ee2d
         adapter.update(alarms);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-<<<<<<< HEAD
         switch (requestCode) {
             case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
                 updateListView();
                 break;
-=======
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
-                    updateListView();
-                    break;
-            }
->>>>>>> db728ab60d9fb669b8bec736dd704a872375ee2d
         }
     }
 }
