@@ -164,14 +164,14 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                                      boolean isChecked) {
             if (isChecked) {
                 if (buttonView.getId() == R.id.checkBoxSnooze)
-                    alarm.setIsMathEnable(true);
-                if (buttonView.getId() == R.id.checkBoxMath)
                     alarm.setIsSnoozeEnable(true);
-            } else {
                 if (buttonView.getId() == R.id.checkBoxMath)
-                    alarm.setIsMathEnable(false);
+                    alarm.setIsMathEnable(true);
+            } else {
                 if (buttonView.getId() == R.id.checkBoxSnooze)
                     alarm.setIsSnoozeEnable(false);
+                if (buttonView.getId() == R.id.checkBoxMath)
+                    alarm.setIsMathEnable(false);
             }
         }
     };
