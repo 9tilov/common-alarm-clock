@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/toor/android/projects/CommonAlarmClock/aFileChooser/src/main/assets"/><source path="/home/toor/android/projects/CommonAlarmClock/aFileChooser/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/home/toor/android/projects/CommonAlarmClock/aFileChooser/src/release/assets"/></dataSet></merger>
