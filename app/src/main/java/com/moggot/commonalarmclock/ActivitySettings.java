@@ -23,9 +23,9 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
-import com.moggot.commonalarmclock.Music.MusicService;
-import com.moggot.commonalarmclock.Observer.AlarmData;
-import com.moggot.commonalarmclock.Observer.SettingsDisplay;
+import com.moggot.commonalarmclock.music.MusicService;
+import com.moggot.commonalarmclock.observer.AlarmData;
+import com.moggot.commonalarmclock.observer.SettingsDisplay;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import android.view.View.OnClickListener;

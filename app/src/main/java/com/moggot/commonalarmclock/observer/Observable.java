@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.Observer;
+package com.moggot.commonalarmclock.observer;
 
 /**
  * Created by toor on 22.02.17.

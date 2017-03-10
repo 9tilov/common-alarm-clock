@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.moggot.commonalarmclock.Observer.AdapterDisplay;
-import com.moggot.commonalarmclock.Observer.AlarmData;
+import com.moggot.commonalarmclock.observer.AdapterDisplay;
+import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.List;

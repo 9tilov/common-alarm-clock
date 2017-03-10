@@ -33,7 +33,7 @@
         </receiver>
 
         <service
-            android:name=".Music.MusicService"
+            android:name=".music.MusicService"
             android:enabled="true" />
 
         <activity

@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.Observer;
+package com.moggot.commonalarmclock.observer;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.Conversion;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;

@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.Observer;
+package com.moggot.commonalarmclock.observer;
 
 import android.app.Activity;
 import android.content.Context;

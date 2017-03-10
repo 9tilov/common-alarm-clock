@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.Music;
+package com.moggot.commonalarmclock.music;
 
 import android.app.Service;
 import android.content.Context;

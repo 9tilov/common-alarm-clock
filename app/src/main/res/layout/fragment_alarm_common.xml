@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="35"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="30"
+        android:gravity="center"
+        android:text="hello"
+        android:textSize="@dimen/text_size_title_time" />
+
+
+    <Button
+        android:id="@+id/btnStopAlarm"
+        style="@style/TextButtonHide"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="30"
+        android:text="@string/stop_alarm" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="5"
+        android:orientation="horizontal" />
 
 </LinearLayout>

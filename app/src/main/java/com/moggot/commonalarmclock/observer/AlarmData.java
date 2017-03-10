@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.Observer;
+package com.moggot.commonalarmclock.observer;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
 

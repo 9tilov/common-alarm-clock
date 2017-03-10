@@ -1,5 +1,7 @@
 package com.moggot.commonalarmclock;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +10,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.fragments.FragmentCommon;
+import com.moggot.commonalarmclock.fragments.FragmentMath;
+import com.moggot.commonalarmclock.fragments.FragmentSnooze;
 
 public class ActivityAlarm extends AppCompatActivity {
 
@@ -31,7 +36,25 @@ public class ActivityAlarm extends AppCompatActivity {
         DataBase db = new DataBase(this);
         Alarm alarm = db.getAlarm(id);
 
-        Log.v(LOG_TAG, "name = " + alarm.getName());
+        FragmentCommon fragmentCommon = new FragmentCommon();
+        FragmentMath fragmentMath = new FragmentMath();
+        FragmentSnooze fragmentSnooze = new FragmentSnooze();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.frgmCont, fragmentCommon);
+
+        if (alarm.getIsMathEnable())
+            ft.add(R.id.frgmCont, fragmentMath);
+        else {
+            if (alarm.getIsSnoozeEnable())
+                ft.add(R.id.frgmCont, fragmentSnooze);
+            else
+                ft.add(R.id.frgmCont, fragmentCommon);
+        }
+
+        ft.commit();
+
+//        Log.v(LOG_TAG, "name = " + alarm.getName());
 
     }
 }

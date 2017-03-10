@@ -1,8 +1,7 @@
-package com.moggot.commonalarmclock.Music;
+package com.moggot.commonalarmclock.music;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.RemoteControlClient;
 import android.media.RingtoneManager;
 import android.net.Uri;
 

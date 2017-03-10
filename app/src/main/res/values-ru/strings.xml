@@ -22,7 +22,7 @@
     <string name="message">Название будильника</string>
     <string name="no_internet_connection">Нет соединения с Интернетом</string>
     <string name="stop_alarm">Стоп</string>
-    <string name="ok">Ок</string>
+    <string name="ok">ОК</string>
     <string name="snooze">Отложить</string>
     <string name="math">Математический\nпример</string>
     <string name="internet_radio">Интернет радио</string>
