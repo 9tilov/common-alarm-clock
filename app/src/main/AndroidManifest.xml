@@ -8,27 +8,25 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
-        <activity android:name="com.moggot.commonalarmclock.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.moggot.commonalarmclock.ActivitySettings"
+            android:name=".ActivitySettings"
             android:label="@string/title_create_alarm"
             android:screenOrientation="portrait" />
 
-        <receiver android:name="com.moggot.commonalarmclock.AlarmManagerBroadcastReceiver">
+        <receiver android:name=".AlarmManagerBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -36,9 +34,11 @@
 
         <service
             android:name=".Music.MusicService"
-            android:enabled="true">
+            android:enabled="true" />
 
-        </service>
+        <activity
+            android:name=".ActivityAlarm"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -130,6 +130,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                     calendar.set(Calendar.MINUTE, selectedMinute);
+                    calendar.set(Calendar.SECOND, 0);
                     Date date = new Date(calendar.getTimeInMillis());
                     alarm.setDate(date);
                     tvAlarmTime.setText(
