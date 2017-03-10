@@ -1,7 +1,9 @@
 package com.moggot.commonalarmclock;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -115,10 +117,25 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
         viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Alarm alarm = getItem(position);
-                db.deleteAlarm(alarm);
-                alarms.remove(position);
-                update(alarms);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle(context.getString(R.string.dialog_title_remove));
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Alarm alarm = getItem(position);
+                                db.deleteAlarm(alarm);
+                                alarms.remove(position);
+                                update(alarms);
+                            }
+                        })
+                        .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 
@@ -134,9 +151,7 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
                     alarmManager.cancelAlarm(alarmContext);
             }
         });
-
         return view;
-
     }
 
 }
