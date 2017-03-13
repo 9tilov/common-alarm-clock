@@ -56,11 +56,11 @@
 
 
         <Button
-            android:id="@+id/btnSetResult"
+            android:id="@+id/btnResult"
             style="@style/TextButtonResult"
             android:layout_width="@dimen/math_result_btn2"
             android:layout_height="@dimen/math_result_btn1"
-            android:text="@string/ok" />
+            android:text="@string/ok"/>
 
     </RelativeLayout>
 

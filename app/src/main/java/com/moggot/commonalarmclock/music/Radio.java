@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Radio implements MusicStategy {
 
-    public MediaPlayer init(Context ctx, String path) {
+    public MediaPlayer init(Context context, String path) {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {

@@ -2,8 +2,11 @@ package com.moggot.commonalarmclock;
 
 import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -268,11 +271,19 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         String requestCodesStr = new Gson().toJson(requestCodes);
         Consts.DAYS days = Consts.DAYS.TOMORROW;
 
-        Consts.MUSIC_TYPE musicType = Consts.MUSIC_TYPE.RADIO;
+        int musicType;
+        String path;
+        if (isNetworkAvailable()) {
+            musicType = Consts.MUSIC_TYPE.RADIO.getType();
+            path = Consts.DATA_RADIO;
+        } else {
+            musicType = Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType();
+            path = Consts.DATA_DEFAULT_RINGTONE;
+        }
 
         return new Alarm(null, date, requestCodesStr, days.getCode(),
-                checkBoxSnooze.isChecked(), checkBoxMath.isChecked(), "", Consts.DATA_RADIO,
-                musicType.getType(), true);
+                checkBoxSnooze.isChecked(), checkBoxMath.isChecked(), "", path,
+                musicType, true);
     }
 
     private static String pad(int c) {
@@ -320,8 +331,20 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         }
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
+    }
+
     private void notMusicFile() {
         Toast.makeText(this, R.string.not_music_file,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void internetUnavailable() {
+        Toast.makeText(getApplicationContext(),
+                R.string.no_internet_connection,
                 Toast.LENGTH_SHORT).show();
     }
 

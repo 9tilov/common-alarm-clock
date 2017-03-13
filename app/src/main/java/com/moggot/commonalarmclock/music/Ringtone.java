@@ -13,12 +13,12 @@ import java.io.IOException;
 
 public class Ringtone implements MusicStategy {
 
-    public MediaPlayer init(Context ctx, String path) {
+    public MediaPlayer init(Context context, String path) {
         MediaPlayer mediaPlayer = null;
         try {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             Uri alarm = Uri.parse(path);
-            mediaPlayer = MediaPlayer.create(ctx, alarm);
+            mediaPlayer = MediaPlayer.create(context, alarm);
 
             mediaPlayer.setLooping(true);
             mediaPlayer.prepare();

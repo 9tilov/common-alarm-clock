@@ -35,8 +35,11 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             case RADIO:
                 if (isNetworkAvailable())
                     musicPlayer = new MusicPlayer(new Radio());
-                else
+                else {
                     internetUnavailable();
+                    musicPlayer = new MusicPlayer(new Ringtone());
+                    path = Consts.DATA_DEFAULT_RINGTONE;
+                }
                 break;
             case DEFAULT_RINGTONE:
                 musicPlayer = new MusicPlayer(new Ringtone());
@@ -45,7 +48,13 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
                 musicPlayer = new MusicPlayer(new File());
                 break;
             default:
-                musicPlayer = new MusicPlayer(new Radio());
+                if (isNetworkAvailable())
+                    musicPlayer = new MusicPlayer(new Radio());
+                else {
+                    internetUnavailable();
+                    musicPlayer = new MusicPlayer(new Ringtone());
+                    path = Consts.DATA_DEFAULT_RINGTONE;
+                }
                 break;
 
         }

@@ -2,7 +2,9 @@ package com.moggot.commonalarmclock;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.fragments.FragmentCommon;
 import com.moggot.commonalarmclock.fragments.FragmentMath;
 import com.moggot.commonalarmclock.fragments.FragmentSnooze;
+import com.moggot.commonalarmclock.music.MusicService;
 
 public class ActivityAlarm extends AppCompatActivity {
 
@@ -40,8 +43,19 @@ public class ActivityAlarm extends AppCompatActivity {
         FragmentMath fragmentMath = new FragmentMath();
         FragmentSnooze fragmentSnooze = new FragmentSnooze();
 
+        final Vibrator vibration = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        long[] once = {0, 500, 500};
+        vibration.vibrate(once, 0);
+        Intent musicIntent = new Intent(ActivityAlarm.this, MusicService.class);
+        musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
+        musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
+        startService(musicIntent);
+
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.frgmCont, fragmentCommon);
+
+        Bundle bundle = new Bundle();
+        bundle.putLong(Consts.EXTRA_ID, id);
+        fragmentMath.setArguments(bundle);
 
         if (alarm.getIsMathEnable())
             ft.add(R.id.frgmCont, fragmentMath);
@@ -53,8 +67,6 @@ public class ActivityAlarm extends AppCompatActivity {
         }
 
         ft.commit();
-
-//        Log.v(LOG_TAG, "name = " + alarm.getName());
-
     }
+
 }
