@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +24,7 @@ import java.util.List;
  * Created by toor on 06.03.17.
  */
 
-public class AlarmAdapter extends ArrayAdapter<Alarm> {
+public class AlarmAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         private TextView tvDays;
@@ -39,23 +39,36 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
 
     private Context context;
     private List<Alarm> alarms;
-    private ViewHolder viewHolder;
-    private Alarm alarm;
+    private LayoutInflater inflater;
 
     private final static String LOG_TAG = "AlarmAdapter";
 
-    public AlarmAdapter(Context context, int layoutResourceID, List<Alarm> alarms) {
-        super(context, layoutResourceID, alarms);
+    public AlarmAdapter(Context context, List<Alarm> alarms) {
         this.context = context;
         this.alarms = alarms;
-        viewHolder = new ViewHolder();
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
+    // кол-во элементов
+    @Override
+    public int getCount() {
+        return alarms.size();
+    }
+
+    // элемент по позиции
+    @Override
+    public Alarm getItem(int position) {
+        return alarms.get(position);
+    }
+
+    // id по позиции
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public void update(List<Alarm> alarms) {
         this.alarms = alarms;
-        clear();
-        addAll(alarms);
         notifyDataSetChanged();
     }
 
@@ -63,8 +76,9 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
     public View getView(final int position, final View convertView, ViewGroup parent) {
 
         View view = convertView;
+        ViewHolder viewHolder;
         if (view == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            viewHolder = new ViewHolder();
             view = inflater.inflate(R.layout.alarm_item, parent, false);
             view.setTag(viewHolder);
         } else
@@ -93,7 +107,7 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
         viewHolder.ivSnooze.setTag(alarms.get(position));
         viewHolder.ivMusicType.setTag(alarms.get(position));
 
-        alarm = getItem(position);
+        Alarm alarm = getItem(position);
         AlarmData alarmData = new AlarmData();
         AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
 
