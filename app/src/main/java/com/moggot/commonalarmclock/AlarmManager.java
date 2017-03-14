@@ -14,33 +14,19 @@ public class AlarmManager implements AlarmType {
         AlarmOn on = new AlarmOn(alarmContext);
         Alarm alarm = alarmContext.getAlarm();
         SparseIntArray ids = alarm.getIDs();
-        if (ids.get(Consts.DAYS.TOMORROW.getCode()) != 0) {
-            if (alarm.getIsSnoozeEnable())
-                on.setType(new SnoozeAlarmDecorator(new SingleAlarm()));
-            else
-                on.setType(new SingleAlarm());
-        } else {
-            if (alarm.getIsSnoozeEnable())
-                on.setType(new SnoozeAlarmDecorator(new RepeateAlarm()));
-            else
-                on.setType(new RepeateAlarm());
-        }
+        if (ids.get(Consts.TOMORROW) != 0)
+            on.setType(new SingleAlarm());
+        else
+            on.setType(new RepeateAlarm());
     }
 
     public void cancelAlarm(AlarmContext alarmContext) {
         AlarmOff off = new AlarmOff(alarmContext);
         Alarm alarm = alarmContext.getAlarm();
         SparseIntArray ids = alarm.getIDs();
-        if (ids.get(Consts.DAYS.TOMORROW.getCode()) != 0) {
-            if (alarm.getIsSnoozeEnable())
-                off.setType(new SnoozeAlarmDecorator(new SingleAlarm()));
-            else
-                off.setType(new SingleAlarm());
-        } else {
-            if (alarm.getIsSnoozeEnable())
-                off.setType(new SnoozeAlarmDecorator(new RepeateAlarm()));
-            else
-                off.setType(new RepeateAlarm());
-        }
+        if (ids.get(Consts.TOMORROW) != 0)
+            off.setType(new SingleAlarm());
+        else
+            off.setType(new RepeateAlarm());
     }
 }

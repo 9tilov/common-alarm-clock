@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.CheckBox;
@@ -48,7 +47,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     private static final String LOG_TAG = "ActivitySettings";
 
     private TextView tvAlarmTime;
-    private SparseArray<Byte> tbDaysOfWeek;
+    private SparseIntArray tbDaysOfWeek;
     private CheckBox checkBoxMath, checkBoxSnooze;
     private RadioGroup rgMusic;
     private ImageView btnMusic;
@@ -72,14 +71,14 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         checkBoxSnooze = (CheckBox) findViewById(R.id.checkBoxSnooze);
         checkBoxSnooze.setOnCheckedChangeListener(checkBoxListener);
 
-        tbDaysOfWeek = new SparseArray<>();
-        tbDaysOfWeek.put(R.id.tbMonday, Consts.DAYS.MONDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbTuesday, Consts.DAYS.TUESDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbWednesday, Consts.DAYS.WEDNESDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbThursday, Consts.DAYS.THURSDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbFriday, Consts.DAYS.FRIDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbSaturday, Consts.DAYS.SATURDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbSunday, Consts.DAYS.SUNDAY.getCode());
+        tbDaysOfWeek = new SparseIntArray();
+        tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
+        tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
+        tbDaysOfWeek.put(R.id.tbWednesday, Calendar.WEDNESDAY);
+        tbDaysOfWeek.put(R.id.tbThursday, Calendar.THURSDAY);
+        tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
+        tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
+        tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
         for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
             (findViewById(tbDaysOfWeek.keyAt(i))).setOnClickListener(this);
         }
@@ -158,7 +157,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         boolean on = ((ToggleButton) v).isChecked();
         SparseIntArray ids = alarm.getIDs();
         if (on) {
-            if (ids.get(Consts.DAYS.TOMORROW.getCode()) != 0)
+            if (ids.get(Consts.TOMORROW) != 0)
                 ids.clear();
             int requestCode = db.getRandomRequestCode();
             ids.put(tbDaysOfWeek.get(v.getId()), requestCode);
@@ -167,18 +166,11 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         }
 
         if (ids.size() == 0)
-            ids.put(Consts.DAYS.TOMORROW.getCode(), db.getRandomRequestCode());
+            ids.put(Consts.TOMORROW, db.getRandomRequestCode());
 
         alarm.setIDs(ids);
         Log.v(LOG_TAG, "ids = " + ids);
 
-
-//        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
-//            int temp = days & tbDaysOfWeek.get(tbDaysOfWeek.keyAt(i));
-//            int t_temp = temp ^ tbDaysOfWeek.get(tbDaysOfWeek.keyAt(i));
-//            ((ToggleButton) findViewById(tbDaysOfWeek.keyAt(i)))
-//                    .setChecked(temp > 0 && t_temp == 0);
-//        }
     }
 
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
@@ -283,10 +275,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         Date date = new Date(calendar.getTimeInMillis());
 
         SparseIntArray ids = new SparseIntArray();
-        Consts.DAYS days = Consts.DAYS.TOMORROW;
         int requstCode = db.getRandomRequestCode();
         Log.v(LOG_TAG, "id = " + requstCode);
-        ids.put(days.getCode(), requstCode);
+        ids.put(Consts.TOMORROW, requstCode);
         String requestCodesStr = new Gson().toJson(ids);
 
         int musicType;

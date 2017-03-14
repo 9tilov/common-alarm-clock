@@ -6,7 +6,6 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +13,8 @@ import android.view.WindowManager;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.fragments.FragmentCreator;
 import com.moggot.commonalarmclock.music.MusicService;
+
+import java.util.Calendar;
 
 public class ActivityAlarm extends AppCompatActivity {
 
@@ -42,6 +43,10 @@ public class ActivityAlarm extends AppCompatActivity {
         DataBase db = new DataBase(this);
         alarm = db.getAlarm(id);
 
+        Calendar calendar = Calendar.getInstance();
+        Log.v(LOG_TAG, "alarmPeriod = " + alarm.getTimeInMillis());
+        Log.v(LOG_TAG, "calendar = " + calendar.getTimeInMillis());
+
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         long[] once = {0, 500, 500};
         vibrator.vibrate(once, 0);
@@ -65,7 +70,7 @@ public class ActivityAlarm extends AppCompatActivity {
         Intent intent = new Intent(this, MusicService.class);
         stopService(intent);
         SparseIntArray ids = alarm.getIDs();
-        if (ids.get(Consts.DAYS.TOMORROW.getCode()) != 0) {
+        if (ids.get(Consts.TOMORROW) != 0) {
             AlarmContext alarmContext = new AlarmContext(alarm, this);
             AlarmManager alarmManager = new AlarmManager();
             alarmManager.cancelAlarm(alarmContext);

@@ -12,7 +12,6 @@ import com.moggot.commonalarmclock.alarm.DaoMaster;
 import com.moggot.commonalarmclock.alarm.DaoSession;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -23,13 +22,13 @@ import java.util.Random;
 
 public class DataBase {
 
-    private Context ctx;
+    private Context context;
     private AlarmDao alarmDao;
 
     private final String DB_NAME = "alarm_db";
 
-    public DataBase(Context ctx) {
-        this.ctx = ctx;
+    public DataBase(Context context) {
+        this.context = context;
         alarmDao = setupDb();
     }
 
@@ -54,7 +53,7 @@ public class DataBase {
     }
 
     private AlarmDao setupDb() {
-        DaoMaster.DevOpenHelper masterHelper = new DaoMaster.DevOpenHelper(ctx, DB_NAME, null); //create database db file if not exist
+        DaoMaster.DevOpenHelper masterHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null); //create database db file if not exist
         SQLiteDatabase db = masterHelper.getWritableDatabase();  //get the created database db file
         DaoMaster master = new DaoMaster(db);//create masterDao
         DaoSession masterSession = master.newSession(); //Creates Session session
@@ -64,7 +63,7 @@ public class DataBase {
     public int getRandomRequestCode() {
         HashSet<Integer> unique = new HashSet<>();
         List<Alarm> alarms = getAllAlarms();
-        for (Alarm alarm:alarms) {
+        for (Alarm alarm : alarms) {
             Type type = new TypeToken<SparseIntArray>() {
             }.getType();
             SparseIntArray ids = new Gson().fromJson(alarm.getRequestCodes(), type);

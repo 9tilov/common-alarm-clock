@@ -1,7 +1,5 @@
 package com.moggot.commonalarmclock;
 
-import com.moggot.commonalarmclock.alarm.Alarm;
-
 /**
  * Created by toor on 03.03.17.
  */

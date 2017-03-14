@@ -8,27 +8,7 @@ import android.media.RingtoneManager;
 
 public final class Consts {
 
-    public enum DAYS {
-        TOMORROW((byte) 0b0000000),
-        MONDAY((byte) 0b0000001),
-        TUESDAY((byte) 0b0000010),
-        WEDNESDAY((byte) 0b0000100),
-        THURSDAY((byte) 0b0001000),
-        FRIDAY((byte) 0b0010000),
-        SATURDAY((byte) 0b0100000),
-        SUNDAY((byte) 0b1000000);
-
-        private final byte code;
-
-        DAYS(byte code) {
-            this.code = code;
-        }
-
-        public byte getCode() {
-            return this.code;
-        }
-
-    }
+    public static int TOMORROW = 0;
 
     public enum MUSIC_TYPE {
         MUSIC_FILE(0),
@@ -42,7 +22,7 @@ public final class Consts {
         }
 
         public static MUSIC_TYPE fromInteger(int x) {
-            switch(x) {
+            switch (x) {
                 case 0:
                     return MUSIC_FILE;
                 case 1:
@@ -66,7 +46,6 @@ public final class Consts {
     public final static int REQUEST_CODE_FILE_CHOSER = 2;
     public final static int REQUEST_CODE_ACTIVITY_SETTINGS = 3;
 
-//    public final static String DATA_RADIO = "http://online.radiorecord.ru:8101/rr_128";
     public final static String DATA_RADIO = "http://pulseedm.cdnstream1.com:8124/1373_128";
     public final static String DATA_DEFAULT_RINGTONE = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
 

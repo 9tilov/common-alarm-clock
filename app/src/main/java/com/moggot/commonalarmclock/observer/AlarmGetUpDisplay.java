@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.moggot.commonalarmclock.Conversion;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -16,11 +15,9 @@ public class AlarmGetUpDisplay implements Observer {
 
     private Alarm alarm;
     private View view;
-    private Context context;
 
-    public AlarmGetUpDisplay(Context context, View view, AlarmData alarmData) {
+    public AlarmGetUpDisplay(View view, AlarmData alarmData) {
         this.view = view;
-        this.context = context;
         alarmData.registerObserver(this);
     }
 

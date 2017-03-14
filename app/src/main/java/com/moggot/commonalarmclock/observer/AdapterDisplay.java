@@ -67,7 +67,6 @@ public class AdapterDisplay implements Observer {
     }
 
     private void displayDays() {
-//        Log.v(LOG_TAG, "days_adapter = " + alarm.getDays());
         ((TextView) view.findViewById(R.id.tvAdapterDays)).setText(Conversion.getDaysAsString(context, alarm.getIDs()));
     }
 

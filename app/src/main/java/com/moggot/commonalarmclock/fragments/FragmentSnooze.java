@@ -6,16 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.moggot.commonalarmclock.AlarmContext;
-import com.moggot.commonalarmclock.AlarmManager;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.SnoozeAlarm;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.observer.AlarmGetUpDisplay;
+
+import java.util.Calendar;
 
 /**
  * Created by toor on 10.03.17.
@@ -42,7 +42,7 @@ public class FragmentSnooze extends Fragment {
         final Alarm alarm = db.getAlarm(id);
 
         AlarmData alarmData = new AlarmData();
-        AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(getActivity(), view, alarmData);
+        AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(view, alarmData);
         alarmData.setAlarm(alarm);
         adapterDisplay.display();
 
@@ -50,9 +50,9 @@ public class FragmentSnooze extends Fragment {
             @Override
             public void onClick(View v) {
 
-                AlarmContext alarmContext = new AlarmContext(alarm, getActivity());
-                AlarmManager alarmManager = new AlarmManager();
-                alarmManager.setAlarm(alarmContext);
+                SnoozeAlarm snoozeAlarm = new SnoozeAlarm(getActivity());
+                Calendar calendar = Calendar.getInstance();
+                snoozeAlarm.setAlarm(alarm, calendar.getTimeInMillis());
                 getActivity().finish();
             }
         });

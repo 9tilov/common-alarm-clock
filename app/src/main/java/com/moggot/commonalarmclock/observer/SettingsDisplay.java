@@ -3,7 +3,6 @@ package com.moggot.commonalarmclock.observer;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,7 +11,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -32,25 +30,25 @@ public class SettingsDisplay implements Observer {
     private Activity activity;
 
     private TextView tvAlarmTime;
-    private SparseArray<Byte> tbDaysOfWeek;
+    private SparseIntArray tbDaysOfWeek;
     private CheckBox checkBoxSnooze;
     private CheckBox checkBoxMathExample;
     private EditText etName;
     private RadioGroup rgMusicType;
 
-    public SettingsDisplay(Context ctx, AlarmData alarmData) {
-        this.activity = (Activity) ctx;
+    public SettingsDisplay(Context context, AlarmData alarmData) {
+        this.activity = (Activity) context;
 
         tvAlarmTime = (TextView) activity.findViewById(R.id.tvAlarmTime);
 
-        tbDaysOfWeek = new SparseArray<>();
-        tbDaysOfWeek.put(R.id.tbMonday, Consts.DAYS.MONDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbTuesday, Consts.DAYS.TUESDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbWednesday, Consts.DAYS.WEDNESDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbThursday, Consts.DAYS.THURSDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbFriday, Consts.DAYS.FRIDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbSaturday, Consts.DAYS.SATURDAY.getCode());
-        tbDaysOfWeek.put(R.id.tbSunday, Consts.DAYS.SUNDAY.getCode());
+        tbDaysOfWeek = new SparseIntArray();
+        tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
+        tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
+        tbDaysOfWeek.put(R.id.tbWednesday, Calendar.WEDNESDAY);
+        tbDaysOfWeek.put(R.id.tbThursday, Calendar.THURSDAY);
+        tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
+        tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
+        tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
 
         checkBoxSnooze = (CheckBox) activity.findViewById(R.id.checkBoxSnooze);
         checkBoxMathExample = (CheckBox) activity.findViewById(R.id.checkBoxMath);
@@ -90,13 +88,8 @@ public class SettingsDisplay implements Observer {
                 int key = tbDaysOfWeek.keyAt(btnID);
                 if (ids.keyAt(requestCode) == tbDaysOfWeek.get(key))
                     ((ToggleButton) activity.findViewById(key))
-                    .setChecked(true);
+                            .setChecked(true);
             }
-//            int key = tbDaysOfWeek.keyAt(i);
-//            int temp = alarm.getDays() & tbDaysOfWeek.get(key);
-//            int t_temp = temp ^ tbDaysOfWeek.get(key);
-//            ((ToggleButton) activity.findViewById(key))
-//                    .setChecked((temp > 0 && t_temp == 0));
         }
     }
 

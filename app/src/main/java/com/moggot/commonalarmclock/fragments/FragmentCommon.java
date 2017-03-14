@@ -6,13 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.observer.AdapterDisplay;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.observer.AlarmGetUpDisplay;
 
@@ -33,7 +31,7 @@ public class FragmentCommon extends Fragment {
         Alarm alarm = db.getAlarm(id);
 
         AlarmData alarmData = new AlarmData();
-        AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(getActivity(), view, alarmData);
+        AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(view, alarmData);
         alarmData.setAlarm(alarm);
         adapterDisplay.display();
 
