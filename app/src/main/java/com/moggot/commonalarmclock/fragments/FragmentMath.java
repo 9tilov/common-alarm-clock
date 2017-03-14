@@ -1,9 +1,9 @@
 package com.moggot.commonalarmclock.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,7 @@ import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +42,6 @@ public class FragmentMath extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alarm_math, container, false);
 
-
         tvExample = (TextView) view.findViewById(R.id.tvMathExample);
         etResult = (EditText) view.findViewById(R.id.etResult);
         etResult.requestFocus();
@@ -49,39 +49,36 @@ public class FragmentMath extends Fragment {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         formExample();
 
-
         final long id = getArguments().getLong(Consts.EXTRA_ID);
+        DataBase db = new DataBase(getActivity());
+        final Alarm alarm = db.getAlarm(id);
+        Log.v(LOG_TAG, "getTimeInMillis = " + alarm.getTimeInMillis());
+        Calendar c = Calendar.getInstance();
+        long t = c.getTimeInMillis();
+        Log.v(LOG_TAG, "t = " + t);
 
         Button btnResult = (Button) view.findViewById(R.id.btnResult);
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isCorrect()) {
-                    DataBase db = new DataBase(getActivity().getBaseContext());
-                    Alarm alarm = db.getAlarm(id);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    if (alarm.getIsSnoozeEnable()) {
-                        FragmentSnooze fragmentSnooze = new FragmentSnooze();
-                        ft.replace(R.id.frgmCont, fragmentSnooze);
-                    } else {
-                        FragmentCommon fragmentCommon = new FragmentCommon();
-                        ft.replace(R.id.frgmCont, fragmentCommon);
-                    }
+                if (isResultCorrect()) {
 
+
+                    FragmentCreator creator = new FragmentCreator(getActivity());
+                    creator.replaceFragment(alarm);
 
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(etResult.getWindowToken(), 0);
-                    ft.commit();
                 } else
-                    incorrectAnswer();
+                    incorrectResult();
             }
         });
 
         return view;
     }
 
-    private void incorrectAnswer() {
-        Toast.makeText(getActivity().getBaseContext(), R.string.incorrect_unswer, Toast.LENGTH_SHORT).show();
+    private void incorrectResult() {
+        Toast.makeText(getActivity(), R.string.incorrect_result, Toast.LENGTH_SHORT).show();
     }
 
     private void formExample() {
@@ -96,8 +93,10 @@ public class FragmentMath extends Fragment {
         tvExample.setText(example);
     }
 
-    private boolean isCorrect() {
+    private boolean isResultCorrect() {
         final String result = etResult.getText().toString();
+        if (result.isEmpty())
+            return false;
         int sum = firstNum + secondNum;
         return (Integer.valueOf(result) == sum);
     }

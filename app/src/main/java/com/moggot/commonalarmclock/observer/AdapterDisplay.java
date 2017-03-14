@@ -1,7 +1,6 @@
 package com.moggot.commonalarmclock.observer;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,11 +22,11 @@ public class AdapterDisplay implements Observer {
 
     private Alarm alarm;
     private View view;
-    private Context ctx;
+    private Context context;
 
-    public AdapterDisplay(Context ctx, View view, AlarmData alarmData) {
+    public AdapterDisplay(Context context, View view, AlarmData alarmData) {
         this.view = view;
-        this.ctx = ctx;
+        this.context = context;
         alarmData.registerObserver(this);
     }
 
@@ -68,8 +67,8 @@ public class AdapterDisplay implements Observer {
     }
 
     private void displayDays() {
-        Log.v(LOG_TAG, "days_adapter = " + alarm.getDays());
-        ((TextView) view.findViewById(R.id.tvAdapterDays)).setText(Conversion.getDaysAsString(ctx, alarm.getDays()));
+//        Log.v(LOG_TAG, "days_adapter = " + alarm.getDays());
+        ((TextView) view.findViewById(R.id.tvAdapterDays)).setText(Conversion.getDaysAsString(context, alarm.getIDs()));
     }
 
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -83,13 +84,19 @@ public class SettingsDisplay implements Observer {
     }
 
     private void displayDays() {
-        Log.v(LOG_TAG, "days_settings = " + alarm.getDays());
-        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
-            int key = tbDaysOfWeek.keyAt(i);
-            int temp = alarm.getDays() & tbDaysOfWeek.get(key);
-            int t_temp = temp ^ tbDaysOfWeek.get(key);
-            ((ToggleButton) activity.findViewById(key))
-                    .setChecked((temp > 0 && t_temp == 0));
+        SparseIntArray ids = alarm.getIDs();
+        for (int requestCode = 0; requestCode < ids.size(); ++requestCode) {
+            for (int btnID = 0; btnID < tbDaysOfWeek.size(); ++btnID) {
+                int key = tbDaysOfWeek.keyAt(btnID);
+                if (ids.keyAt(requestCode) == tbDaysOfWeek.get(key))
+                    ((ToggleButton) activity.findViewById(key))
+                    .setChecked(true);
+            }
+//            int key = tbDaysOfWeek.keyAt(i);
+//            int temp = alarm.getDays() & tbDaysOfWeek.get(key);
+//            int t_temp = temp ^ tbDaysOfWeek.get(key);
+//            ((ToggleButton) activity.findViewById(key))
+//                    .setChecked((temp > 0 && t_temp == 0));
         }
     }
 

@@ -17,14 +17,14 @@ public class SingleAlarm implements AlarmType {
 
     public void setAlarm(AlarmContext alarmContext) {
         Alarm alarm = alarmContext.getAlarm();
-        long alarmPeriod = alarm.getDate().getTime();
+        long alarmPeriod = alarm.getTimeInMillis();
         Calendar calendar = Calendar.getInstance();
         while (alarmPeriod < calendar.getTimeInMillis())
             alarmPeriod += AlarmManager.INTERVAL_DAY;
         Context context = alarmContext.getActivityContext();
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-        PendingIntent pi = PendingIntent.getBroadcast(context, alarm.getIDsList().get(0), intent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, alarm.getIDs().valueAt(0), intent, 0);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, alarmPeriod, pi);
     }
@@ -34,7 +34,7 @@ public class SingleAlarm implements AlarmType {
         Alarm alarm = alarmContext.getAlarm();
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarm.getIDsList().get(0),
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarm.getIDs().valueAt(0),
                 intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);

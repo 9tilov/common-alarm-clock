@@ -123,6 +123,9 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
                         .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Alarm alarm = getItem(position);
+                                AlarmContext alarmContext = new AlarmContext(alarm, context);
+                                AlarmManager alarmManager = new AlarmManager();
+                                alarmManager.cancelAlarm(alarmContext);
                                 db.deleteAlarm(alarm);
                                 alarms.remove(position);
                                 update(alarms);

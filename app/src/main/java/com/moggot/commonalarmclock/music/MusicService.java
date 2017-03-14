@@ -26,6 +26,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private boolean isServiceStopped = false;
 
     public int onStartCommand(Intent intent, int flags, int startID) {
+
         Consts.MUSIC_TYPE type = Consts.MUSIC_TYPE.fromInteger(intent.getIntExtra(Consts.EXTRA_TYPE, Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType()));
         String path = intent.getStringExtra(Consts.EXTRA_PATH);
 
@@ -92,7 +93,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     private void internetUnavailable() {
-        Toast.makeText(getApplicationContext(),
+        Toast.makeText(this,
                 R.string.no_internet_connection,
                 Toast.LENGTH_SHORT).show();
     }

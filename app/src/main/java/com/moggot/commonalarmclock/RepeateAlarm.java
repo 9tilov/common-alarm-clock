@@ -4,10 +4,12 @@ import android.app.*;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.SparseIntArray;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,17 +24,18 @@ public class RepeateAlarm implements AlarmType {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        List<Integer> ids = alarm.getIDsList();
-        for (Integer id : ids) {
-            PendingIntent pi = PendingIntent.getBroadcast(context, id, intent, 0);
-            long alarmPeriod = alarm.getDate().getTime();
+        intent.putExtra(Consts.EXTRA_ID, alarm.getId());
+        SparseIntArray ids = alarm.getIDs();
+
+        for (int i = 0; i < ids.size(); ++i) {
+            PendingIntent pi = PendingIntent.getBroadcast(context, ids.valueAt(i), intent, 0);
+            long alarmPeriod = alarm.getTimeInMillis();
             Calendar calendar = Calendar.getInstance();
             while (alarmPeriod < calendar.getTimeInMillis())
                 alarmPeriod += 7 * AlarmManager.INTERVAL_DAY;
             am.setRepeating(AlarmManager.RTC_WAKEUP, alarmPeriod,
                     7 * android.app.AlarmManager.INTERVAL_DAY, pi);
         }
-
     }
 
     public void cancelAlarm(AlarmContext alarmContext) {
@@ -41,9 +44,9 @@ public class RepeateAlarm implements AlarmType {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        List<Integer> ids = alarm.getIDsList();
-        for (Integer id : ids) {
-            PendingIntent pi = PendingIntent.getBroadcast(context, id, intent, 0);
+        SparseIntArray ids = alarm.getIDs();
+        for (int i = 0; i < ids.size(); ++i) {
+            PendingIntent pi = PendingIntent.getBroadcast(context, ids.valueAt(i), intent, 0);
             am.cancel(pi);
         }
     }

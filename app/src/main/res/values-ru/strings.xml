@@ -29,7 +29,7 @@
     <string name="music_file">Файл</string>
     <string name="default_ringtones">Рингтоны</string>
     <string name="time_difference">Будильник прозвенит через</string>
-    <string name="incorrect_unswer">Неправильный ответ</string>
+    <string name="incorrect_result">Неправильный ответ</string>
 
     <string name="not_music_file">Это не музыкальный файл</string>
 

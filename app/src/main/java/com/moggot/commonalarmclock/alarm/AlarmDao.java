@@ -26,13 +26,12 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
         public final static Property RequestCodes = new Property(2, String.class, "requestCodes", false, "REQUEST_CODES");
-        public final static Property Days = new Property(3, int.class, "days", false, "DAYS");
-        public final static Property IsSnoozeEnable = new Property(4, Boolean.class, "isSnoozeEnable", false, "IS_SNOOZE_ENABLE");
-        public final static Property IsMathEnable = new Property(5, Boolean.class, "isMathEnable", false, "IS_MATH_ENABLE");
-        public final static Property Name = new Property(6, String.class, "name", false, "NAME");
-        public final static Property MusicPath = new Property(7, String.class, "musicPath", false, "MUSIC_PATH");
-        public final static Property MusicType = new Property(8, Integer.class, "musicType", false, "MUSIC_TYPE");
-        public final static Property State = new Property(9, Boolean.class, "state", false, "STATE");
+        public final static Property IsSnoozeEnable = new Property(3, Boolean.class, "isSnoozeEnable", false, "IS_SNOOZE_ENABLE");
+        public final static Property IsMathEnable = new Property(4, Boolean.class, "isMathEnable", false, "IS_MATH_ENABLE");
+        public final static Property Name = new Property(5, String.class, "name", false, "NAME");
+        public final static Property MusicPath = new Property(6, String.class, "musicPath", false, "MUSIC_PATH");
+        public final static Property MusicType = new Property(7, int.class, "musicType", false, "MUSIC_TYPE");
+        public final static Property State = new Property(8, boolean.class, "state", false, "STATE");
     };
 
 
@@ -51,13 +50,12 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"DATE\" INTEGER NOT NULL ," + // 1: date
                 "\"REQUEST_CODES\" TEXT NOT NULL ," + // 2: requestCodes
-                "\"DAYS\" INTEGER NOT NULL ," + // 3: days
-                "\"IS_SNOOZE_ENABLE\" INTEGER," + // 4: isSnoozeEnable
-                "\"IS_MATH_ENABLE\" INTEGER," + // 5: isMathEnable
-                "\"NAME\" TEXT," + // 6: name
-                "\"MUSIC_PATH\" TEXT," + // 7: musicPath
-                "\"MUSIC_TYPE\" INTEGER," + // 8: musicType
-                "\"STATE\" INTEGER);"); // 9: state
+                "\"IS_SNOOZE_ENABLE\" INTEGER," + // 3: isSnoozeEnable
+                "\"IS_MATH_ENABLE\" INTEGER," + // 4: isMathEnable
+                "\"NAME\" TEXT," + // 5: name
+                "\"MUSIC_PATH\" TEXT NOT NULL ," + // 6: musicPath
+                "\"MUSIC_TYPE\" INTEGER NOT NULL ," + // 7: musicType
+                "\"STATE\" INTEGER NOT NULL );"); // 8: state
     }
 
     /** Drops the underlying database table. */
@@ -77,37 +75,24 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
         }
         stmt.bindLong(2, entity.getDate().getTime());
         stmt.bindString(3, entity.getRequestCodes());
-        stmt.bindLong(4, entity.getDays());
  
         Boolean isSnoozeEnable = entity.getIsSnoozeEnable();
         if (isSnoozeEnable != null) {
-            stmt.bindLong(5, isSnoozeEnable ? 1L: 0L);
+            stmt.bindLong(4, isSnoozeEnable ? 1L: 0L);
         }
  
         Boolean isMathEnable = entity.getIsMathEnable();
         if (isMathEnable != null) {
-            stmt.bindLong(6, isMathEnable ? 1L: 0L);
+            stmt.bindLong(5, isMathEnable ? 1L: 0L);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(7, name);
+            stmt.bindString(6, name);
         }
- 
-        String musicPath = entity.getMusicPath();
-        if (musicPath != null) {
-            stmt.bindString(8, musicPath);
-        }
- 
-        Integer musicType = entity.getMusicType();
-        if (musicType != null) {
-            stmt.bindLong(9, musicType);
-        }
- 
-        Boolean state = entity.getState();
-        if (state != null) {
-            stmt.bindLong(10, state ? 1L: 0L);
-        }
+        stmt.bindString(7, entity.getMusicPath());
+        stmt.bindLong(8, entity.getMusicType());
+        stmt.bindLong(9, entity.getState() ? 1L: 0L);
     }
 
     /** @inheritdoc */
@@ -123,13 +108,12 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             new java.util.Date(cursor.getLong(offset + 1)), // date
             cursor.getString(offset + 2), // requestCodes
-            cursor.getInt(offset + 3), // days
-            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0, // isSnoozeEnable
-            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0, // isMathEnable
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // name
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // musicPath
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // musicType
-            cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0 // state
+            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // isSnoozeEnable
+            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0, // isMathEnable
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // name
+            cursor.getString(offset + 6), // musicPath
+            cursor.getInt(offset + 7), // musicType
+            cursor.getShort(offset + 8) != 0 // state
         );
         return entity;
     }
@@ -140,13 +124,12 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setDate(new java.util.Date(cursor.getLong(offset + 1)));
         entity.setRequestCodes(cursor.getString(offset + 2));
-        entity.setDays(cursor.getInt(offset + 3));
-        entity.setIsSnoozeEnable(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
-        entity.setIsMathEnable(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
-        entity.setName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setMusicPath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setMusicType(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-        entity.setState(cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0);
+        entity.setIsSnoozeEnable(cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0);
+        entity.setIsMathEnable(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
+        entity.setName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setMusicPath(cursor.getString(offset + 6));
+        entity.setMusicType(cursor.getInt(offset + 7));
+        entity.setState(cursor.getShort(offset + 8) != 0);
      }
     
     /** @inheritdoc */

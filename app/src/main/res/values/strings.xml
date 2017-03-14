@@ -37,7 +37,7 @@
     <string name="music_file">Music file</string>
     <string name="default_ringtones">Default ringtones</string>
     <string name="time_difference">Alarm will ring after</string>
-    <string name="incorrect_unswer">Incorrect unswer</string>
+    <string name="incorrect_result">Incorrect answer</string>
 
     <string name="not_music_file">It\'s not a music file</string>
 

@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -35,10 +36,8 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by toor on 06.03.17.
@@ -103,6 +102,8 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         else
             alarm = db.getAlarm(id);
 
+        Log.v(LOG_TAG, "id_load = " + alarm.getIDs());
+
         final AlarmData alarmData = new AlarmData();
         SettingsDisplay settingsDisplay = new SettingsDisplay(this, alarmData);
         alarmData.setAlarm(alarm);
@@ -113,9 +114,16 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
             public void onClick(View view) {
                 if (id == 0)
                     db.addAlarm(alarm);
-                else
+                else {
+                    Alarm loadedAlarm = db.getAlarm(id);
+                    if (!compareDays(loadedAlarm.getIDs(), alarm.getIDs())) {
+                        AlarmContext alarmContext = new AlarmContext(loadedAlarm, ActivitySettings.this);
+                        AlarmManager alarmManager = new AlarmManager();
+                        alarmManager.cancelAlarm(alarmContext);
+                    }
                     db.editAlarm(alarm);
-                AlarmContext alarmContext = new AlarmContext(alarm, getBaseContext());
+                }
+                AlarmContext alarmContext = new AlarmContext(alarm, ActivitySettings.this);
                 AlarmManager alarmManager = new AlarmManager();
                 alarmManager.setAlarm(alarmContext);
                 finish();
@@ -148,21 +156,29 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
     public void onClick(View v) {
         boolean on = ((ToggleButton) v).isChecked();
-        int days = alarm.getDays();
+        SparseIntArray ids = alarm.getIDs();
         if (on) {
-            days = days | tbDaysOfWeek.get(v.getId());
+            if (ids.get(Consts.DAYS.TOMORROW.getCode()) != 0)
+                ids.clear();
+            int requestCode = db.getRandomRequestCode();
+            ids.put(tbDaysOfWeek.get(v.getId()), requestCode);
         } else {
-            days = days & ~tbDaysOfWeek.get(v.getId());
+            ids.delete(tbDaysOfWeek.get(v.getId()));
         }
 
-        alarm.setDays(days);
+        if (ids.size() == 0)
+            ids.put(Consts.DAYS.TOMORROW.getCode(), db.getRandomRequestCode());
 
-        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
-            int temp = days & tbDaysOfWeek.get(tbDaysOfWeek.keyAt(i));
-            int t_temp = temp ^ tbDaysOfWeek.get(tbDaysOfWeek.keyAt(i));
-            ((ToggleButton) findViewById(tbDaysOfWeek.keyAt(i)))
-                    .setChecked(temp > 0 && t_temp == 0);
-        }
+        alarm.setIDs(ids);
+        Log.v(LOG_TAG, "ids = " + ids);
+
+
+//        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
+//            int temp = days & tbDaysOfWeek.get(tbDaysOfWeek.keyAt(i));
+//            int t_temp = temp ^ tbDaysOfWeek.get(tbDaysOfWeek.keyAt(i));
+//            ((ToggleButton) findViewById(tbDaysOfWeek.keyAt(i)))
+//                    .setChecked(temp > 0 && t_temp == 0);
+//        }
     }
 
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
@@ -266,10 +282,12 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         Calendar calendar = Calendar.getInstance();
         Date date = new Date(calendar.getTimeInMillis());
 
-        List<Integer> requestCodes = new ArrayList<>();
-        requestCodes.add(db.getRandomRequestCode());
-        String requestCodesStr = new Gson().toJson(requestCodes);
+        SparseIntArray ids = new SparseIntArray();
         Consts.DAYS days = Consts.DAYS.TOMORROW;
+        int requstCode = db.getRandomRequestCode();
+        Log.v(LOG_TAG, "id = " + requstCode);
+        ids.put(days.getCode(), requstCode);
+        String requestCodesStr = new Gson().toJson(ids);
 
         int musicType;
         String path;
@@ -281,9 +299,8 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
             path = Consts.DATA_DEFAULT_RINGTONE;
         }
 
-        return new Alarm(null, date, requestCodesStr, days.getCode(),
-                checkBoxSnooze.isChecked(), checkBoxMath.isChecked(), "", path,
-                musicType, true);
+        return new Alarm(null, date, requestCodesStr, checkBoxSnooze.isChecked(),
+                checkBoxMath.isChecked(), "", path, musicType, true);
     }
 
     private static String pad(int c) {
@@ -331,6 +348,39 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         }
     }
 
+    private static boolean compareDays(SparseIntArray first, SparseIntArray second) {
+        // compare null
+        if (first == null) {
+            return (second == null);
+        }
+        if (second == null) {
+            return false;
+        }
+
+        // compare count
+        int count = first.size();
+        if (second.size() != count) {
+            return false;
+        }
+
+        // for each pair
+        for (int index = 0; index < count; ++index) {
+            // compare key
+            int key = first.keyAt(index);
+            if (key != second.keyAt(index)) {
+                return false;
+            }
+
+            // compare value
+            int value = first.valueAt(index);
+            if (second.valueAt(index) != value) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -339,12 +389,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
     private void notMusicFile() {
         Toast.makeText(this, R.string.not_music_file,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    private void internetUnavailable() {
-        Toast.makeText(getApplicationContext(),
-                R.string.no_internet_connection,
                 Toast.LENGTH_SHORT).show();
     }
 

@@ -4,38 +4,36 @@ package com.moggot.commonalarmclock.alarm;
 
 // KEEP INCLUDES - put your custom includes here
 
+import android.util.SparseIntArray;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moggot.commonalarmclock.Consts;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.lang.reflect.Type;
 import java.util.concurrent.CancellationException;
 // KEEP INCLUDES END
-
 /**
  * Entity mapped to table "ALARM".
  */
 public class Alarm {
 
     private Long id;
-    /**
-     * Not-null value.
-     */
+    /** Not-null value. */
     private java.util.Date date;
-    /**
-     * Not-null value.
-     */
+    /** Not-null value. */
     private String requestCodes;
-    private int days;
     private Boolean isSnoozeEnable;
     private Boolean isMathEnable;
     private String name;
+    /** Not-null value. */
     private String musicPath;
-    private Integer musicType;
-    private Boolean state;
+    private int musicType;
+    private boolean state;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -47,11 +45,10 @@ public class Alarm {
         this.id = id;
     }
 
-    public Alarm(Long id, java.util.Date date, String requestCodes, int days, Boolean isSnoozeEnable, Boolean isMathEnable, String name, String musicPath, Integer musicType, Boolean state) {
+    public Alarm(Long id, java.util.Date date, String requestCodes, Boolean isSnoozeEnable, Boolean isMathEnable, String name, String musicPath, int musicType, boolean state) {
         this.id = id;
         this.date = date;
         this.requestCodes = requestCodes;
-        this.days = days;
         this.isSnoozeEnable = isSnoozeEnable;
         this.isMathEnable = isMathEnable;
         this.name = name;
@@ -68,40 +65,24 @@ public class Alarm {
         this.id = id;
     }
 
-    /**
-     * Not-null value.
-     */
+    /** Not-null value. */
     public java.util.Date getDate() {
         return date;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setDate(java.util.Date date) {
         this.date = date;
     }
 
-    /**
-     * Not-null value.
-     */
+    /** Not-null value. */
     public String getRequestCodes() {
         return requestCodes;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setRequestCodes(String requestCodes) {
         this.requestCodes = requestCodes;
-    }
-
-    public int getDays() {
-        return days;
-    }
-
-    public void setDays(int days) {
-        this.days = days;
     }
 
     public Boolean getIsSnoozeEnable() {
@@ -128,27 +109,29 @@ public class Alarm {
         this.name = name;
     }
 
+    /** Not-null value. */
     public String getMusicPath() {
         return musicPath;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setMusicPath(String musicPath) {
         this.musicPath = musicPath;
     }
 
-    public Integer getMusicType() {
+    public int getMusicType() {
         return musicType;
     }
 
-    public void setMusicType(Integer musicType) {
+    public void setMusicType(int musicType) {
         this.musicType = musicType;
     }
 
-    public Boolean getState() {
+    public boolean getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 
@@ -159,13 +142,13 @@ public class Alarm {
         this.musicPath = musicPath;
     }
 
-    public List<Integer> getIDsList() {
-        Type type = new TypeToken<ArrayList<Integer>>() {
+    public SparseIntArray getIDs() {
+        Type type = new TypeToken<SparseIntArray>() {
         }.getType();
         return new Gson().fromJson(getRequestCodes(), type);
     }
 
-    public void setIDsList(List<Integer> ids) {
+    public void setIDs(SparseIntArray ids) {
         this.requestCodes = new Gson().toJson(ids);
     }
 
@@ -190,7 +173,6 @@ public class Alarm {
     public Consts.MUSIC_TYPE getMusicTypeEnum() {
         return Consts.MUSIC_TYPE.fromInteger(musicType);
     }
-
     // KEEP METHODS END
 
 }

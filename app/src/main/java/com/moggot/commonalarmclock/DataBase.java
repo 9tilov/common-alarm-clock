@@ -2,6 +2,7 @@ package com.moggot.commonalarmclock;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -64,11 +65,11 @@ public class DataBase {
         HashSet<Integer> unique = new HashSet<>();
         List<Alarm> alarms = getAllAlarms();
         for (Alarm alarm:alarms) {
-            Type type = new TypeToken<ArrayList<Integer>>() {
+            Type type = new TypeToken<SparseIntArray>() {
             }.getType();
-            List<Integer> ids = new Gson().fromJson(alarm.getRequestCodes(), type);
-            for (Integer ID : ids) {
-                unique.add(ID);
+            SparseIntArray ids = new Gson().fromJson(alarm.getRequestCodes(), type);
+            for (int i = 0; i < ids.size(); ++i) {
+                unique.add(ids.valueAt(i));
             }
         }
         Random rnd = new Random();

@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/CommonAlarmClock.iml" filepath="$PROJECT_DIR$/CommonAlarmClock.iml" />
       <module fileurl="file://$PROJECT_DIR$/aFileChooser/aFileChooser.iml" filepath="$PROJECT_DIR$/aFileChooser/aFileChooser.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common-alarm-clock.iml" filepath="$PROJECT_DIR$/common-alarm-clock.iml" />
       <module fileurl="file://$PROJECT_DIR$/greendao_gen/greendao_gen.iml" filepath="$PROJECT_DIR$/greendao_gen/greendao_gen.iml" />
     </modules>
   </component>

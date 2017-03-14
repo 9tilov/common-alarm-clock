@@ -31,7 +31,6 @@ public class MainGenerator {
         alarm.addIdProperty().primaryKey().autoincrement();
         alarm.addDateProperty("date").notNull();
         alarm.addStringProperty("requestCodes").notNull();
-        alarm.addIntProperty("days").notNull();
         alarm.addBooleanProperty("isSnoozeEnable");
         alarm.addBooleanProperty("isMathEnable");
         alarm.addStringProperty("name");
