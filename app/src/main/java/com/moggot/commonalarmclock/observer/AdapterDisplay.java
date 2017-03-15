@@ -80,13 +80,13 @@ public class AdapterDisplay implements Observer {
 
         switch (alarm.getMusicTypeEnum()) {
             case RADIO:
-                ((ImageView) view.findViewById(R.id.ivAdapterMusicType)).setImageResource(R.drawable.ic_radio_black_24px);
+                ((ImageView) view.findViewById(R.id.ivAdapterMusicType)).setImageResource(R.drawable.ic_radio);
                 break;
             case DEFAULT_RINGTONE:
-                ((ImageView) view.findViewById(R.id.ivAdapterMusicType)).setImageResource(R.drawable.ic_music_note_black_24px);
+                ((ImageView) view.findViewById(R.id.ivAdapterMusicType)).setImageResource(R.drawable.ic_note);
                 break;
             case MUSIC_FILE:
-                ((ImageView) view.findViewById(R.id.ivAdapterMusicType)).setImageResource(R.drawable.ic_library_music_black_24px);
+                ((ImageView) view.findViewById(R.id.ivAdapterMusicType)).setImageResource(R.drawable.ic_music_file);
                 break;
         }
     }
@@ -98,12 +98,12 @@ public class AdapterDisplay implements Observer {
     private void displayAlarmType() {
         if (alarm.getIsSnoozeEnable()) {
             view.findViewById(R.id.ivAdapterSnooze).setVisibility(View.VISIBLE);
-            ((ImageView) view.findViewById(R.id.ivAdapterSnooze)).setImageResource(R.drawable.ic_snooze_black_24px);
+            ((ImageView) view.findViewById(R.id.ivAdapterSnooze)).setImageResource(R.drawable.ic_snooze);
         } else
             view.findViewById(R.id.ivAdapterSnooze).setVisibility(View.GONE);
         if (alarm.getIsMathEnable()) {
             view.findViewById(R.id.ivAdapterMath).setVisibility(View.VISIBLE);
-            ((ImageView) view.findViewById(R.id.ivAdapterMath)).setImageResource(R.drawable.ic_functions_black_24px);
+            ((ImageView) view.findViewById(R.id.ivAdapterMath)).setImageResource(R.drawable.ic_function);
         } else
             view.findViewById(R.id.ivAdapterMath).setVisibility(View.GONE);
     }

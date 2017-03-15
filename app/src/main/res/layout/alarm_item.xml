@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:weightSum="13">
 
-
         <TextView
             android:id="@+id/tvAdapterTime"
             style="@style/TextAdapterTime"
@@ -58,9 +57,11 @@
 
                 <ImageView
                     android:id="@+id/ivAdapterMusicType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_radio_black_24px"
+                    android:layout_width="@dimen/btn_alarm_type"
+                    android:layout_height="@dimen/btn_alarm_type"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_radio"
                     android:visibility="invisible" />
             </RelativeLayout>
 
@@ -72,9 +73,11 @@
 
                 <ImageView
                     android:id="@+id/ivAdapterSnooze"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_snooze_black_24px"
+                    android:layout_width="@dimen/btn_alarm_type"
+                    android:layout_height="@dimen/btn_alarm_type"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_snooze"
                     android:visibility="invisible" />
             </RelativeLayout>
 
@@ -86,9 +89,11 @@
 
                 <ImageView
                     android:id="@+id/ivAdapterMath"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_functions_black_24px"
+                    android:layout_width="@dimen/btn_alarm_type"
+                    android:layout_height="@dimen/btn_alarm_type"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_function"
                     android:visibility="invisible" />
             </RelativeLayout>
         </LinearLayout>

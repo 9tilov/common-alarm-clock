@@ -24,4 +24,5 @@
     <dimen name="ok_btn_size">50dip</dimen>
     <dimen name="btn_music_icons">40dip</dimen>
     <dimen name="btn_delete">30dip</dimen>
+    <dimen name="btn_alarm_type">20dip</dimen>
 </resources>
