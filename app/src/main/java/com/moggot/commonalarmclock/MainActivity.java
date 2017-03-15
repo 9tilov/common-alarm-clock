@@ -1,14 +1,18 @@
 package com.moggot.commonalarmclock;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.animation.AddAlarmAnimation;
-import com.moggot.commonalarmclock.animation.Animation;
+import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
+import com.moggot.commonalarmclock.animation.AnimationBounce;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
         updateListView();
 
+        Intent intent = new Intent(this, ActivitySettings.class);
+        startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
+
     }
 
     public void onClickAdd(View view) {
-        Animation animation = new AddAlarmAnimation(this);
+        AnimationBounce animation = new AddAlarmAnimationBounce(this);
         animation.animate(view);
     }
 

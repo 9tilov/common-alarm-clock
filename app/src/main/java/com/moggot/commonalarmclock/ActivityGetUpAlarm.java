@@ -28,8 +28,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_up_alarm);
 
-        Log.v(LOG_TAG, "start");
-
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
@@ -37,15 +35,12 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
 
         Intent intent = getIntent();
         long id = intent.getLongExtra(Consts.EXTRA_ID, 0);
+        Log.v(LOG_TAG, "id = " + id);
         if (id == 0)
             return;
 
         DataBase db = new DataBase(this);
         alarm = db.getAlarm(id);
-
-        Calendar calendar = Calendar.getInstance();
-        Log.v(LOG_TAG, "alarmPeriod = " + alarm.getTimeInMillis());
-        Log.v(LOG_TAG, "calendar = " + calendar.getTimeInMillis());
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         long[] once = {0, 500, 500};
@@ -64,7 +59,21 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v(LOG_TAG, "onPause1");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.v(LOG_TAG, "onStop1");
+    }
+
+    @Override
     public void onDestroy() {
+        Log.v(LOG_TAG, "onDestroy1");
         super.onDestroy();
         vibrator.cancel();
         Intent intent = new Intent(this, MusicService.class);

@@ -10,12 +10,12 @@ import com.moggot.commonalarmclock.R;
  * Created by toor on 15.03.17.
  */
 
-public abstract class Animation {
+public abstract class AnimationBounce {
 
     protected Context context;
     protected final android.view.animation.Animation animation;
 
-    public Animation(Context context) {
+    public AnimationBounce(Context context) {
         this.context = context;
         this.animation = AnimationUtils.loadAnimation(context, R.anim.bounce);
         double animationDuration = 0.5 * 1000;

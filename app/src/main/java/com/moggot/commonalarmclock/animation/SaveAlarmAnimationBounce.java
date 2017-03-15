@@ -1,21 +1,15 @@
 package com.moggot.commonalarmclock.animation;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-
-import com.ipaulpro.afilechooser.utils.FileUtils;
-import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.R;
 
 /**
  * Created by toor on 15.03.17.
  */
 
-public class MusicFileAnimation extends Animation {
+public class SaveAlarmAnimationBounce extends AnimationBounce {
 
-    public MusicFileAnimation(Context context) {
+    public SaveAlarmAnimationBounce(Context context) {
         super(context);
     }
 
@@ -32,18 +26,8 @@ public class MusicFileAnimation extends Animation {
 
             @Override
             public void onAnimationEnd(android.view.animation.Animation arg0) {
-                showChooser();
+                ((Activity) context).finish();
             }
         });
     }
-
-    private void showChooser() {
-        Intent target = FileUtils.createGetContentIntent();
-        Intent intent = Intent.createChooser(target, context.getString(R.string.app_name));
-        try {
-            ((Activity)context).startActivityForResult(intent, Consts.REQUEST_CODE_FILE_CHOSER);
-        } catch (ActivityNotFoundException e) {
-        }
-    }
-
 }

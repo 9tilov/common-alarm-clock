@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.moggot.commonalarmclock.animation.Animation;
-import com.moggot.commonalarmclock.animation.DeleteAlarmAnimation;
+import com.moggot.commonalarmclock.animation.AnimationBounce;
+import com.moggot.commonalarmclock.animation.DeleteAlarmAnimationBounce;
 import com.moggot.commonalarmclock.observer.AdapterDisplay;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.alarm.Alarm;
@@ -61,6 +62,8 @@ public class AlarmAdapter extends BaseAdapter {
     // элемент по позиции
     @Override
     public Alarm getItem(int position) {
+        Log.v(LOG_TAG, "position = " + position);
+        Log.v(LOG_TAG, "alarms = " + alarms);
         return alarms.get(position);
     }
 
@@ -134,8 +137,8 @@ public class AlarmAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                Animation animation = new DeleteAlarmAnimation(context);
-                animation.animate(view);
+                AnimationBounce animationBounce = new DeleteAlarmAnimationBounce(context);
+                animationBounce.animate(view);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setTitle(context.getString(R.string.dialog_title_remove));
                 alertDialogBuilder

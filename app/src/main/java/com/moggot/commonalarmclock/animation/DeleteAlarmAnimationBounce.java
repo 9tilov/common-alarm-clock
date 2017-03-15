@@ -6,9 +6,9 @@ import android.content.Context;
  * Created by toor on 15.03.17.
  */
 
-public class RadioAnimation extends Animation {
+public class DeleteAlarmAnimationBounce extends AnimationBounce {
 
-    public RadioAnimation(Context context) {
+    public DeleteAlarmAnimationBounce(Context context) {
         super(context);
     }
 

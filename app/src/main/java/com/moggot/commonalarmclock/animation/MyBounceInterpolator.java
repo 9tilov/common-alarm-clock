@@ -1,7 +1,7 @@
 package com.moggot.commonalarmclock.animation;
 
 //
-// Interpolator to be used with Android view AddAlarmAnimation class to achieve the spring-bounce effect.
+// Interpolator to be used with Android view AddAlarmAnimationBounce class to achieve the spring-bounce effect.
 //
 // License: MIT
 // Source: http://evgenii.com/blog/spring-button-animation-on-android/
@@ -10,7 +10,7 @@ package com.moggot.commonalarmclock.animation;
 // ------------
 //
 //    // Load animation
-//    final AddAlarmAnimation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+//    final AddAlarmAnimationBounce myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 //    double animationDuration = getDurationValue() * 1000;
 //
 //    // Create interpolator with the amplitude 0.2 and frequency 20

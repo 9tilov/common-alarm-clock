@@ -3,18 +3,17 @@ package com.moggot.commonalarmclock.animation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 
+import com.moggot.commonalarmclock.ActivitySettings;
 import com.moggot.commonalarmclock.Consts;
 
 /**
  * Created by toor on 15.03.17.
  */
 
-public class RingtoneAnimation extends Animation {
+public class AddAlarmAnimationBounce extends AnimationBounce {
 
-    public RingtoneAnimation(Context context) {
+    public AddAlarmAnimationBounce(Context context) {
         super(context);
     }
 
@@ -31,17 +30,9 @@ public class RingtoneAnimation extends Animation {
 
             @Override
             public void onAnimationEnd(android.view.animation.Animation arg0) {
-                showRingtones();
+                Intent intent = new Intent(context, ActivitySettings.class);
+                ((Activity) context).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
             }
         });
     }
-
-    private void showRingtones() {
-        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-        ((Activity)context).startActivityForResult(intent, Consts.REQUEST_CODE_DEFAULT_RINGTONE);
-    }
-
 }

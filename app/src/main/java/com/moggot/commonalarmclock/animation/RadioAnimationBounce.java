@@ -1,15 +1,14 @@
 package com.moggot.commonalarmclock.animation;
 
-import android.app.Activity;
 import android.content.Context;
 
 /**
  * Created by toor on 15.03.17.
  */
 
-public class SaveAlarmAnimation extends Animation {
+public class RadioAnimationBounce extends AnimationBounce {
 
-    public SaveAlarmAnimation(Context context) {
+    public RadioAnimationBounce(Context context) {
         super(context);
     }
 
@@ -26,7 +25,6 @@ public class SaveAlarmAnimation extends Animation {
 
             @Override
             public void onAnimationEnd(android.view.animation.Animation arg0) {
-                ((Activity) context).finish();
             }
         });
     }

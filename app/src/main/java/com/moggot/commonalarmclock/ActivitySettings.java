@@ -14,6 +14,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,11 +27,11 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
-import com.moggot.commonalarmclock.animation.Animation;
-import com.moggot.commonalarmclock.animation.MusicFileAnimation;
-import com.moggot.commonalarmclock.animation.RadioAnimation;
-import com.moggot.commonalarmclock.animation.RingtoneAnimation;
-import com.moggot.commonalarmclock.animation.SaveAlarmAnimation;
+import com.moggot.commonalarmclock.animation.AnimationBounce;
+import com.moggot.commonalarmclock.animation.MusicFileAnimationBounce;
+import com.moggot.commonalarmclock.animation.RadioAnimationBounce;
+import com.moggot.commonalarmclock.animation.RingtoneAnimationBounce;
+import com.moggot.commonalarmclock.animation.SaveAlarmAnimationBounce;
 import com.moggot.commonalarmclock.music.MusicService;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.observer.SettingsDisplay;
@@ -132,8 +134,8 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
                 Log.v(LOG_TAG, "path = " + alarm.getMusicPath() + "  type = " + alarm.getMusicType());
 
-                Animation animation = new SaveAlarmAnimation(ActivitySettings.this);
-                animation.animate(view);
+                AnimationBounce animationBounce = new SaveAlarmAnimationBounce(ActivitySettings.this);
+                animationBounce.animate(view);
             }
         });
 
@@ -163,6 +165,8 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
     public void onClick(View v) {
         boolean on = ((ToggleButton) v).isChecked();
+        Animation bounce = AnimationUtils.loadAnimation(this, R.anim.toggle_anim);
+        v.startAnimation(bounce);
         SparseIntArray ids = alarm.getIDs();
         if (on) {
             if (ids.get(Consts.TOMORROW) != 0)
@@ -229,8 +233,13 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     btnMusic.setBackgroundResource(R.drawable.ic_music_file);
                     break;
                 case R.id.rbRadio:
-                    btnMusic.setBackgroundResource(R.drawable.ic_radio);
-                    alarm.setMusic(Consts.MUSIC_TYPE.RADIO.getType(), Consts.DATA_RADIO);
+                    if (isNetworkAvailable()) {
+                        btnMusic.setBackgroundResource(R.drawable.ic_radio);
+                        alarm.setMusic(Consts.MUSIC_TYPE.RADIO.getType(), Consts.DATA_RADIO);
+                    } else {
+                        internetUnavailable();
+                        ((RadioButton) rgMusic.getChildAt(alarm.getMusicType())).setChecked(true);
+                    }
                     break;
                 case R.id.rbRingtones:
                     if (isMusicPlaying) {
@@ -247,11 +256,11 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     };
 
     public void onClickMusic(View view) {
-        Animation animation;
+        AnimationBounce animationBounce;
         switch (rgMusic.getCheckedRadioButtonId()) {
             case R.id.rbFile:
-                animation = new MusicFileAnimation(this);
-                animation.animate(view);
+                animationBounce = new MusicFileAnimationBounce(this);
+                animationBounce.animate(view);
                 break;
             case R.id.rbRadio:
                 Intent musicIntent = new Intent(this, MusicService.class);
@@ -267,12 +276,12 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     startService(musicIntent);
                 }
 
-                animation = new RadioAnimation(this);
-                animation.animate(view);
+                animationBounce = new RadioAnimationBounce(this);
+                animationBounce.animate(view);
                 break;
             case R.id.rbRingtones:
-                animation = new RingtoneAnimation(this);
-                animation.animate(view);
+                animationBounce = new RingtoneAnimationBounce(this);
+                animationBounce.animate(view);
                 break;
         }
     }
@@ -387,6 +396,12 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
     private void notMusicFile() {
         Toast.makeText(this, R.string.not_music_file,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void internetUnavailable() {
+        Toast.makeText(this,
+                R.string.no_internet_connection,
                 Toast.LENGTH_SHORT).show();
     }
 
