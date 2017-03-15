@@ -18,7 +18,9 @@
 
     <dimen name="toggle_button_size">100dip</dimen>
 
-    <dimen name="ok_btn_size">100dip</dimen>
+    <dimen name="add_btn_size">100dip</dimen>
+    <dimen name="save_btn_size">100dip</dimen>
     <dimen name="btn_music_icons">80dip</dimen>
-    <dimen name="btn_delete">30dip</dimen>
+    <dimen name="btn_delete">40dip</dimen>
+    <dimen name="icon_alarm_type">30dip</dimen>
 </resources>

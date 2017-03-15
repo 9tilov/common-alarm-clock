@@ -24,11 +24,10 @@
     <string name="stop_alarm">Стоп</string>
     <string name="ok">ОК</string>
     <string name="snooze">Отложить</string>
-    <string name="math">Математический\nпример</string>
+    <string name="math">Математический пример</string>
     <string name="internet_radio">Интернет радио</string>
     <string name="music_file">Файл</string>
     <string name="default_ringtones">Рингтоны</string>
-    <string name="time_difference">Будильник прозвенит через</string>
     <string name="incorrect_result">Неправильный ответ</string>
 
     <string name="not_music_file">Это не музыкальный файл</string>

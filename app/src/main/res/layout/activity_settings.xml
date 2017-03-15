@@ -298,8 +298,8 @@
 
         <Button
             android:id="@+id/btnSaveAlarm"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/save_btn_size"
+            android:layout_height="@dimen/save_btn_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_save"/>

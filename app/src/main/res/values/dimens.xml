@@ -21,8 +21,9 @@
     <dimen name="math_result_btn1">150dip</dimen>
     <dimen name="math_result_btn2">200dip</dimen>
 
-    <dimen name="ok_btn_size">50dip</dimen>
+    <dimen name="add_btn_size">50dip</dimen>
+    <dimen name="save_btn_size">50dip</dimen>
     <dimen name="btn_music_icons">40dip</dimen>
     <dimen name="btn_delete">30dip</dimen>
-    <dimen name="btn_alarm_type">20dip</dimen>
+    <dimen name="icon_alarm_type">20dip</dimen>
 </resources>

@@ -32,11 +32,10 @@
     <string name="stop_alarm">Stop</string>
     <string name="ok">OK</string>
     <string name="snooze">Snooze</string>
-    <string name="math">Math\nexample</string>
+    <string name="math">Math example</string>
     <string name="internet_radio">Internet radio</string>
     <string name="music_file">Music file</string>
     <string name="default_ringtones">Default ringtones</string>
-    <string name="time_difference">Alarm will ring after</string>
     <string name="incorrect_result">Incorrect answer</string>
 
     <string name="not_music_file">It\'s not a music file</string>
