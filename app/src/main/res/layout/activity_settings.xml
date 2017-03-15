@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="100">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollCreateAlarmActivity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="85"
         android:isScrollContainer="false">
 
         <LinearLayout
@@ -265,14 +265,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <ImageView
+                    <Button
                         android:id="@+id/btnMusic"
                         android:layout_width="@dimen/btn_music_icons"
                         android:layout_height="@dimen/btn_music_icons"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:onClick="onClickMusic"
-                        android:src="@drawable/ic_library_music_black_24px" />
+                        android:background="@drawable/ic_radio"/>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -288,7 +288,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1">
+        android:layout_weight="13">
 
         <View
             android:id="@+id/view"
@@ -296,25 +296,13 @@
             android:layout_height="1dp"
             android:background="@color/separator" />
 
-        <ImageView
-            android:id="@+id/ivSaveAlarm"
-            android:layout_width="@dimen/ok_btn_size"
-            android:layout_height="@dimen/ok_btn_size"
-            android:layout_below="@+id/view"
+        <Button
+            android:id="@+id/btnSaveAlarm"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_done_black_24px" />
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_save"/>
     </RelativeLayout>
 
-    <!--<RelativeLayout xmlns:ads="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="0dip"-->
-    <!--android:layout_weight="1">-->
-
-    <!--<com.google.android.gms.ads.AdView-->
-    <!--android:id="@+id/adViewSettings"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--ads:adSize="SMART_BANNER"-->
-    <!--ads:adUnitId="@string/banner_ad_unit_id_settings" />-->
-    <!--</RelativeLayout>-->
 </LinearLayout>

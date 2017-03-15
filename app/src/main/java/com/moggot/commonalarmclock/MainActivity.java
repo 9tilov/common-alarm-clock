@@ -3,11 +3,12 @@ package com.moggot.commonalarmclock;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.animation.AddAlarmAnimation;
+import com.moggot.commonalarmclock.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickAdd(View view) {
-        Intent intent = new Intent(this, ActivitySettings.class);
-        startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
+        Animation animation = new AddAlarmAnimation(this);
+        animation.animate(view);
     }
 
     private void updateListView() {

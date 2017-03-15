@@ -14,7 +14,7 @@
     <dimen name="text_size_adapter_alarm_name">15sp</dimen>
     <dimen name="text_size">15sp</dimen>
 
-    <dimen name="listview_item_height">80sp</dimen>
+    <dimen name="listview_item_height">75sp</dimen>
 
     <dimen name="toggle_button_size">45dip</dimen>
 

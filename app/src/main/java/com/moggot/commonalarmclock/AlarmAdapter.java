@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.moggot.commonalarmclock.animation.Animation;
+import com.moggot.commonalarmclock.animation.DeleteAlarmAnimation;
 import com.moggot.commonalarmclock.observer.AdapterDisplay;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.alarm.Alarm;
@@ -31,7 +34,7 @@ public class AlarmAdapter extends BaseAdapter {
         private TextView tvTime;
         private TextView tvName;
         private ToggleButton tgState;
-        private ImageView ivDelete;
+        private Button ivDelete;
         private ImageView ivMath;
         private ImageView ivSnooze;
         private ImageView ivMusicType;
@@ -89,8 +92,8 @@ public class AlarmAdapter extends BaseAdapter {
         viewHolder.tvDays = (TextView) view.findViewById(R.id.tvAdapterDays);
         viewHolder.tvTime = (TextView) view.findViewById(R.id.tvAdapterTime);
         viewHolder.tvName = (TextView) view.findViewById(R.id.tvAdapterName);
-        viewHolder.ivDelete = (ImageView) view
-                .findViewById(R.id.ivAdapterDelete);
+        viewHolder.ivDelete = (Button) view
+                .findViewById(R.id.btnAdapterDelete);
         viewHolder.ivMath = (ImageView) view
                 .findViewById(R.id.ivAdapterMath);
         viewHolder.ivSnooze = (ImageView) view
@@ -130,6 +133,9 @@ public class AlarmAdapter extends BaseAdapter {
         viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Animation animation = new DeleteAlarmAnimation(context);
+                animation.animate(view);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setTitle(context.getString(R.string.dialog_title_remove));
                 alertDialogBuilder

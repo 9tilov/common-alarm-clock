@@ -1,7 +1,6 @@
 package com.moggot.commonalarmclock;
 
 import android.app.TimePickerDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -15,10 +14,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -26,6 +25,11 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
+import com.moggot.commonalarmclock.animation.Animation;
+import com.moggot.commonalarmclock.animation.MusicFileAnimation;
+import com.moggot.commonalarmclock.animation.RadioAnimation;
+import com.moggot.commonalarmclock.animation.RingtoneAnimation;
+import com.moggot.commonalarmclock.animation.SaveAlarmAnimation;
 import com.moggot.commonalarmclock.music.MusicService;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.observer.SettingsDisplay;
@@ -50,7 +54,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     private SparseIntArray tbDaysOfWeek;
     private CheckBox checkBoxMath, checkBoxSnooze;
     private RadioGroup rgMusic;
-    private ImageView btnMusic;
+    private Button btnMusic;
 
     private Alarm alarm;
     private DataBase db;
@@ -89,9 +93,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         rgMusic = (RadioGroup) findViewById(R.id.rgMusicType);
         rgMusic.setOnCheckedChangeListener(rgListener);
 
-        btnMusic = (ImageView) findViewById(R.id.btnMusic);
+        btnMusic = (Button) findViewById(R.id.btnMusic);
 
-        ImageView btnSave = (ImageView) findViewById(R.id.ivSaveAlarm);
+        Button btnSave = (Button) findViewById(R.id.btnSaveAlarm);
 
         db = new DataBase(this);
 
@@ -125,7 +129,11 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 AlarmContext alarmContext = new AlarmContext(alarm, ActivitySettings.this);
                 AlarmManager alarmManager = new AlarmManager();
                 alarmManager.setAlarm(alarmContext);
-                finish();
+
+                Log.v(LOG_TAG, "path = " + alarm.getMusicPath() + "  type = " + alarm.getMusicType());
+
+                Animation animation = new SaveAlarmAnimation(ActivitySettings.this);
+                animation.animate(view);
             }
         });
 
@@ -213,15 +221,24 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         public void onCheckedChanged(RadioGroup radioGroup, int checkedID) {
             switch (checkedID) {
                 case R.id.rbFile:
-                    btnMusic.setImageResource(R.drawable.ic_library_music_black_24px);
-                    showChooser();
+                    if (isMusicPlaying) {
+                        isMusicPlaying = false;
+                        Intent dummyIntent = new Intent(ActivitySettings.this, MusicService.class);
+                        stopService(dummyIntent);
+                    }
+                    btnMusic.setBackgroundResource(R.drawable.ic_music_file);
                     break;
                 case R.id.rbRadio:
-                    btnMusic.setImageResource(R.drawable.ic_radio_black_24px);
+                    btnMusic.setBackgroundResource(R.drawable.ic_radio);
                     alarm.setMusic(Consts.MUSIC_TYPE.RADIO.getType(), Consts.DATA_RADIO);
                     break;
                 case R.id.rbRingtones:
-                    btnMusic.setImageResource(R.drawable.ic_music_note_black_24px);
+                    if (isMusicPlaying) {
+                        isMusicPlaying = false;
+                        Intent dummyIntent = new Intent(ActivitySettings.this, MusicService.class);
+                        stopService(dummyIntent);
+                    }
+                    btnMusic.setBackgroundResource(R.drawable.ic_note);
                     alarm.setMusic(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType(), Consts.DATA_DEFAULT_RINGTONE);
                     break;
             }
@@ -230,9 +247,11 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     };
 
     public void onClickMusic(View view) {
+        Animation animation;
         switch (rgMusic.getCheckedRadioButtonId()) {
             case R.id.rbFile:
-                showChooser();
+                animation = new MusicFileAnimation(this);
+                animation.animate(view);
                 break;
             case R.id.rbRadio:
                 Intent musicIntent = new Intent(this, MusicService.class);
@@ -240,33 +259,21 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
                 if (isMusicPlaying) {
                     isMusicPlaying = false;
+                    btnMusic.setBackgroundResource(R.drawable.ic_radio);
                     stopService(musicIntent);
                 } else {
                     isMusicPlaying = true;
+                    btnMusic.setBackgroundResource(R.drawable.ic_radio_pressed);
                     startService(musicIntent);
                 }
+
+                animation = new RadioAnimation(this);
+                animation.animate(view);
                 break;
             case R.id.rbRingtones:
-                showRingtones();
+                animation = new RingtoneAnimation(this);
+                animation.animate(view);
                 break;
-        }
-    }
-
-    public void showRingtones() {
-        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-        this.startActivityForResult(intent, Consts.REQUEST_CODE_DEFAULT_RINGTONE);
-    }
-
-    private void showChooser() {
-        Intent target = FileUtils.createGetContentIntent();
-        Intent intent = Intent.createChooser(target,
-                getString(R.string.app_name));
-        try {
-            startActivityForResult(intent, Consts.REQUEST_CODE_FILE_CHOSER);
-        } catch (ActivityNotFoundException e) {
         }
     }
 
@@ -325,7 +332,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                         }
                     }
                 } else {
-                    ((RadioButton) rgMusic.getChildAt(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType())).setChecked(true);
+                    ((RadioButton) rgMusic.getChildAt(alarm.getMusicType())).setChecked(true);
                 }
                 break;
             case Consts.REQUEST_CODE_DEFAULT_RINGTONE:
