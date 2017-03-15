@@ -18,7 +18,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         Log.v(LOG_TAG, "startbroadcts");
         Bundle extras = intent.getExtras();
         long id = extras.getLong(Consts.EXTRA_ID);
-        intent = new Intent(context, ActivityAlarm.class);
+        intent = new Intent(context, ActivityGetUpAlarm.class);
         intent.putExtra(Consts.EXTRA_ID, id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);

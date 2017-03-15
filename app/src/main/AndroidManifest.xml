@@ -37,7 +37,7 @@
             android:enabled="true" />
 
         <activity
-            android:name=".ActivityAlarm"
+            android:name=".ActivityGetUpAlarm"
             android:screenOrientation="portrait" />
     </application>
 

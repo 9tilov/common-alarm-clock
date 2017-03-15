@@ -16,9 +16,9 @@ import com.moggot.commonalarmclock.music.MusicService;
 
 import java.util.Calendar;
 
-public class ActivityAlarm extends AppCompatActivity {
+public class ActivityGetUpAlarm extends AppCompatActivity {
 
-    private static final String LOG_TAG = "ActivityAlarm";
+    private static final String LOG_TAG = "ActivityGetUpAlarm";
 
     private Vibrator vibrator;
     private Alarm alarm;
@@ -26,7 +26,7 @@ public class ActivityAlarm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm);
+        setContentView(R.layout.activity_get_up_alarm);
 
         Log.v(LOG_TAG, "start");
 
@@ -51,7 +51,7 @@ public class ActivityAlarm extends AppCompatActivity {
         long[] once = {0, 500, 500};
         vibrator.vibrate(once, 0);
 
-        Intent musicIntent = new Intent(ActivityAlarm.this, MusicService.class);
+        Intent musicIntent = new Intent(ActivityGetUpAlarm.this, MusicService.class);
         musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
         musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
         startService(musicIntent);
