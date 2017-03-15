@@ -1,6 +1,5 @@
 package com.moggot.commonalarmclock.observer;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
