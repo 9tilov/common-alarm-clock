@@ -76,7 +76,6 @@ public class AlarmAdapter extends BaseAdapter {
 
     public void update(List<Alarm> alarms) {
         this.alarms = alarms;
-        Log.v(LOG_TAG, "update = " + alarms.size());
         notifyDataSetChanged();
     }
 

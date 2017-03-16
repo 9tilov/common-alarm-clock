@@ -107,8 +107,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         else
             alarm = db.getAlarm(id);
 
-        Log.v(LOG_TAG, "id_load = " + alarm.getIDs());
-
         final AlarmData alarmData = new AlarmData();
         SettingsDisplay settingsDisplay = new SettingsDisplay(this, alarmData);
         alarmData.setAlarm(alarm);
@@ -131,8 +129,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 AlarmContext alarmContext = new AlarmContext(alarm, ActivitySettings.this);
                 AlarmManager alarmManager = new AlarmManager();
                 alarmManager.setAlarm(alarmContext);
-
-                Log.v(LOG_TAG, "path = " + alarm.getMusicPath() + "  type = " + alarm.getMusicType());
 
                 AnimationBounce animationBounce = new SaveAlarmAnimationBounce(ActivitySettings.this);
                 animationBounce.animate(view);
@@ -181,7 +177,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
             ids.put(Consts.TOMORROW, db.getRandomRequestCode());
 
         alarm.setIDs(ids);
-        Log.v(LOG_TAG, "ids = " + ids);
 
     }
 
@@ -292,7 +287,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
         SparseIntArray ids = new SparseIntArray();
         int requstCode = db.getRandomRequestCode();
-        Log.v(LOG_TAG, "id = " + requstCode);
         ids.put(Consts.TOMORROW, requstCode);
         String requestCodesStr = new Gson().toJson(ids);
 

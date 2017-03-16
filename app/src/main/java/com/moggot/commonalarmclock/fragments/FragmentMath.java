@@ -52,18 +52,12 @@ public class FragmentMath extends Fragment {
         final long id = getArguments().getLong(Consts.EXTRA_ID);
         DataBase db = new DataBase(getActivity());
         final Alarm alarm = db.getAlarm(id);
-        Log.v(LOG_TAG, "getTimeInMillis = " + alarm.getTimeInMillis());
-        Calendar c = Calendar.getInstance();
-        long t = c.getTimeInMillis();
-        Log.v(LOG_TAG, "t = " + t);
 
         Button btnResult = (Button) view.findViewById(R.id.btnResult);
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isResultCorrect()) {
-
-
                     FragmentCreator creator = new FragmentCreator(getActivity());
                     creator.replaceFragment(alarm);
 

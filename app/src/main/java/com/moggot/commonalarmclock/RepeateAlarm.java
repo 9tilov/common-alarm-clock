@@ -40,8 +40,6 @@ public class RepeateAlarm implements AlarmType {
             Calendar calendarNow = Calendar.getInstance();
             while (alarmPeriod < calendarNow.getTimeInMillis())
                 alarmPeriod += 7 * AlarmManager.INTERVAL_DAY;
-            Log.v(LOG_TAG, "alarmPeriod = " + alarmPeriod);
-            Log.v(LOG_TAG, "calendar = " + calendarNow.getTimeInMillis());
             am.setRepeating(AlarmManager.RTC_WAKEUP, alarmPeriod,
                     7 * android.app.AlarmManager.INTERVAL_DAY, pi);
         }
