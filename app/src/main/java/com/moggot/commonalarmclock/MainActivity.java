@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         updateListView();
 
-        Intent intent = new Intent(this, ActivitySettings.class);
-        startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
-
     }
 
     public void onClickAdd(View view) {

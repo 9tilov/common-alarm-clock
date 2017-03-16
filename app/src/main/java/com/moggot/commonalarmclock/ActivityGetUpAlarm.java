@@ -84,5 +84,10 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
             AlarmManager alarmManager = new AlarmManager();
             alarmManager.cancelAlarm(alarmContext);
         }
+
+        intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
