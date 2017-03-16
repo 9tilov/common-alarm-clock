@@ -50,7 +50,7 @@ public class AlarmAdapter extends BaseAdapter {
     public AlarmAdapter(Context context, List<Alarm> alarms) {
         this.context = context;
         this.alarms = alarms;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     // кол-во элементов
@@ -62,8 +62,6 @@ public class AlarmAdapter extends BaseAdapter {
     // элемент по позиции
     @Override
     public Object getItem(int position) {
-        Log.v(LOG_TAG, "position = " + position);
-        Log.v(LOG_TAG, "alarms = " + alarms.size());
         return alarms.get(position);
     }
 
@@ -71,7 +69,6 @@ public class AlarmAdapter extends BaseAdapter {
         return ((Alarm) getItem(position));
     }
 
-    // id по позиции
     @Override
     public long getItemId(int position) {
         return position;
@@ -154,7 +151,6 @@ public class AlarmAdapter extends BaseAdapter {
                                 alarmManager.cancelAlarm(alarmContext);
                                 db.deleteAlarm(alarm);
                                 alarms.remove(position);
-                                Log.v(LOG_TAG, "delete_alarms = " + alarms.size());
                                 update(alarms);
                             }
                         })
