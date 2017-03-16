@@ -33,7 +33,7 @@ public class FragmentSnooze extends Fragment {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getActivity().finish();
             }
         });
 
@@ -53,13 +53,10 @@ public class FragmentSnooze extends Fragment {
                 SnoozeAlarm snoozeAlarm = new SnoozeAlarm(getActivity());
                 Calendar calendar = Calendar.getInstance();
                 snoozeAlarm.setAlarm(alarm, calendar.getTimeInMillis());
-                finish();
+                getActivity().finish();
             }
         });
         return view;
     }
 
-    public void finish() {
-        getActivity().finish();
-    }
 }

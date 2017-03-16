@@ -39,15 +39,11 @@ public class FragmentCommon extends Fragment {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getActivity().finish();
             }
         });
 
         return view;
-    }
-
-    public void finish() {
-        getActivity().finish();
     }
 
 }
