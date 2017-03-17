@@ -177,7 +177,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
             ids.put(Consts.TOMORROW, db.getRandomRequestCode());
 
         alarm.setIDs(ids);
-        Log.v(LOG_TAG, "ids = " + ids);
 
     }
 

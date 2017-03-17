@@ -1,7 +1,6 @@
 package com.moggot.commonalarmclock.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Button;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
-import com.moggot.commonalarmclock.MainActivity;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.observer.AlarmData;
@@ -41,17 +39,11 @@ public class FragmentCommon extends Fragment {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getActivity().finish();
             }
         });
 
         return view;
-    }
-
-    public void finish() {
-//        Intent intent = new Intent(getActivity(), MainActivity.class);
-//        startActivity(intent);
-        getActivity().finish();
     }
 
 }

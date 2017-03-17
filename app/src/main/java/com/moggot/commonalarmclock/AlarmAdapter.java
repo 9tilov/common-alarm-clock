@@ -50,7 +50,7 @@ public class AlarmAdapter extends BaseAdapter {
     public AlarmAdapter(Context context, List<Alarm> alarms) {
         this.context = context;
         this.alarms = alarms;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     // кол-во элементов
@@ -61,13 +61,14 @@ public class AlarmAdapter extends BaseAdapter {
 
     // элемент по позиции
     @Override
-    public Alarm getItem(int position) {
-        Log.v(LOG_TAG, "position = " + position);
-        Log.v(LOG_TAG, "alarms = " + alarms);
+    public Object getItem(int position) {
         return alarms.get(position);
     }
 
-    // id по позиции
+    private Alarm getAlarm(int position) {
+        return ((Alarm) getItem(position));
+    }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -113,7 +114,7 @@ public class AlarmAdapter extends BaseAdapter {
         viewHolder.ivSnooze.setTag(alarms.get(position));
         viewHolder.ivMusicType.setTag(alarms.get(position));
 
-        Alarm alarm = getItem(position);
+        final Alarm alarm = getAlarm(position);
         AlarmData alarmData = new AlarmData();
         AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
 
@@ -126,7 +127,6 @@ public class AlarmAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivitySettings.class);
-                Alarm alarm = getItem(position);
                 intent.putExtra(Consts.EXTRA_ID, alarm.getId());
                 ((Activity) context).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
             }
@@ -145,7 +145,6 @@ public class AlarmAdapter extends BaseAdapter {
                         .setCancelable(false)
                         .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Alarm alarm = getItem(position);
                                 AlarmContext alarmContext = new AlarmContext(alarm, context);
                                 AlarmManager alarmManager = new AlarmManager();
                                 alarmManager.cancelAlarm(alarmContext);
@@ -167,7 +166,6 @@ public class AlarmAdapter extends BaseAdapter {
         viewHolder.tgState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Alarm alarm = getItem(position);
                 AlarmContext alarmContext = new AlarmContext(alarm, context);
                 AlarmManager alarmManager = new AlarmManager();
                 if (isChecked)

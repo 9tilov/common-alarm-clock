@@ -26,14 +26,16 @@ public class Conversion {
         byteToString.put(Calendar.SATURDAY, context.getString(R.string.saturday_short));
         byteToString.put(Calendar.SUNDAY, context.getString(R.string.sunday_short));
 
-        String days = "";
+        StringBuilder days = new StringBuilder();
 
         for (int i = 0; i < ids.size(); ++i) {
             if (i == ids.size() - 1)
-                days += byteToString.get(ids.keyAt(i));
-            else
-                days += byteToString.get(ids.keyAt(i)) + " ";
+                days.append(byteToString.get(ids.keyAt(i)));
+            else {
+                days.append(byteToString.get(ids.keyAt(i)));
+                days.append(" ");
+            }
         }
-        return days;
+        return days.toString();
     }
 }

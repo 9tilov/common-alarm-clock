@@ -30,7 +30,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         Consts.MUSIC_TYPE type = Consts.MUSIC_TYPE.fromInteger(intent.getIntExtra(Consts.EXTRA_TYPE, Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType()));
         String path = intent.getStringExtra(Consts.EXTRA_PATH);
 
-        MusicPlayer musicPlayer = null;
+        MusicPlayer musicPlayer;
 
         switch (type) {
             case RADIO:

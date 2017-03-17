@@ -14,8 +14,6 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.fragments.FragmentCreator;
 import com.moggot.commonalarmclock.music.MusicService;
 
-import java.util.Calendar;
-
 public class ActivityGetUpAlarm extends AppCompatActivity {
 
     private static final String LOG_TAG = "ActivityGetUpAlarm";
@@ -35,14 +33,13 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
 
         Intent intent = getIntent();
         long id = intent.getLongExtra(Consts.EXTRA_ID, 0);
-        Log.v(LOG_TAG, "id = " + id);
         if (id == 0)
             return;
 
         DataBase db = new DataBase(this);
-        alarm = db.getAlarm(id);
+        this.alarm = db.getAlarm(id);
 
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         long[] once = {0, 500, 500};
         vibrator.vibrate(once, 0);
 
@@ -62,18 +59,15 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        Log.v(LOG_TAG, "onPause1");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.v(LOG_TAG, "onStop1");
     }
 
     @Override
     public void onDestroy() {
-        Log.v(LOG_TAG, "onDestroy1");
         super.onDestroy();
         vibrator.cancel();
         Intent intent = new Intent(this, MusicService.class);
