@@ -26,7 +26,7 @@ public class SnoozeAlarm {
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
         PendingIntent pi = PendingIntent.getBroadcast(context, requestCode, intent, 0);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        time += 60000;
+        time += Consts.SNOOZE_TIME_IN_MINUTES * 60000;
         am.set(AlarmManager.RTC_WAKEUP, time, pi);
     }
 }
