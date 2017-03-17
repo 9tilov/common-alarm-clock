@@ -2,9 +2,6 @@
 
     <string name="app_name">Обычный Будильник</string>
     <string name="title_create_alarm">Создание будильника</string>
-    <string name="title_alarm_screen">Вставай!</string>
-    <string name="title_alarm_sound">Звук будильника</string>
-    <string name="title_alarm_math">Подсчитай!</string>
     <string name="title_sounds_and_music">Звуки &amp; Музыка</string>
     <string name="title_alarm_type">Тип будильника</string>
     <string name="title_days_of_week">Дни недели</string>
@@ -19,7 +16,7 @@
     <string name="saturday_short">Сб</string>
 
     <string name="tomorrow">Будильник</string>
-    <string name="message">Название будильника</string>
+    <string name="alarm_name">Название будильника</string>
     <string name="no_internet_connection">Нет соединения с Интернетом</string>
     <string name="stop_alarm">Стоп</string>
     <string name="ok">ОК</string>

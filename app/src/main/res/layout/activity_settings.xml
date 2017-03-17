@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:hint="@string/message"
+                android:hint="@string/alarm_name"
                 android:weightSum="2" />
 
 

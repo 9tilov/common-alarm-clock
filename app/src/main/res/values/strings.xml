@@ -1,18 +1,9 @@
 <resources>
 
-    <string name="app_id" translatable="false">ca-app-pub-1475613019168586~3639059753</string>
-    <string name="banner_ad_unit_id_main" translatable="false">ca-app-pub-1475613019168586/6592526158</string>
-    <string name="banner_ad_unit_id_settings" translatable="false">ca-app-pub-1475613019168586/8069259352</string>
-    <string name="banner_ad_unit_id_math_interstitial" translatable="false">ca-app-pub-1475613019168586/9545992555</string>
-    <string name="banner_ad_unit_id_common_interstitial" translatable="false">ca-app-pub-1475613019168586/3499458954</string>
-
     <string name="default_time" translatable="false">00:00</string>
 
     <string name="app_name">Common Alarm Clock</string>
     <string name="title_create_alarm">Create alarm</string>
-    <string name="title_alarm_screen">Get up!</string>
-    <string name="title_alarm_sound">Alarm sound</string>
-    <string name="title_alarm_math">Count!</string>
     <string name="title_sounds_and_music">Sounds &amp; Music</string>
     <string name="title_alarm_type">Alarm Type</string>
     <string name="title_days_of_week">Days Of Week</string>
@@ -27,7 +18,7 @@
     <string name="saturday_short">Sa</string>
 
     <string name="tomorrow">Alarm</string>
-    <string name="message">Alarm name</string>
+    <string name="alarm_name">Alarm name</string>
     <string name="no_internet_connection">Internet connection is unavailable</string>
     <string name="stop_alarm">Stop</string>
     <string name="ok">OK</string>
