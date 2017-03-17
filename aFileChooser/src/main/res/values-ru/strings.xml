@@ -5,4 +5,5 @@
   <string name="storage_removed">Storage was removed or unmounted.</string>
   <string name="choose_file">Выберите файл</string>
   <string name="error_selecting_file">Ошибка при выборе файла</string>
+  <string name="internal_storage">Внутренняя память</string>
 </resources>
