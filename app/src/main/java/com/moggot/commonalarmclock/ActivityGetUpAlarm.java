@@ -19,7 +19,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
 
     private static final String LOG_TAG = "ActivityGetUpAlarm";
 
-    private Vibrator vibrator;
     private Alarm alarm;
 
     @Override
@@ -43,10 +42,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
 
         DataBase db = new DataBase(this);
         this.alarm = db.getAlarm(id);
-
-        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        long[] once = {0, 500, 500};
-        vibrator.vibrate(once, 0);
 
         Intent musicIntent = new Intent(ActivityGetUpAlarm.this, MusicService.class);
         musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
@@ -74,7 +69,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        vibrator.cancel();
         Intent intent = new Intent(this, MusicService.class);
         stopService(intent);
         SparseIntArray ids = alarm.getIDs();
