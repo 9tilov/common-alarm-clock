@@ -3,9 +3,11 @@ package com.moggot.commonalarmclock;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
@@ -24,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Tracker tracker = ((AnalyticsApplication) getApplication())
+                .getDefaultTracker();
+        tracker.enableAdvertisingIdCollection(true);
 
         ListView listView = (ListView) findViewById(R.id.lvAlarms);
         adapter = new AlarmAdapter(this, alarms);

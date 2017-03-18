@@ -25,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
@@ -67,6 +68,10 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Tracker tracker = ((AnalyticsApplication) getApplication())
+                .getDefaultTracker();
+        tracker.enableAdvertisingIdCollection(true);
 
         tvAlarmTime = (TextView) findViewById(R.id.tvAlarmTime);
         tvAlarmTime.setOnClickListener(timeListiner);

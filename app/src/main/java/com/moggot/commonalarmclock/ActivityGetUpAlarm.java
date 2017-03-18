@@ -10,6 +10,7 @@ import android.util.SparseIntArray;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.fragments.FragmentCreator;
 import com.moggot.commonalarmclock.music.MusicService;
@@ -25,6 +26,10 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_up_alarm);
+
+        Tracker tracker = ((AnalyticsApplication) getApplication())
+                .getDefaultTracker();
+        tracker.enableAdvertisingIdCollection(true);
 
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
