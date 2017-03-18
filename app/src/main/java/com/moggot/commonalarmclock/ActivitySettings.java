@@ -28,6 +28,8 @@ import android.widget.TimePicker;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
+import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
+import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.MusicFileAnimationBounce;
 import com.moggot.commonalarmclock.animation.RadioAnimationBounce;
@@ -72,6 +74,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         Tracker tracker = ((AnalyticsApplication) getApplication())
                 .getDefaultTracker();
         tracker.enableAdvertisingIdCollection(true);
+
+        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
+        firebaseAnalytics.init();
 
         tvAlarmTime = (TextView) findViewById(R.id.tvAlarmTime);
         tvAlarmTime.setOnClickListener(timeListiner);

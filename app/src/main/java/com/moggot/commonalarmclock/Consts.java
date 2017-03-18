@@ -42,6 +42,10 @@ public final class Consts {
     public final static String EXTRA_TYPE = "type";
     public final static String EXTRA_PATH = "path";
 
+    public final static String FIREBASE_ITEM_ID = "ID";
+    public final static String FIREBASE_ITEM_NAME = "NAME";
+    public final static String FIREBASE_CONTENT_TYPE = "IMAGE";
+
     public final static int REQUEST_CODE_DEFAULT_RINGTONE = 1;
     public final static int REQUEST_CODE_FILE_CHOSER = 2;
     public final static int REQUEST_CODE_ACTIVITY_SETTINGS = 3;

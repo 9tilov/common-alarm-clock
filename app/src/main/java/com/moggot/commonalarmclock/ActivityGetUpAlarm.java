@@ -1,17 +1,16 @@
 package com.moggot.commonalarmclock;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
+import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.fragments.FragmentCreator;
 import com.moggot.commonalarmclock.music.MusicService;
 
@@ -29,6 +28,9 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         Tracker tracker = ((AnalyticsApplication) getApplication())
                 .getDefaultTracker();
         tracker.enableAdvertisingIdCollection(true);
+
+        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
+        firebaseAnalytics.init();
 
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED

@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.analytics;
 
 /*
  * Google Inc. Все права защищены.
@@ -18,6 +18,7 @@ import android.app.Application;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.moggot.commonalarmclock.R;
 
 /**
  * Это подкласс {@link Application}, с помощью которого приложению передаются общие объекты,
