@@ -58,8 +58,8 @@
         <Button
             android:id="@+id/btnResult"
             style="@style/TextButtonResult"
-            android:layout_width="@dimen/math_result_btn2"
-            android:layout_height="@dimen/math_result_btn1"
+            android:layout_width="@dimen/math_result_btn_width"
+            android:layout_height="@dimen/math_result_btn_height"
             android:text="@string/ok"/>
 
     </RelativeLayout>
