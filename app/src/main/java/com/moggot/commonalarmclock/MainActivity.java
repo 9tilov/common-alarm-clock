@@ -12,6 +12,8 @@ import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
+import com.moggot.commonalarmclock.tutorial.OnboardingActivity;
+import com.moggot.commonalarmclock.tutorial.SharedPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (SharedPreference.LoadTutorialStatus(this)) {
+            Intent onboarding = new Intent(this, OnboardingActivity.class);
+            startActivityForResult(onboarding, Consts.REQUEST_CODE_ONBOARDING_SCREEN);
+        }
 
         Tracker tracker = ((AnalyticsApplication) getApplication())
                 .getDefaultTracker();

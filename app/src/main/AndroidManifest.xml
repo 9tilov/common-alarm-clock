@@ -41,6 +41,10 @@
         <activity
             android:name=".ActivityGetUpAlarm"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".tutorial.OnboardingActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

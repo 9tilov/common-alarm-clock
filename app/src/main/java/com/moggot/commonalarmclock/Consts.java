@@ -49,6 +49,7 @@ public final class Consts {
     public final static int REQUEST_CODE_DEFAULT_RINGTONE = 1;
     public final static int REQUEST_CODE_FILE_CHOSER = 2;
     public final static int REQUEST_CODE_ACTIVITY_SETTINGS = 3;
+    public final static int REQUEST_CODE_ONBOARDING_SCREEN = 4;
 
     public final static int SNOOZE_TIME_IN_MINUTES = 5;
 

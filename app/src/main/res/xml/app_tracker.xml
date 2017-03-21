@@ -21,5 +21,7 @@
     <screenName name="com.moggot.commonalarmclock.ActivitySettings">ActivitySettings</screenName>
     <screenName name="com.moggot.commonalarmclock.ActivityGetUpAlarm">ActivityGetUpAlarm
     </screenName>
+    <screenName name="com.moggot.commonalarmclock.tutorial.OnboardingActivity">OnboardingActivity
+    </screenName>
 
 </resources>
