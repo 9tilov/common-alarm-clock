@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
-import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,16 +25,12 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     private boolean isServiceStopped = false;
 
-    private Vibrator vibrator;
-
     public int onStartCommand(Intent intent, int flags, int startID) {
 
         Consts.MUSIC_TYPE type = Consts.MUSIC_TYPE.fromInteger(intent.getIntExtra(Consts.EXTRA_TYPE, Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType()));
         String path = intent.getStringExtra(Consts.EXTRA_PATH);
 
         MusicPlayer musicPlayer;
-
-        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (type) {
             case RADIO:
@@ -76,28 +71,15 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     public void onPrepared(MediaPlayer mediaPlayer) {
-        if (!isServiceStopped) {
+        if (!isServiceStopped)
             mediaPlayer.start();
-            startVibro();
-        }
-    }
-
-    private void startVibro() {
-        long[] once = {0, 500, 500};
-        vibrator.vibrate(once, 0);
-    }
-
-    private void cancelVibro() {
-        vibrator.cancel();
     }
 
     public void onDestroy() {
         super.onDestroy();
         isServiceStopped = true;
-        if (mediaPlayer.isPlaying()) {
+        if (mediaPlayer.isPlaying())
             mediaPlayer.stop();
-            cancelVibro();
-        }
     }
 
 
