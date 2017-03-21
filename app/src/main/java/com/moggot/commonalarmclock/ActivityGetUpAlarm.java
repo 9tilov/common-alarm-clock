@@ -22,7 +22,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
 
     private Alarm alarm;
 
-    private Vibrator vibrator;                                                                                          `
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
