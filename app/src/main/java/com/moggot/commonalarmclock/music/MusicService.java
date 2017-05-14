@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.moggot.commonalarmclock.Consts;
@@ -21,46 +20,47 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     private MediaPlayer mediaPlayer = null;
 
-    private final static String LOG_TAG = "MusicService";
+    private final static String LOG_TAG = MusicService.class.getSimpleName();
 
     private boolean isServiceStopped = false;
 
     public int onStartCommand(Intent intent, int flags, int startID) {
 
         Consts.MUSIC_TYPE type = Consts.MUSIC_TYPE.fromInteger(intent.getIntExtra(Consts.EXTRA_TYPE, Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType()));
+        if (type == null)
+            throw new NullPointerException("type is null");
         String path = intent.getStringExtra(Consts.EXTRA_PATH);
 
-        MusicPlayer musicPlayer;
+        Player player;
 
         switch (type) {
             case RADIO:
                 if (isNetworkAvailable())
-                    musicPlayer = new MusicPlayer(new Radio());
+                    player = new Player(new Radio());
                 else {
                     internetUnavailable();
-                    musicPlayer = new MusicPlayer(new Ringtone());
+                    player = new Player(new Ringtone());
                     path = Consts.DATA_DEFAULT_RINGTONE;
                 }
                 break;
             case DEFAULT_RINGTONE:
-                musicPlayer = new MusicPlayer(new Ringtone());
+                player = new Player(new Ringtone());
                 break;
             case MUSIC_FILE:
-                musicPlayer = new MusicPlayer(new File());
+                player = new Player(new File());
                 break;
             default:
                 if (isNetworkAvailable())
-                    musicPlayer = new MusicPlayer(new Radio());
+                    player = new Player(new Radio());
                 else {
                     internetUnavailable();
-                    musicPlayer = new MusicPlayer(new Ringtone());
+                    player = new Player(new Ringtone());
                     path = Consts.DATA_DEFAULT_RINGTONE;
                 }
                 break;
-
         }
 
-        mediaPlayer = musicPlayer.init(this, path);
+        mediaPlayer = player.init(this, path);
         mediaPlayer.setOnPreparedListener(this);
 
         return super.onStartCommand(intent, flags, startID);

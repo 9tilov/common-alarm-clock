@@ -7,11 +7,11 @@ import android.media.MediaPlayer;
  * Created by toor on 10.03.17.
  */
 
-public class MusicPlayer {
+public class Player {
 
     private MusicStategy musicStategy;
 
-    public MusicPlayer(MusicStategy musicStategy) {
+    public Player(MusicStategy musicStategy) {
         this.musicStategy = musicStategy;
     }
 

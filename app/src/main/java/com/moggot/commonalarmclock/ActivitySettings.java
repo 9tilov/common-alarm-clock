@@ -89,6 +89,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         checkBoxSnooze = (CheckBox) findViewById(R.id.checkBoxSnooze);
         checkBoxSnooze.setOnCheckedChangeListener(checkBoxListener);
 
+        CheckBox checkBoxRepeat = (CheckBox) findViewById(R.id.checkBoxRepeat);
+        checkBoxRepeat.setOnCheckedChangeListener(checkBoxListener);
+
         tbDaysOfWeek = new SparseIntArray();
         tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
         tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
