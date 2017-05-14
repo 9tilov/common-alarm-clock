@@ -12,10 +12,6 @@ import android.widget.Toast;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 
-/**
- * Created by toor on 10.03.17.
- */
-
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener {
 
     private MediaPlayer mediaPlayer = null;
