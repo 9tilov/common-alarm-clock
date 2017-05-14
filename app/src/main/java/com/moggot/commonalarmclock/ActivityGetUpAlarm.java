@@ -18,7 +18,7 @@ import com.moggot.commonalarmclock.music.MusicService;
 
 public class ActivityGetUpAlarm extends AppCompatActivity {
 
-    private static final String LOG_TAG = "ActivityGetUpAlarm";
+    private static final String LOG_TAG = ActivityGetUpAlarm.class.getSimpleName();
 
     private Alarm alarm;
 

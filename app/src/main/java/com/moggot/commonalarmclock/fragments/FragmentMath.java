@@ -3,7 +3,6 @@ package com.moggot.commonalarmclock.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,28 +28,51 @@ import java.util.List;
 
 public class FragmentMath extends Fragment {
 
-    private final static String LOG_TAG = "FragmentMath";
+    private final static String LOG_TAG = FragmentMath.class.getSimpleName();
 
     private TextView tvExample;
     private EditText etResult;
 
+    private Alarm alarm;
+
     private int firstNum, secondNum;
+
+    public FragmentMath() {
+    }
+
+    public static FragmentMath newInstance(long id) {
+        FragmentMath fragmentMath = new FragmentMath();
+        Bundle args = new Bundle();
+        args.putLong(Consts.EXTRA_ID, id);
+        fragmentMath.setArguments(args);
+        return fragmentMath;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        long id = 0;
+        if (getArguments() != null)
+            id = getArguments().getLong(Consts.EXTRA_ID);
+        DataBase db = new DataBase(getActivity());
+        alarm = db.getAlarm(id);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_alarm_math, container, false);
+        return inflater.inflate(R.layout.fragment_alarm_math, container, false);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         tvExample = (TextView) view.findViewById(R.id.tvMathExample);
         etResult = (EditText) view.findViewById(R.id.etResult);
         etResult.requestFocus();
         if (etResult.requestFocus())
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        formExample();
-
-        final long id = getArguments().getLong(Consts.EXTRA_ID);
-        DataBase db = new DataBase(getActivity());
-        final Alarm alarm = db.getAlarm(id);
+        createExample();
 
         Button btnResult = (Button) view.findViewById(R.id.btnResult);
         btnResult.setOnClickListener(new View.OnClickListener() {
@@ -67,15 +88,13 @@ public class FragmentMath extends Fragment {
                     incorrectResult();
             }
         });
-
-        return view;
     }
 
     private void incorrectResult() {
         Toast.makeText(getActivity(), R.string.incorrect_result, Toast.LENGTH_SHORT).show();
     }
 
-    private void formExample() {
+    private void createExample() {
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
             list.add(i);
@@ -93,5 +112,12 @@ public class FragmentMath extends Fragment {
             return false;
         int sum = firstNum + secondNum;
         return (Integer.valueOf(result) == sum);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tvExample = null;
+        etResult = null;
     }
 }

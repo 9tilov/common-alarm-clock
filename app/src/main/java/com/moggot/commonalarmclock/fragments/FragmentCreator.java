@@ -25,17 +25,13 @@ public class FragmentCreator {
         FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
         Fragment fragment;
         if (alarm.getIsMathEnable()) {
-            fragment = new FragmentMath();
+            fragment = FragmentMath.newInstance(alarm.getId());
         } else {
             if (alarm.getIsSnoozeEnable())
-                fragment = new FragmentSnooze();
+                fragment = FragmentSnooze.newInstance(alarm.getId());
             else
-                fragment = new FragmentCommon();
+                fragment = FragmentCommon.newInstance(alarm.getId());
         }
-
-        Bundle bundle = new Bundle();
-        bundle.putLong(Consts.EXTRA_ID, alarm.getId());
-        fragment.setArguments(bundle);
 
         ft.add(R.id.frgmCont, fragment);
         ft.commit();
@@ -45,13 +41,9 @@ public class FragmentCreator {
         FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
         Fragment fragment;
         if (alarm.getIsSnoozeEnable())
-            fragment = new FragmentSnooze();
+            fragment = FragmentSnooze.newInstance(alarm.getId());
         else
-            fragment = new FragmentCommon();
-
-        Bundle bundle = new Bundle();
-        bundle.putLong(Consts.EXTRA_ID, alarm.getId());
-        fragment.setArguments(bundle);
+            fragment = FragmentCommon.newInstance(alarm.getId());
 
         ft.replace(R.id.frgmCont, fragment);
         ft.commit();
