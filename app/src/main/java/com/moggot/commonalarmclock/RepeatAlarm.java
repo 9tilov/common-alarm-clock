@@ -15,9 +15,9 @@ import java.util.Calendar;
  * Created by toor on 01.03.17.
  */
 
-public class RepeateAlarm implements AlarmType {
+public class RepeatAlarm implements AlarmType {
 
-    private static final String LOG_TAG = "RepeateAlarm";
+    private static final String LOG_TAG = "RepeatAlarm";
 
     public void setAlarm(AlarmContext alarmContext) {
         Context context = alarmContext.getActivityContext();

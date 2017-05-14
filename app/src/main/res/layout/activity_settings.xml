@@ -61,7 +61,16 @@
                     android:textAppearance="?android:attr/textAppearanceLarge" />
             </LinearLayout>
 
+            <CheckBox
+                android:id="@+id/checkBoxRepeat"
+                style="@style/TextCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/repeat" />
+
             <RelativeLayout
+                android:id="@+id/rlDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -271,8 +280,8 @@
                         android:layout_height="@dimen/btn_music_icons"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:onClick="onClickMusic"
-                        android:background="@drawable/ic_radio"/>
+                        android:background="@drawable/ic_radio"
+                        android:onClick="onClickMusic" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -302,7 +311,7 @@
             android:layout_height="@dimen/save_btn_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_save"/>
+            android:background="@drawable/ic_save" />
     </RelativeLayout>
 
 </LinearLayout>

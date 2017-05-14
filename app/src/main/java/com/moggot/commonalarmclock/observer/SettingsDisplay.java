@@ -2,12 +2,13 @@ package com.moggot.commonalarmclock.observer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseIntArray;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -29,17 +30,10 @@ public class SettingsDisplay implements Observer {
 
     private Activity activity;
 
-    private TextView tvAlarmTime;
     private SparseIntArray tbDaysOfWeek;
-    private CheckBox checkBoxSnooze;
-    private CheckBox checkBoxMathExample;
-    private EditText etName;
-    private RadioGroup rgMusicType;
 
     public SettingsDisplay(Context context, AlarmData alarmData) {
         this.activity = (Activity) context;
-
-        tvAlarmTime = (TextView) activity.findViewById(R.id.tvAlarmTime);
 
         tbDaysOfWeek = new SparseIntArray();
         tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
@@ -49,13 +43,6 @@ public class SettingsDisplay implements Observer {
         tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
         tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
         tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
-
-        checkBoxSnooze = (CheckBox) activity.findViewById(R.id.checkBoxSnooze);
-        checkBoxMathExample = (CheckBox) activity.findViewById(R.id.checkBoxMath);
-
-        etName = (EditText) activity.findViewById(R.id.etAlarmName);
-
-        rgMusicType = (RadioGroup) activity.findViewById(R.id.rgMusicType);
 
         alarmData.registerObserver(this);
     }
@@ -78,32 +65,38 @@ public class SettingsDisplay implements Observer {
         Date date = alarm.getDate();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        tvAlarmTime.setText(getTimeStr(calendar.getTimeInMillis()));
+        ((TextView) activity.findViewById(R.id.tvAlarmTime)).setText(getTimeStr(calendar.getTimeInMillis()));
     }
 
     private void displayDays() {
-        SparseIntArray ids = alarm.getIDs();
-        for (int requestCode = 0; requestCode < ids.size(); ++requestCode) {
-            for (int btnID = 0; btnID < tbDaysOfWeek.size(); ++btnID) {
-                int key = tbDaysOfWeek.keyAt(btnID);
-                if (ids.keyAt(requestCode) == tbDaysOfWeek.get(key))
-                    ((ToggleButton) activity.findViewById(key))
-                            .setChecked(true);
+        if (((CheckBox) activity.findViewById(R.id.checkBoxRepeat)).isChecked()) {
+            ((RelativeLayout) activity.findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
+            SparseIntArray ids = alarm.getIDs();
+            for (int requestCode = 0; requestCode < ids.size(); ++requestCode) {
+                for (int btnID = 0; btnID < tbDaysOfWeek.size(); ++btnID) {
+                    int key = tbDaysOfWeek.keyAt(btnID);
+                    if (ids.keyAt(requestCode) == tbDaysOfWeek.get(key)) {
+                        ((ToggleButton) activity.findViewById(key))
+                                .setChecked(true);
+                    }
+                }
             }
+        } else {
+            ((RelativeLayout) activity.findViewById(R.id.rlDays)).setVisibility(View.GONE);
         }
     }
 
     private void displayCheckBoxes() {
-        checkBoxSnooze.setChecked(alarm.getIsSnoozeEnable());
-        checkBoxMathExample.setChecked(alarm.getIsMathEnable());
+        ((CheckBox) activity.findViewById(R.id.checkBoxSnooze)).setChecked(alarm.getIsSnoozeEnable());
+        ((CheckBox) activity.findViewById(R.id.checkBoxMath)).setChecked(alarm.getIsMathEnable());
     }
 
     private void displayAlarmName() {
-        etName.setText(alarm.getName());
+        ((EditText) activity.findViewById(R.id.etAlarmName)).setText(alarm.getName());
     }
 
     private void displayMusicType() {
-        ((RadioButton) rgMusicType.getChildAt(alarm.getMusicType())).setChecked(true);
+        ((RadioButton) ((RadioGroup) activity.findViewById(R.id.rgMusicType)).getChildAt(alarm.getMusicType())).setChecked(true);
     }
 
     private String getTimeStr(long timeInMillis) {

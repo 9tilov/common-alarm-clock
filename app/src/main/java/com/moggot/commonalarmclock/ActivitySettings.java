@@ -1,5 +1,6 @@
 package com.moggot.commonalarmclock;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -57,7 +59,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
     private TextView tvAlarmTime;
     private SparseIntArray tbDaysOfWeek;
-    private CheckBox checkBoxMath, checkBoxSnooze;
+    private CheckBox checkBoxMath, checkBoxSnooze, checkBoxRepeat;
     private RadioGroup rgMusic;
     private Button btnMusic;
 
@@ -86,6 +88,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
         checkBoxSnooze = (CheckBox) findViewById(R.id.checkBoxSnooze);
         checkBoxSnooze.setOnCheckedChangeListener(checkBoxListener);
+
+        checkBoxRepeat = (CheckBox) findViewById(R.id.checkBoxRepeat);
+        checkBoxRepeat.setOnCheckedChangeListener(checkBoxListener);
 
         tbDaysOfWeek = new SparseIntArray();
         tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
@@ -120,7 +125,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         final AlarmData alarmData = new AlarmData();
         SettingsDisplay settingsDisplay = new SettingsDisplay(this, alarmData);
         alarmData.setAlarm(alarm);
-        settingsDisplay.display();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,11 +203,15 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     alarm.setIsSnoozeEnable(true);
                 if (buttonView.getId() == R.id.checkBoxMath)
                     alarm.setIsMathEnable(true);
+                if (buttonView.getId() == R.id.checkBoxRepeat)
+                    ((RelativeLayout)((Activity)ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
             } else {
                 if (buttonView.getId() == R.id.checkBoxSnooze)
                     alarm.setIsSnoozeEnable(false);
                 if (buttonView.getId() == R.id.checkBoxMath)
                     alarm.setIsMathEnable(false);
+                if (buttonView.getId() == R.id.checkBoxRepeat)
+                    ((RelativeLayout)((Activity)ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.GONE);
             }
         }
     };

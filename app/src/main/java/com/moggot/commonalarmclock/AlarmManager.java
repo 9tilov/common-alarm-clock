@@ -17,7 +17,7 @@ public class AlarmManager implements AlarmType {
         if (ids.get(Consts.TOMORROW) != 0)
             on.setType(new SingleAlarm());
         else
-            on.setType(new RepeateAlarm());
+            on.setType(new RepeatAlarm());
     }
 
     public void cancelAlarm(AlarmContext alarmContext) {
@@ -27,6 +27,6 @@ public class AlarmManager implements AlarmType {
         if (ids.get(Consts.TOMORROW) != 0)
             off.setType(new SingleAlarm());
         else
-            off.setType(new RepeateAlarm());
+            off.setType(new RepeatAlarm());
     }
 }
