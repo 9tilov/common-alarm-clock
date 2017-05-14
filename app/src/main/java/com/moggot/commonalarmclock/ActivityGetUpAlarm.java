@@ -82,7 +82,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         vibrator.cancel();
         Intent intent = new Intent(this, MusicService.class);
         stopService(intent);
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (ids.get(Consts.TOMORROW) != 0) {
             AlarmContext alarmContext = new AlarmContext(alarm, this);
             AlarmManager alarmManager = new AlarmManager();

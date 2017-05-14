@@ -13,7 +13,7 @@ public class AlarmManager implements AlarmType {
     public void setAlarm(AlarmContext alarmContext) {
         AlarmOn on = new AlarmOn(alarmContext);
         Alarm alarm = alarmContext.getAlarm();
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (ids.get(Consts.TOMORROW) != 0)
             on.setType(new SingleAlarm());
         else
@@ -23,7 +23,7 @@ public class AlarmManager implements AlarmType {
     public void cancelAlarm(AlarmContext alarmContext) {
         AlarmOff off = new AlarmOff(alarmContext);
         Alarm alarm = alarmContext.getAlarm();
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (ids.get(Consts.TOMORROW) != 0)
             off.setType(new SingleAlarm());
         else

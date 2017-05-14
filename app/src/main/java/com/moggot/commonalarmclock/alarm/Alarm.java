@@ -142,13 +142,13 @@ public class Alarm {
         this.musicPath = musicPath;
     }
 
-    public SparseIntArray getIDs() {
+    public SparseIntArray getRepeatAlarmIDs() {
         Type type = new TypeToken<SparseIntArray>() {
         }.getType();
         return new Gson().fromJson(getRequestCodes(), type);
     }
 
-    public void setIDs(SparseIntArray ids) {
+    public void setRepeatAlarmIDs(SparseIntArray ids) {
         this.requestCodes = new Gson().toJson(ids);
     }
 

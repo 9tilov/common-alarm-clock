@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -68,17 +69,24 @@ public class SettingsDisplay implements Observer {
         ((TextView) activity.findViewById(R.id.tvAlarmTime)).setText(getTimeStr(calendar.getTimeInMillis()));
     }
 
+    private void displayCheckBoxDays() {
+        if (alarm.getRepeatAlarmIDs().get(Consts.TOMORROW) > 0)
+            ((CheckBox) activity.findViewById(R.id.checkBoxRepeat)).setChecked(false);
+        else
+            ((CheckBox) activity.findViewById(R.id.checkBoxRepeat)).setChecked(true);
+    }
+
     private void displayDays() {
+        displayCheckBoxDays();
         if (((CheckBox) activity.findViewById(R.id.checkBoxRepeat)).isChecked()) {
             ((RelativeLayout) activity.findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
-            SparseIntArray ids = alarm.getIDs();
+            SparseIntArray ids = alarm.getRepeatAlarmIDs();
             for (int requestCode = 0; requestCode < ids.size(); ++requestCode) {
                 for (int btnID = 0; btnID < tbDaysOfWeek.size(); ++btnID) {
                     int key = tbDaysOfWeek.keyAt(btnID);
-                    if (ids.keyAt(requestCode) == tbDaysOfWeek.get(key)) {
+                    if (ids.keyAt(requestCode) == tbDaysOfWeek.get(key))
                         ((ToggleButton) activity.findViewById(key))
                                 .setChecked(true);
-                    }
                 }
             }
         } else {
