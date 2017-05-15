@@ -46,11 +46,13 @@ public class AlarmAdapter extends BaseAdapter {
     private Context context;
     private List<Alarm> alarms;
     private LayoutInflater inflater;
+    private DataBase db;
 
     public AlarmAdapter(Context context, List<Alarm> alarms) {
         this.context = context;
         this.alarms = alarms;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.db = new DataBase(context);
     }
 
     // кол-во элементов
@@ -117,11 +119,7 @@ public class AlarmAdapter extends BaseAdapter {
         final Alarm alarm = getAlarm(position);
         AlarmData alarmData = new AlarmData();
         AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
-
         alarmData.setAlarm(alarm);
-        adapterDisplay.display();
-
-        final DataBase db = new DataBase(context);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
