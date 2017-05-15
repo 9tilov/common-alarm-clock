@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class SharedPreference {
-    private static final String s_tutorial = "tutorial";
 
-    final static String LOG_TAG = "myLogs";
+    final static String LOG_TAG = SharedPreference.class.getSimpleName();
+
+    private static final String s_tutorial = "tutorial";
 
     static void SaveTutorialStatus(Context ctx, boolean status) {
         SharedPreferences sharedPreferences = PreferenceManager

@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 public class AdapterDisplay implements Observer {
 
-    private final static String LOG_TAG = "AdapterDisplay";
+    private final static String LOG_TAG = AdapterDisplay.class.getSimpleName();
 
     private Alarm alarm;
     private View view;

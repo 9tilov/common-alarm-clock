@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 public class Conversion {
 
-    private static final String LOG_TAG = "Conversion";
+    private static final String LOG_TAG = Conversion.class.getSimpleName();
 
     static public String getDaysAsString(Context context, SparseIntArray ids) {
         SparseArray<String> byteToString = new SparseArray<>();

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "MainActivity";
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private List<Alarm> alarms = new ArrayList<>();
     private AlarmAdapter adapter;
