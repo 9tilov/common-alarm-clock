@@ -1,31 +1,33 @@
 package com.moggot.commonalarmclock.music;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 
 import java.io.IOException;
 
-/**
- * Created by toor on 28.02.17.
- */
+public class FilePlayer extends PlayerCreator {
 
-public class Ringtone implements MusicStategy {
+    private Context context;
 
-    public MediaPlayer init(Context context, String path) {
+    public FilePlayer(Context context) {
+        this.context = context;
+    }
+
+    public MediaPlayer create(Music music) {
         MediaPlayer mediaPlayer = null;
         try {
-            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            Uri alarm = Uri.parse(path);
-            mediaPlayer = MediaPlayer.create(context, alarm);
-
+            Uri uri = Uri.fromFile((new java.io.File(music.getMusicPath())));
+            mediaPlayer = MediaPlayer.create(context, uri);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setLooping(true);
             mediaPlayer.prepare();
         } catch (IllegalArgumentException | SecurityException
                 | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
+
         return mediaPlayer;
     }
 }

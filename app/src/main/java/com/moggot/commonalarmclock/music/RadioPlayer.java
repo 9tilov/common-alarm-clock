@@ -7,16 +7,22 @@ import android.media.MediaPlayer;
 import java.io.IOException;
 
 /**
- * Created by toor on 28.02.17.
+ * Created by toor on 15.05.17.
  */
 
-public class Radio implements MusicStategy {
+public class RadioPlayer extends PlayerCreator {
 
-    public MediaPlayer init(Context context, String path) {
+    private Context context;
+
+    public RadioPlayer(Context context) {
+        this.context = context;
+    }
+
+    public MediaPlayer create(Music music) {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mediaPlayer.setDataSource(path);
+            mediaPlayer.setDataSource(music.getMusicPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
