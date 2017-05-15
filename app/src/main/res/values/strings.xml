@@ -23,6 +23,7 @@
     <string name="stop_alarm">Stop</string>
     <string name="ok">OK</string>
     <string name="snooze">Snooze</string>
+    <string name="repeat">Repeat</string>
     <string name="math">Math example</string>
     <string name="internet_radio">Internet radio</string>
     <string name="music_file">Music file</string>

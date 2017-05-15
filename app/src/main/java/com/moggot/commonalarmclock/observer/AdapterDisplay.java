@@ -46,28 +46,11 @@ public class AdapterDisplay implements Observer {
     }
 
     private void displayTime() {
-        long timeInMillis = alarm.getTimeInMillis();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(timeInMillis);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        String hourStr;
-        if (hour < 10)
-            hourStr = "0" + String.valueOf(hour);
-        else
-            hourStr = String.valueOf(hour);
-        String minuteStr;
-        if (minute < 10)
-            minuteStr = "0" + String.valueOf(minute);
-        else
-            minuteStr = String.valueOf(minute);
-        final String time = hourStr + ":" + minuteStr;
-        ((TextView) view.findViewById(R.id.tvAdapterTime)).setText(time);
+        ((TextView) view.findViewById(R.id.tvAdapterTime)).setText(getTimeAsString());
     }
 
     private void displayDays() {
-        ((TextView) view.findViewById(R.id.tvAdapterDays)).setText(Conversion.getDaysAsString(context, alarm.getIDs()));
+        ((TextView) view.findViewById(R.id.tvAdapterDays)).setText(Conversion.getDaysAsString(context, alarm.getRepeatAlarmIDs()));
     }
 
 
@@ -106,5 +89,25 @@ public class AdapterDisplay implements Observer {
             ((ImageView) view.findViewById(R.id.ivAdapterMath)).setImageResource(R.drawable.ic_function);
         } else
             view.findViewById(R.id.ivAdapterMath).setVisibility(View.GONE);
+    }
+
+    private String getTimeAsString() {
+        long timeInMillis = alarm.getTimeInMillis();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMillis);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        String hourStr;
+        if (hour < 10)
+            hourStr = "0" + String.valueOf(hour);
+        else
+            hourStr = String.valueOf(hour);
+        String minuteStr;
+        if (minute < 10)
+            minuteStr = "0" + String.valueOf(minute);
+        else
+            minuteStr = String.valueOf(minute);
+        return hourStr + ":" + minuteStr;
     }
 }

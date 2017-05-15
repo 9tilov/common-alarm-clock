@@ -1,5 +1,6 @@
 package com.moggot.commonalarmclock;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -53,7 +55,7 @@ import java.util.Date;
 
 public class ActivitySettings extends AppCompatActivity implements OnClickListener {
 
-    private static final String LOG_TAG = "ActivitySettings";
+    private static final String LOG_TAG = ActivitySettings.class.getSimpleName();
 
     private TextView tvAlarmTime;
     private SparseIntArray tbDaysOfWeek;
@@ -86,6 +88,9 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
         checkBoxSnooze = (CheckBox) findViewById(R.id.checkBoxSnooze);
         checkBoxSnooze.setOnCheckedChangeListener(checkBoxListener);
+
+        CheckBox checkBoxRepeat = (CheckBox) findViewById(R.id.checkBoxRepeat);
+        checkBoxRepeat.setOnCheckedChangeListener(checkBoxListener);
 
         tbDaysOfWeek = new SparseIntArray();
         tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
@@ -120,7 +125,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         final AlarmData alarmData = new AlarmData();
         SettingsDisplay settingsDisplay = new SettingsDisplay(this, alarmData);
         alarmData.setAlarm(alarm);
-        settingsDisplay.display();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +133,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     db.addAlarm(alarm);
                 else {
                     Alarm loadedAlarm = db.getAlarm(id);
-                    if (!compareDays(loadedAlarm.getIDs(), alarm.getIDs())) {
+                    if (!compareDays(loadedAlarm.getRepeatAlarmIDs(), alarm.getRepeatAlarmIDs())) {
                         AlarmContext alarmContext = new AlarmContext(loadedAlarm, ActivitySettings.this);
                         AlarmManager alarmManager = new AlarmManager();
                         alarmManager.cancelAlarm(alarmContext);
@@ -170,10 +174,11 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
     };
 
     public void onClick(View v) {
+        Log.v(LOG_TAG, "click");
         boolean on = ((ToggleButton) v).isChecked();
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.toggle_days);
         v.startAnimation(bounce);
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (on) {
             if (ids.get(Consts.TOMORROW) != 0)
                 ids.clear();
@@ -186,8 +191,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         if (ids.size() == 0)
             ids.put(Consts.TOMORROW, db.getRandomRequestCode());
 
-        alarm.setIDs(ids);
-
+        alarm.setRepeatAlarmIDs(ids);
     }
 
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
@@ -199,11 +203,23 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                     alarm.setIsSnoozeEnable(true);
                 if (buttonView.getId() == R.id.checkBoxMath)
                     alarm.setIsMathEnable(true);
+                if (buttonView.getId() == R.id.checkBoxRepeat)
+                    ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
             } else {
                 if (buttonView.getId() == R.id.checkBoxSnooze)
                     alarm.setIsSnoozeEnable(false);
                 if (buttonView.getId() == R.id.checkBoxMath)
                     alarm.setIsMathEnable(false);
+                if (buttonView.getId() == R.id.checkBoxRepeat) {
+                    RelativeLayout rlDays = ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays));
+                    for (int i = 0; i < rlDays.getChildCount(); ++i) {
+                        ((ToggleButton) rlDays.getChildAt(i)).setChecked(false);
+                        SparseIntArray ids = new SparseIntArray();
+                        ids.put(Consts.TOMORROW, db.getRandomRequestCode());
+                        alarm.setRepeatAlarmIDs(ids);
+                    }
+                    ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.GONE);
+                }
             }
         }
     };
@@ -314,13 +330,6 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 checkBoxMath.isChecked(), "", path, musicType, true);
     }
 
-    private static String pad(int c) {
-        if (c >= 10)
-            return String.valueOf(c);
-        else
-            return "0" + String.valueOf(c);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -359,6 +368,37 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         }
     }
 
+   private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
+    }
+
+    private void notMusicFile() {
+        Toast.makeText(this, R.string.not_music_file,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void internetUnavailable() {
+        Toast.makeText(this,
+                R.string.no_internet_connection,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent musicIntent = new Intent(ActivitySettings.this, MusicService.class);
+        stopService(musicIntent);
+    }
+
+    private static String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else
+            return "0" + String.valueOf(c);
+    }
+
     private static boolean compareDays(SparseIntArray first, SparseIntArray second) {
         // compare null
         if (first == null) {
@@ -390,29 +430,5 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         }
 
         return true;
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
-    }
-
-    private void notMusicFile() {
-        Toast.makeText(this, R.string.not_music_file,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    private void internetUnavailable() {
-        Toast.makeText(this,
-                R.string.no_internet_connection,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Intent musicIntent = new Intent(ActivitySettings.this, MusicService.class);
-        stopService(musicIntent);
     }
 }

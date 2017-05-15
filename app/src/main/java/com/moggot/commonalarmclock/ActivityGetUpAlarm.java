@@ -18,7 +18,7 @@ import com.moggot.commonalarmclock.music.MusicService;
 
 public class ActivityGetUpAlarm extends AppCompatActivity {
 
-    private static final String LOG_TAG = "ActivityGetUpAlarm";
+    private static final String LOG_TAG = ActivityGetUpAlarm.class.getSimpleName();
 
     private Alarm alarm;
 
@@ -82,7 +82,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         vibrator.cancel();
         Intent intent = new Intent(this, MusicService.class);
         stopService(intent);
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (ids.get(Consts.TOMORROW) != 0) {
             AlarmContext alarmContext = new AlarmContext(alarm, this);
             AlarmManager alarmManager = new AlarmManager();

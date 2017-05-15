@@ -4,7 +4,6 @@ import android.app.*;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.util.SparseIntArray;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
@@ -15,9 +14,9 @@ import java.util.Calendar;
  * Created by toor on 01.03.17.
  */
 
-public class RepeateAlarm implements AlarmType {
+public class RepeatAlarm implements AlarmType {
 
-    private static final String LOG_TAG = "RepeateAlarm";
+    private static final String LOG_TAG = "RepeatAlarm";
 
     public void setAlarm(AlarmContext alarmContext) {
         Context context = alarmContext.getActivityContext();
@@ -26,7 +25,7 @@ public class RepeateAlarm implements AlarmType {
 
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
 
         for (int i = 0; i < ids.size(); ++i) {
             PendingIntent pi = PendingIntent.getBroadcast(context, ids.valueAt(i), intent, 0);
@@ -51,7 +50,7 @@ public class RepeateAlarm implements AlarmType {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        SparseIntArray ids = alarm.getIDs();
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
         for (int i = 0; i < ids.size(); ++i) {
             PendingIntent pi = PendingIntent.getBroadcast(context, ids.valueAt(i), intent, 0);
             am.cancel(pi);

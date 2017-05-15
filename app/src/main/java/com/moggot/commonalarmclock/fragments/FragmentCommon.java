@@ -20,20 +20,43 @@ import com.moggot.commonalarmclock.observer.AlarmGetUpDisplay;
 
 public class FragmentCommon extends Fragment {
 
+    private Alarm alarm;
+
+    public FragmentCommon() {
+    }
+
+    public static FragmentCommon newInstance(long id) {
+        FragmentCommon fragmentCommon = new FragmentCommon();
+        Bundle args = new Bundle();
+        args.putLong(Consts.EXTRA_ID, id);
+        fragmentCommon.setArguments(args);
+        return fragmentCommon;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        long id = 0;
+        if (getArguments() != null)
+            id = getArguments().getLong(Consts.EXTRA_ID);
+        DataBase db = new DataBase(getActivity());
+        alarm = db.getAlarm(id);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_alarm_common, container, false);
+        return inflater.inflate(R.layout.fragment_alarm_common, container, false);
+    }
 
-        final long id = getArguments().getLong(Consts.EXTRA_ID);
-        DataBase db = new DataBase(getActivity());
-        Alarm alarm = db.getAlarm(id);
-
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         AlarmData alarmData = new AlarmData();
         AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(view, alarmData);
         alarmData.setAlarm(alarm);
-        adapterDisplay.display();
 
         Button btnStop = (Button) view.findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +65,6 @@ public class FragmentCommon extends Fragment {
                 getActivity().finish();
             }
         });
-
-        return view;
     }
 
 }

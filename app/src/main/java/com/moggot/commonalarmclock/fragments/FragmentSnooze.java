@@ -23,10 +23,39 @@ import java.util.Calendar;
 
 public class FragmentSnooze extends Fragment {
 
+    private Alarm alarm;
+
+    public FragmentSnooze() {
+    }
+
+    public static FragmentSnooze newInstance(long id) {
+        FragmentSnooze fragmentSnooze = new FragmentSnooze();
+        Bundle args = new Bundle();
+        args.putLong(Consts.EXTRA_ID, id);
+        fragmentSnooze.setArguments(args);
+        return fragmentSnooze;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        long id = 0;
+        if (getArguments() != null)
+            id = getArguments().getLong(Consts.EXTRA_ID);
+        DataBase db = new DataBase(getActivity());
+        alarm = db.getAlarm(id);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_alarm_snooze, container, false);
+        return inflater.inflate(R.layout.fragment_alarm_snooze, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         Button btnStop = (Button) view.findViewById(R.id.btnStop);
         Button btnSnooze = (Button) view.findViewById(R.id.btnSnooze);
 
@@ -37,14 +66,9 @@ public class FragmentSnooze extends Fragment {
             }
         });
 
-        final long id = getArguments().getLong(Consts.EXTRA_ID);
-        DataBase db = new DataBase(getActivity());
-        final Alarm alarm = db.getAlarm(id);
-
         AlarmData alarmData = new AlarmData();
         AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(view, alarmData);
         alarmData.setAlarm(alarm);
-        adapterDisplay.display();
 
         btnSnooze.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +80,6 @@ public class FragmentSnooze extends Fragment {
                 getActivity().finish();
             }
         });
-        return view;
     }
 
 }

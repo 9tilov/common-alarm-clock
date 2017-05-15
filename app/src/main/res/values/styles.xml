@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/background_title</item>
         <item name="colorPrimaryDark">@color/background_title</item>
