@@ -30,6 +30,8 @@ import java.util.List;
 
 public class AlarmAdapter extends BaseAdapter {
 
+    private final static String LOG_TAG = AlarmAdapter.class.getSimpleName();
+
     private static class ViewHolder {
         private TextView tvDays;
         private TextView tvTime;
@@ -44,8 +46,6 @@ public class AlarmAdapter extends BaseAdapter {
     private Context context;
     private List<Alarm> alarms;
     private LayoutInflater inflater;
-
-    private final static String LOG_TAG = "AlarmAdapter";
 
     public AlarmAdapter(Context context, List<Alarm> alarms) {
         this.context = context;

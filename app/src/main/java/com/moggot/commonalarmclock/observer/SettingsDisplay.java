@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class SettingsDisplay implements Observer {
 
-    private static final String LOG_TAG = "SettingsDisplay";
+    private static final String LOG_TAG = SettingsDisplay.class.getSimpleName();
 
     private Alarm alarm;
 
