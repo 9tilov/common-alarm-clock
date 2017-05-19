@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.ToggleButton;
 
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.DeleteAlarmAnimationBounce;
-import com.moggot.commonalarmclock.observer.AdapterDisplay;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -98,8 +96,8 @@ public class AlarmAdapter extends BaseAdapter {
         viewHolder.tvDays = (TextView) view.findViewById(R.id.tvAdapterDays);
         viewHolder.tvTime = (TextView) view.findViewById(R.id.tvAdapterTime);
         viewHolder.tvName = (TextView) view.findViewById(R.id.tvAdapterName);
-        viewHolder.ivDelete = (Button) view
-                .findViewById(R.id.btnAdapterDelete);
+//        viewHolder.ivDelete = (Button) view
+//                .findViewById(R.id.btnAdapterDelete);
         viewHolder.ivMath = (ImageView) view
                 .findViewById(R.id.ivAdapterMath);
         viewHolder.ivSnooze = (ImageView) view
@@ -118,7 +116,7 @@ public class AlarmAdapter extends BaseAdapter {
 
         final Alarm alarm = getAlarm(position);
         AlarmData alarmData = new AlarmData();
-        AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
+//        AdapterDisplay adapterDisplay = new AdapterDisplay(context, view, alarmData);
         alarmData.setAlarm(alarm);
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +144,7 @@ public class AlarmAdapter extends BaseAdapter {
                                 AlarmContext alarmContext = new AlarmContext(alarm, context);
                                 AlarmManager alarmManager = new AlarmManager();
                                 alarmManager.cancelAlarm(alarmContext);
-                                db.deleteAlarm(alarm);
+                                db.removeAlarm(alarm);
                                 alarms.remove(position);
                                 update(alarms);
                             }

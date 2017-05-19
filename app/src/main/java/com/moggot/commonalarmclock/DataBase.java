@@ -40,7 +40,7 @@ public class DataBase {
         alarmDao.update(alarm);
     }
 
-    public void deleteAlarm(Alarm alarm) {
+    public void removeAlarm(Alarm alarm) {
         alarmDao.delete(alarm);
     }
 
