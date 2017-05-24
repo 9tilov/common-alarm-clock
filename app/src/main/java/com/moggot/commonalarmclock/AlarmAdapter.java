@@ -144,7 +144,7 @@ public class AlarmAdapter extends BaseAdapter {
                                 AlarmContext alarmContext = new AlarmContext(alarm, context);
                                 AlarmManager alarmManager = new AlarmManager();
                                 alarmManager.cancelAlarm(alarmContext);
-                                db.removeAlarm(alarm);
+                                db.deleteAlarm(alarm);
                                 alarms.remove(position);
                                 update(alarms);
                             }

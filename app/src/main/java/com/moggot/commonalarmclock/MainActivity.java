@@ -1,33 +1,31 @@
 package com.moggot.commonalarmclock;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.analytics.Tracker;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
+import com.moggot.commonalarmclock.main.MainModelImpl;
+import com.moggot.commonalarmclock.main.MainPresenter;
+import com.moggot.commonalarmclock.main.MainPresenterImpl;
+import com.moggot.commonalarmclock.main.MainView;
 import com.moggot.commonalarmclock.tutorial.OnboardingActivity;
 import com.moggot.commonalarmclock.tutorial.SharedPreference;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements OnItemTouchListener {
+public class MainActivity extends AppCompatActivity implements MainView {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private List<Alarm> alarms;
-    private DataBase db;
     private SwipeRecyclerViewAdapter adapter;
-    RecyclerView recyclerView;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,36 +35,8 @@ public class MainActivity extends AppCompatActivity implements OnItemTouchListen
         startOnboarding();
         initAnalytics();
 
-        this.db = new DataBase(this);
-        alarms = db.getAllAlarms();
-        Log.v(LOG_TAG, "size1 = " + alarms.size());
-//        Log.v(LOG_TAG, "time1 = " + alarms.get(1).getDate());
-        this.adapter = new SwipeRecyclerViewAdapter(this, alarms, this);
-
-        recyclerView = (RecyclerView) findViewById(R.id.langRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(this, adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-    }
-
-    @Override
-    public void onCardViewTap(View view, int position) {
-        Alarm alarm = adapter.getAlarmAtPosition(position);
-        Intent intent = new Intent(this, ActivitySettings.class);
-        intent.putExtra(Consts.EXTRA_ID, alarm.getId());
-        startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
-    }
-
-    @Override
-    public void onStateChange(View view, int position) {
-        Alarm alarm = adapter.getAlarmAtPosition(position);
-        alarm.setState(!alarm.getState());
-        db.editAlarm(alarm);
+        setupMVP();
+        setupViews();
     }
 
     private void startOnboarding() {
@@ -77,12 +47,30 @@ public class MainActivity extends AppCompatActivity implements OnItemTouchListen
     }
 
     private void initAnalytics() {
-        Tracker tracker = ((AnalyticsApplication) getApplication())
+        Tracker tracker = ((App) getApplication())
                 .getDefaultTracker();
         tracker.enableAdvertisingIdCollection(true);
 
         FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
         firebaseAnalytics.init();
+    }
+
+    private void setupViews() {
+        this.adapter = new SwipeRecyclerViewAdapter(presenter);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.alarmRecyclerView);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(this, presenter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void setupMVP() {
+        MainPresenterImpl presenter = new MainPresenterImpl(this);
+        MainModelImpl model = new MainModelImpl(getApplicationContext());
+        presenter.setModel(model);
+        this.presenter = presenter;
     }
 
     public void onClickAdd(View view) {
@@ -94,31 +82,28 @@ public class MainActivity extends AppCompatActivity implements OnItemTouchListen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
-                DataBase db = new DataBase(this);
-                alarms = db.getAllAlarms();
-                this.adapter = new SwipeRecyclerViewAdapter(this, alarms, this);
-                recyclerView = (RecyclerView) findViewById(R.id.langRecyclerView);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-                ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(this, adapter);
-                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-                itemTouchHelper.attachToRecyclerView(recyclerView);
-//                adapter.notifyDataSetChanged();
-                Log.v(LOG_TAG, "size2 = " + alarms.size());
-//                alarms = db.getAllAlarms();
-//                adapter = new SwipeRecyclerViewAdapter(alarms, this);
-//
-//                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.langRecyclerView);
-//                recyclerView.setHasFixedSize(true);
-//                recyclerView.setAdapter(adapter);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//                ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(this, adapter);
-//                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-//                itemTouchHelper.attachToRecyclerView(recyclerView);
+                presenter.updateList();
                 break;
         }
+    }
+
+    @Override
+    public void deleteAlarm(int position) {
+        adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void notifyItemRangeChanged(int positionStart, int itemCount) {
+        adapter.notifyItemRangeChanged(positionStart, itemCount);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

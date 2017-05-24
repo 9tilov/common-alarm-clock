@@ -43,7 +43,7 @@ public class FragmentSnooze extends Fragment {
         long id = 0;
         if (getArguments() != null)
             id = getArguments().getLong(Consts.EXTRA_ID);
-        DataBase db = new DataBase(getActivity());
+        DataBase db = new DataBase(getActivity().getApplicationContext());
         alarm = db.getAlarm(id);
 
     }

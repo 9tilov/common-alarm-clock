@@ -8,12 +8,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
-    private final ItemTouchHelperAdapter mAdapter;
+    private final ItemTouchHelperAdapter helper;
     private Context context;
 
-    public SimpleItemTouchHelperCallback(Context context, ItemTouchHelperAdapter adapter) {
+    public SimpleItemTouchHelperCallback(Context context, ItemTouchHelperAdapter helper) {
         this.context = context;
-        mAdapter = adapter;
+        this.helper = helper;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        final int swipeFlags = ItemTouchHelper.START;
+        final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
@@ -44,18 +44,17 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private void showDialog(final RecyclerView.ViewHolder viewHolder) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); //alert for confirm to delete
-        builder.setMessage(context.getString(R.string.dialog_title_remove));    //set message
-
+        builder.setMessage(context.getString(R.string.dialog_title_remove)).setCancelable(false);    //set message
         builder.setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() { //when click on DELETE
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+                helper.onItemDismiss(viewHolder.getAdapterPosition(), viewHolder.getLayoutPosition());
                 return;
             }
         }).setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {  //not removing items if cancel is done
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mAdapter.onItemShow(viewHolder.getAdapterPosition());
+                helper.onItemShow(viewHolder.getLayoutPosition());
                 return;
             }
         }).show();

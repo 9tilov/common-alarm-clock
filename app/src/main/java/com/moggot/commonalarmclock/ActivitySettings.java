@@ -30,7 +30,6 @@ import android.widget.TimePicker;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
-import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.MusicFileAnimationBounce;
@@ -73,7 +72,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Tracker tracker = ((AnalyticsApplication) getApplication())
+        Tracker tracker = ((App) getApplication())
                 .getDefaultTracker();
         tracker.enableAdvertisingIdCollection(true);
 
@@ -114,7 +113,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
 
         Button btnSave = (Button) findViewById(R.id.btnSaveAlarm);
 
-        db = new DataBase(this);
+        db = new DataBase(getApplicationContext());
 
         final long id = getIntent().getLongExtra(Consts.EXTRA_ID, 0);
         if (id == 0)
@@ -134,13 +133,13 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
                 else {
                     Alarm loadedAlarm = db.getAlarm(id);
                     if (!compareDays(loadedAlarm.getRepeatAlarmIDs(), alarm.getRepeatAlarmIDs())) {
-                        AlarmContext alarmContext = new AlarmContext(loadedAlarm, ActivitySettings.this);
+                        AlarmContext alarmContext = new AlarmContext(loadedAlarm, getApplicationContext());
                         AlarmManager alarmManager = new AlarmManager();
                         alarmManager.cancelAlarm(alarmContext);
                     }
                     db.editAlarm(alarm);
                 }
-                AlarmContext alarmContext = new AlarmContext(alarm, ActivitySettings.this);
+                AlarmContext alarmContext = new AlarmContext(alarm, getApplicationContext());
                 AlarmManager alarmManager = new AlarmManager();
                 alarmManager.setAlarm(alarmContext);
 
@@ -368,7 +367,7 @@ public class ActivitySettings extends AppCompatActivity implements OnClickListen
         }
     }
 
-   private boolean isNetworkAvailable() {
+    private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return (activeNetworkInfo != null && activeNetworkInfo.isConnected());

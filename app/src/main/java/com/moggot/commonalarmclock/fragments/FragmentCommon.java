@@ -14,10 +14,6 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.observer.AlarmData;
 import com.moggot.commonalarmclock.observer.AlarmGetUpDisplay;
 
-/**
- * Created by toor on 10.03.17.
- */
-
 public class FragmentCommon extends Fragment {
 
     private Alarm alarm;
@@ -40,7 +36,7 @@ public class FragmentCommon extends Fragment {
         long id = 0;
         if (getArguments() != null)
             id = getArguments().getLong(Consts.EXTRA_ID);
-        DataBase db = new DataBase(getActivity());
+        DataBase db = new DataBase(getActivity().getApplicationContext());
         alarm = db.getAlarm(id);
 
     }

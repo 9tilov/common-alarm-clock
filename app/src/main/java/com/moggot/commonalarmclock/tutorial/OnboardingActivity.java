@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.google.android.gms.analytics.Tracker;
+import com.moggot.commonalarmclock.App;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 
 public class OnboardingActivity extends AppIntro2 {
@@ -15,7 +15,7 @@ public class OnboardingActivity extends AppIntro2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Tracker tracker = ((AnalyticsApplication) getApplication())
+        Tracker tracker = ((App) getApplication())
                 .getDefaultTracker();
         tracker.enableAdvertisingIdCollection(true);
 

@@ -11,7 +11,6 @@ import android.view.WindowManager;
 
 import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.fragments.FragmentCreator;
 import com.moggot.commonalarmclock.music.MusicService;
@@ -29,7 +28,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_up_alarm);
 
-        Tracker tracker = ((AnalyticsApplication) getApplication())
+        Tracker tracker = ((App) getApplication())
                 .getDefaultTracker();
         tracker.enableAdvertisingIdCollection(true);
 
@@ -46,7 +45,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         if (id == 0)
             return;
 
-        DataBase db = new DataBase(this);
+        DataBase db = new DataBase(getApplicationContext());
         this.alarm = db.getAlarm(id);
 
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -84,7 +83,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         stopService(intent);
         SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (ids.get(Consts.TOMORROW) != 0) {
-            AlarmContext alarmContext = new AlarmContext(alarm, this);
+            AlarmContext alarmContext = new AlarmContext(alarm, getApplicationContext());
             AlarmManager alarmManager = new AlarmManager();
             alarmManager.cancelAlarm(alarmContext);
         }

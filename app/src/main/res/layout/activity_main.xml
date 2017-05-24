@@ -7,7 +7,7 @@
     android:weightSum="100">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/langRecyclerView"
+        android:id="@+id/alarmRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="85"

@@ -39,6 +39,7 @@ public final class Consts {
     }
 
     public final static String EXTRA_ID = "_id";
+    public final static String EXTRA_POSITION = "position";
     public final static String EXTRA_TYPE = "type";
     public final static String EXTRA_PATH = "path";
 
@@ -51,6 +52,8 @@ public final class Consts {
     public final static int REQUEST_CODE_ACTIVITY_SETTINGS = 3;
 
     public final static int SNOOZE_TIME_IN_MINUTES = 5;
+
+    public static final int NO_POSITION = -1;
 
     public final static String DATA_RADIO = "http://pulseedm.cdnstream1.com:8124/1373_128";
     public final static String DATA_DEFAULT_RINGTONE = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
