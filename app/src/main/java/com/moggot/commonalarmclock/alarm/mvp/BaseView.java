@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.main;
+package com.moggot.commonalarmclock.alarm.mvp;
 
 import android.content.Context;
 

@@ -15,10 +15,10 @@ public final class Consts {
         RADIO(1),
         DEFAULT_RINGTONE(2);
 
-        private final int type;
+        private final int code;
 
-        MUSIC_TYPE(int type) {
-            this.type = type;
+        MUSIC_TYPE(int code) {
+            this.code = code;
         }
 
         public static MUSIC_TYPE fromInteger(int x) {
@@ -33,14 +33,14 @@ public final class Consts {
             return null;
         }
 
-        public int getType() {
-            return this.type;
+        public int getCode() {
+            return this.code;
         }
     }
 
     public final static String EXTRA_ID = "_id";
     public final static String EXTRA_POSITION = "position";
-    public final static String EXTRA_TYPE = "type";
+    public final static String EXTRA_TYPE = "code";
     public final static String EXTRA_PATH = "path";
 
     public final static String FIREBASE_ITEM_ID = "ID";
@@ -54,6 +54,8 @@ public final class Consts {
     public final static int SNOOZE_TIME_IN_MINUTES = 5;
 
     public static final int NO_POSITION = -1;
+
+    public static final int NO_ID = 0;
 
     public final static String DATA_RADIO = "http://pulseedm.cdnstream1.com:8124/1373_128";
     public final static String DATA_DEFAULT_RINGTONE = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();

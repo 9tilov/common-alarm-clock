@@ -1,9 +1,8 @@
-package com.moggot.commonalarmclock.main;
+package com.moggot.commonalarmclock.alarm.mvp.main;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.moggot.commonalarmclock.AlarmContext;
-import com.moggot.commonalarmclock.AlarmManager;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -11,13 +10,13 @@ import java.util.List;
 
 public class MainModelImpl implements MainModel {
 
+    private static final String LOG_TAG = MainModelImpl.class.getSimpleName();
+
     private DataBase db;
-    private Context context;
     private List<Alarm> alarms;
 
     public MainModelImpl(Context context) {
         this.db = new DataBase(context);
-        this.context = context;
     }
 
     @Override
@@ -28,6 +27,11 @@ public class MainModelImpl implements MainModel {
     @Override
     public int getAlarmsCount() {
         return alarms.size();
+    }
+
+    @Override
+    public int getAlarmPosition(Alarm alarm) {
+        return alarms.indexOf(alarm);
     }
 
     @Override
@@ -46,17 +50,5 @@ public class MainModelImpl implements MainModel {
     public void editAlarm(Alarm alarm, int position) {
         alarms.set(position, alarm);
         db.editAlarm(alarm);
-        AlarmContext alarmContext = new AlarmContext(alarm, context);
-        AlarmManager alarmManager = new AlarmManager();
-        if (alarm.getState())
-            alarmManager.setAlarm(alarmContext);
-        else
-            alarmManager.cancelAlarm(alarmContext);
-    }
-
-    @Override
-    public void addAlarm(Alarm alarm) {
-        db.addAlarm(alarm);
-        alarms.add(alarm);
     }
 }

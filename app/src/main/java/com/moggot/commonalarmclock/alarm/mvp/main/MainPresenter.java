@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.main;
+package com.moggot.commonalarmclock.alarm.mvp.main;
 
 import android.view.ViewGroup;
 
@@ -6,6 +6,8 @@ import com.moggot.commonalarmclock.AlarmViewHolder;
 import com.moggot.commonalarmclock.ItemTouchHelperAdapter;
 
 public interface MainPresenter extends ItemTouchHelperAdapter {
+
+    void setMainModel(MainModel mainModel);
 
     void updateList();
 

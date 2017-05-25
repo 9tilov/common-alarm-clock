@@ -13,10 +13,10 @@ import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.main.MainModelImpl;
-import com.moggot.commonalarmclock.main.MainPresenter;
-import com.moggot.commonalarmclock.main.MainPresenterImpl;
-import com.moggot.commonalarmclock.main.MainView;
+import com.moggot.commonalarmclock.alarm.mvp.main.MainModelImpl;
+import com.moggot.commonalarmclock.alarm.mvp.main.MainPresenter;
+import com.moggot.commonalarmclock.alarm.mvp.main.MainPresenterImpl;
+import com.moggot.commonalarmclock.alarm.mvp.main.MainView;
 import com.moggot.commonalarmclock.tutorial.OnboardingActivity;
 import com.moggot.commonalarmclock.tutorial.SharedPreference;
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private void setupMVP() {
         MainPresenterImpl presenter = new MainPresenterImpl(this);
         MainModelImpl model = new MainModelImpl(getApplicationContext());
-        presenter.setModel(model);
+        presenter.setMainModel(model);
         this.presenter = presenter;
     }
 

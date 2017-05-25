@@ -1,9 +1,8 @@
-package com.moggot.commonalarmclock.main;
+package com.moggot.commonalarmclock.alarm.mvp.main;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,30 +20,36 @@ public class MainPresenterImpl implements MainPresenter {
     private static final String LOG_TAG = MainPresenterImpl.class.getSimpleName();
 
     private MainView view;
-    private MainModel model;
+    private MainModel mainModel;
 
     public MainPresenterImpl(MainView view) {
         this.view = view;
     }
 
     @Override
+    public void setMainModel(MainModel mainModel) {
+        this.mainModel = mainModel;
+        mainModel.loadData();
+    }
+
+    @Override
     public void updateList() {
-        model.loadData();
+        mainModel.loadData();
         view.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClicked(int position) {
         Intent intent = new Intent(view.getContext(), ActivitySettings.class);
-        intent.putExtra(Consts.EXTRA_ID, model.getAlarm(position).getId());
+        intent.putExtra(Consts.EXTRA_ID, mainModel.getAlarm(position).getId());
         ((Activity) view.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
     }
 
     @Override
     public void onItemChangeState(int position, boolean newState) {
-        Alarm alarm = model.getAlarm(position);
+        Alarm alarm = mainModel.getAlarm(position);
         alarm.setState(newState);
-        model.editAlarm(alarm, position);
+        mainModel.editAlarm(alarm, position);
     }
 
     @Override
@@ -73,7 +78,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void bindViewHolder(AlarmViewHolder viewHolder, int position) {
-        Alarm alarm = model.getAlarm(position);
+        Alarm alarm = mainModel.getAlarm(position);
         Converter converter = new Converter(view.getContext().getResources());
         viewHolder.time.setText(converter.getTimeAsString(alarm.getTimeInMillis()));
         viewHolder.days.setText(converter.getDaysAsString(alarm.getRepeatAlarmIDs()));
@@ -86,12 +91,12 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public int getItemsCount() {
-        return model.getAlarmsCount();
+        return mainModel.getAlarmsCount();
     }
 
     @Override
     public long getItemId(int position) {
-        return model.getAlarm(position).hashCode();
+        return mainModel.getAlarm(position).hashCode();
     }
 
     private void setMusicIcon(AlarmViewHolder viewHolder, Consts.MUSIC_TYPE musicType) {
@@ -122,19 +127,14 @@ public class MainPresenterImpl implements MainPresenter {
             viewHolder.snooze.setVisibility(View.GONE);
     }
 
-    public void setModel(MainModel model) {
-        this.model = model;
-        model.loadData();
-    }
-
     @Override
     public void onItemDismiss(int adapterPosition, int layoutPosition) {
-        model.deleteAlarm(adapterPosition);
+        mainModel.deleteAlarm(adapterPosition);
         view.deleteAlarm(layoutPosition);
     }
 
     @Override
     public void onItemShow(int layoutPosition) {
-        view.notifyItemRangeChanged(layoutPosition, model.getAlarmsCount());
+        view.notifyItemRangeChanged(layoutPosition, mainModel.getAlarmsCount());
     }
 }

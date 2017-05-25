@@ -12,7 +12,7 @@
     <dimen name="text_size_adapter_time">35sp</dimen>
     <dimen name="text_size_adapter_days">11sp</dimen>
     <dimen name="text_size_adapter_alarm_name">15sp</dimen>
-    <dimen name="text_size">15sp</dimen>
+    <dimen name="text_size">18sp</dimen>
 
     <dimen name="listview_item_height">75dp</dimen>
 

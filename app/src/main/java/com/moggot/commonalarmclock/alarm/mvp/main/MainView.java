@@ -1,4 +1,6 @@
-package com.moggot.commonalarmclock.main;
+package com.moggot.commonalarmclock.alarm.mvp.main;
+
+import com.moggot.commonalarmclock.alarm.mvp.BaseView;
 
 public interface MainView extends BaseView {
 
