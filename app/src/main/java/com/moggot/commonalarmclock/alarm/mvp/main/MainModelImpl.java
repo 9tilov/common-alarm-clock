@@ -6,6 +6,7 @@ import android.util.Log;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainModelImpl implements MainModel {
@@ -17,6 +18,7 @@ public class MainModelImpl implements MainModel {
 
     public MainModelImpl(Context context) {
         this.db = new DataBase(context);
+        this.alarms = new ArrayList<>();
     }
 
     @Override

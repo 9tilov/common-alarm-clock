@@ -11,6 +11,8 @@ public interface MainPresenter extends ItemTouchHelperAdapter {
 
     void updateList();
 
+    void onActivityResult();
+
     void onItemClicked(int position);
 
     void onItemChangeState(int position, boolean newState);

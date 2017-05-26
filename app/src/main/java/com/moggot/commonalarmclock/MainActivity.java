@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
-                presenter.updateList();
+                presenter.onActivityResult();
                 break;
         }
     }

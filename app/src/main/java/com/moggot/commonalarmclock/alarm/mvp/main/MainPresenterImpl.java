@@ -2,6 +2,7 @@ package com.moggot.commonalarmclock.alarm.mvp.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,18 @@ public class MainPresenterImpl implements MainPresenter {
     public void updateList() {
         mainModel.loadData();
         view.notifyDataSetChanged();
+    }
+
+    //Задержка нужна, потому что без нее не работает анимация в onActivityResult
+    @Override
+    public void onActivityResult() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateList();
+            }
+        }, 400);
     }
 
     @Override
