@@ -3,7 +3,7 @@ package com.moggot.commonalarmclock;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.moggot.commonalarmclock.alarm.mvp.main.MainPresenter;
+import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 
 public class SwipeRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
 

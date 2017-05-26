@@ -29,10 +29,10 @@ import android.widget.TimePicker;
 
 import com.google.android.gms.analytics.Tracker;
 import com.ipaulpro.afilechooser.utils.FileUtils;
-import com.moggot.commonalarmclock.alarm.mvp.settings.SettingsModelImpl;
-import com.moggot.commonalarmclock.alarm.mvp.settings.SettingsPresenter;
-import com.moggot.commonalarmclock.alarm.mvp.settings.SettingsPresenterImpl;
-import com.moggot.commonalarmclock.alarm.mvp.settings.SettingsView;
+import com.moggot.commonalarmclock.mvp.settings.SettingsModelImpl;
+import com.moggot.commonalarmclock.mvp.settings.SettingsPresenter;
+import com.moggot.commonalarmclock.mvp.settings.SettingsPresenterImpl;
+import com.moggot.commonalarmclock.mvp.settings.SettingsView;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.MusicFileAnimationBounce;

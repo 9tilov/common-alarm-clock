@@ -13,10 +13,10 @@ import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.alarm.mvp.main.MainModelImpl;
-import com.moggot.commonalarmclock.alarm.mvp.main.MainPresenter;
-import com.moggot.commonalarmclock.alarm.mvp.main.MainPresenterImpl;
-import com.moggot.commonalarmclock.alarm.mvp.main.MainView;
+import com.moggot.commonalarmclock.mvp.main.MainModelImpl;
+import com.moggot.commonalarmclock.mvp.main.MainPresenter;
+import com.moggot.commonalarmclock.mvp.main.MainPresenterImpl;
+import com.moggot.commonalarmclock.mvp.main.MainView;
 import com.moggot.commonalarmclock.tutorial.OnboardingActivity;
 import com.moggot.commonalarmclock.tutorial.SharedPreference;
 

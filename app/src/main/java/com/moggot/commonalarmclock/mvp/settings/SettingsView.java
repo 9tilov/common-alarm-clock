@@ -1,8 +1,8 @@
-package com.moggot.commonalarmclock.alarm.mvp.settings;
+package com.moggot.commonalarmclock.mvp.settings;
 
 import android.util.SparseIntArray;
 
-import com.moggot.commonalarmclock.alarm.mvp.BaseView;
+import com.moggot.commonalarmclock.mvp.BaseView;
 
 public interface SettingsView extends BaseView {
 

@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.alarm.mvp.main;
+package com.moggot.commonalarmclock.mvp.main;
 
 import android.app.Activity;
 import android.content.Intent;

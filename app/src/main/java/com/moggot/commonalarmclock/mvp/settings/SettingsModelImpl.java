@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.alarm.mvp.settings;
+package com.moggot.commonalarmclock.mvp.settings;
 
 import android.content.Context;
 import android.util.SparseIntArray;

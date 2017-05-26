@@ -1,7 +1,6 @@
-package com.moggot.commonalarmclock.alarm.mvp.main;
+package com.moggot.commonalarmclock.mvp.main;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;

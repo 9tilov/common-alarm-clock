@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.alarm.mvp.main;
+package com.moggot.commonalarmclock.mvp.main;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
 
