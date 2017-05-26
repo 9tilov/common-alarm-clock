@@ -1,6 +1,5 @@
 package com.moggot.commonalarmclock;
 
-import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -173,20 +172,16 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         boolean on = ((ToggleButton) v).isChecked();
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.toggle_days);
         v.startAnimation(bounce);
-        SparseIntArray ids = alarm.getRepeatAlarmIDs();
+        SparseIntArray ids = presenter.getDays();
         if (on) {
             if (ids.get(Consts.TOMORROW) != 0)
                 ids.clear();
-//            int requestCode = db.getRandomRequestCode();
-//            ids.put(tbDaysOfWeek.get(v.getId()), requestCode);
+            presenter.setDay(tbDaysOfWeek.get(v.getId()));
         } else {
             ids.delete(tbDaysOfWeek.get(v.getId()));
         }
 
-        if (ids.size() == 0)
-//            ids.put(Consts.TOMORROW, db.getRandomRequestCode());
 
-            alarm.setRepeatAlarmIDs(ids);
     }
 
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
@@ -199,16 +194,14 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                 presenter.setIsMathEnable(isChecked);
             if (buttonView.getId() == R.id.checkBoxRepeat) {
                 if (isChecked)
-                    ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
+                    ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
                 else {
-                    RelativeLayout rlDays = ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays));
+                    RelativeLayout rlDays = ((RelativeLayout) findViewById(R.id.rlDays));
                     for (int i = 0; i < rlDays.getChildCount(); ++i) {
                         ((ToggleButton) rlDays.getChildAt(i)).setChecked(false);
-                        SparseIntArray ids = new SparseIntArray();
-//                        ids.put(Consts.TOMORROW, db.getRandomRequestCode());
-                        alarm.setRepeatAlarmIDs(ids);
+                        presenter.setTomorrowDay();
                     }
-                    ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.GONE);
+                    ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.GONE);
                 }
             }
         }

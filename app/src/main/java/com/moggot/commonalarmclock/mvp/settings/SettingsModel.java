@@ -36,5 +36,11 @@ public interface SettingsModel {
 
     int getMusicCode();
 
+    void setTomorrowDay();
+
+    void setDay(int dayCode);
+
+    SparseIntArray getDays();
+
     SparseIntArray getRepeateIDs();
 }

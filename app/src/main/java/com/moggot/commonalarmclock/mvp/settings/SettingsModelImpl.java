@@ -144,6 +144,29 @@ public class SettingsModelImpl implements SettingsModel {
     }
 
     @Override
+    public void setTomorrowDay() {
+        SparseIntArray ids = new SparseIntArray();
+        ids.put(Consts.TOMORROW, db.getRandomRequestCode());
+        alarm.setRepeatAlarmIDs(ids);
+    }
+
+    @Override
+    public void setDay(int dayCode) {
+        SparseIntArray ids = alarm.getRepeatAlarmIDs();
+        int requestCode = db.getRandomRequestCode();
+        ids.put(dayCode, requestCode);
+        alarm.setRepeatAlarmIDs(ids);
+
+        if (ids.size() == 0)
+            setTomorrowDay();
+    }
+
+    @Override
+    public SparseIntArray getDays() {
+        return alarm.getRepeatAlarmIDs();
+    }
+
+    @Override
     public SparseIntArray getRepeateIDs() {
         return alarm.getRepeatAlarmIDs();
     }

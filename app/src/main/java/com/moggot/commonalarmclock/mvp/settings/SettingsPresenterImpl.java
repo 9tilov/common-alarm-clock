@@ -1,5 +1,7 @@
 package com.moggot.commonalarmclock.mvp.settings;
 
+import android.util.SparseIntArray;
+
 import com.moggot.commonalarmclock.music.Music;
 
 import java.util.Calendar;
@@ -84,5 +86,20 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     @Override
     public int getMusicCode() {
         return model.getMusicCode();
+    }
+
+    @Override
+    public void setTomorrowDay() {
+        model.setTomorrowDay();
+    }
+
+    @Override
+    public void setDay(int dayCode) {
+        model.setDay(dayCode);
+    }
+
+    @Override
+    public SparseIntArray getDays() {
+        return model.getDays();
     }
 }
