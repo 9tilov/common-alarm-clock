@@ -39,6 +39,7 @@ import com.moggot.commonalarmclock.animation.MusicFileAnimationBounce;
 import com.moggot.commonalarmclock.animation.RadioAnimationBounce;
 import com.moggot.commonalarmclock.animation.RingtoneAnimationBounce;
 import com.moggot.commonalarmclock.animation.SaveAlarmAnimationBounce;
+import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.music.MusicService;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
@@ -169,7 +170,6 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
     };
 
     public void onClick(View v) {
-        Log.v(LOG_TAG, "click");
         boolean on = ((ToggleButton) v).isChecked();
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.toggle_days);
         v.startAnimation(bounce);
@@ -197,11 +197,10 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                 presenter.setIsSnoozeEnable(isChecked);
             if (buttonView.getId() == R.id.checkBoxMath)
                 presenter.setIsMathEnable(isChecked);
-            if (isChecked) {
-                if (buttonView.getId() == R.id.checkBoxRepeat)
+            if (buttonView.getId() == R.id.checkBoxRepeat) {
+                if (isChecked)
                     ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
-            } else {
-                if (buttonView.getId() == R.id.checkBoxRepeat) {
+                else {
                     RelativeLayout rlDays = ((RelativeLayout) ((Activity) ActivitySettings.this).findViewById(R.id.rlDays));
                     for (int i = 0; i < rlDays.getChildCount(); ++i) {
                         ((ToggleButton) rlDays.getChildAt(i)).setChecked(false);
@@ -235,6 +234,7 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
     RadioGroup.OnCheckedChangeListener rgListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int checkedID) {
+            Music music = new Music(ActivitySettings.this);
             switch (checkedID) {
                 case R.id.rbFile:
                     if (isMusicPlaying) {
@@ -247,10 +247,10 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                 case R.id.rbRadio:
                     if (isNetworkAvailable()) {
                         btnMusic.setBackgroundResource(R.drawable.ic_radio);
-                        presenter.setMusic(Consts.MUSIC_TYPE.RADIO.getCode(), Consts.DATA_RADIO);
+                        music.setInternetRadio();
                     } else {
                         internetUnavailable();
-                        ((RadioButton) rgMusic.getChildAt(presenter.getMusicType())).setChecked(true);
+                        ((RadioButton) rgMusic.getChildAt(presenter.getMusicCode())).setChecked(true);
                     }
                     break;
                 case R.id.rbRingtones:
@@ -260,10 +260,13 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                         stopService(dummyIntent);
                     }
                     btnMusic.setBackgroundResource(R.drawable.ic_note);
-                    presenter.setMusic(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getCode(), Consts.DATA_DEFAULT_RINGTONE);
+                    music.setDefaultRingtone(Consts.DEFAULT_RINGTONE_URL);
+                    break;
+                default:
+                    music.setInternetRadio();
                     break;
             }
-
+            presenter.setMusic(music);
         }
     };
 
@@ -276,8 +279,7 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                 break;
             case R.id.rbRadio:
                 Intent musicIntent = new Intent(this, MusicService.class);
-                musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
-                musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
+                musicIntent.putExtra(Consts.EXTRA_MUSIC, new Music(this));
                 if (isMusicPlaying) {
                     isMusicPlaying = false;
                     btnMusic.setBackgroundResource(R.drawable.ic_radio);
@@ -300,10 +302,9 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Music music = new Music(this);
         switch (requestCode) {
-
             case Consts.REQUEST_CODE_FILE_CHOSER:
-                // If the file selection was successful
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
                         // Get the URI of the selected file
@@ -312,7 +313,8 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                             // Get the file g_path from the URI
                             String path = FileUtils.getPath(this, uri);
                             if (MusicFile.checkExtension(path)) {
-                                presenter.setMusic(Consts.MUSIC_TYPE.MUSIC_FILE.getCode(), path);
+                                music.setMusicFile(path);
+                                presenter.setMusic(music);
                             } else {
                                 notMusicFile();
                                 ((RadioButton) rgMusic.getChildAt(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getCode())).setChecked(true);
@@ -322,14 +324,16 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                         }
                     }
                 } else {
-                    ((RadioButton) rgMusic.getChildAt(presenter.getMusicType())).setChecked(true);
+                    ((RadioButton) rgMusic.getChildAt(presenter.getMusicCode())).setChecked(true);
                 }
                 break;
             case Consts.REQUEST_CODE_DEFAULT_RINGTONE:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    if (uri != null)
-                        presenter.setMusic(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getCode(), uri.toString());
+                    if (uri != null) {
+                        music.setDefaultRingtone(uri.toString());
+                        presenter.setMusic(music);
+                    }
                 }
                 break;
         }
@@ -457,7 +461,7 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
     }
 
     @Override
-    public void setMusic(int musicType) {
+    public void setMusicRadioButton(int musicType) {
         ((RadioButton) ((RadioGroup) findViewById(R.id.rgMusicType)).getChildAt(musicType)).setChecked(true);
     }
 }

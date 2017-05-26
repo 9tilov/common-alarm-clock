@@ -32,9 +32,9 @@ public interface SettingsModel {
 
     String getName();
 
-    void setMusic(int musicType, String musicPath);
+    void setMusic(Music music);
 
-    int getMusicType();
+    int getMusicCode();
 
     SparseIntArray getRepeateIDs();
 }

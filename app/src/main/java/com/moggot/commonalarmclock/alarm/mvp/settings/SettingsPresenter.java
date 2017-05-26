@@ -26,7 +26,8 @@ public interface SettingsPresenter {
 
     void setName(String name);
 
-    void setMusic(int musicType, String musicPath);
+    void setMusic(Music music);
 
-    int getMusicType();
+    int getMusicCode();
+
 }

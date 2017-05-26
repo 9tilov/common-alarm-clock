@@ -11,6 +11,7 @@ import android.util.SparseIntArray;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.music.Music;
 
 import java.util.Calendar;
 import java.lang.reflect.Type;
@@ -76,7 +77,9 @@ public class Alarm {
         return date;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setDate(@NotNull java.util.Date date) {
         this.date = date;
     }
@@ -86,7 +89,9 @@ public class Alarm {
         return requestCodes;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setRequestCodes(@NotNull String requestCodes) {
         this.requestCodes = requestCodes;
     }
@@ -120,7 +125,9 @@ public class Alarm {
         return musicPath;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setMusicPath(@NotNull String musicPath) {
         this.musicPath = musicPath;
     }
@@ -143,9 +150,9 @@ public class Alarm {
 
     // KEEP METHODS - put your custom methods here
 
-    public void setMusic(Integer musicType, String musicPath) {
-        this.musicType = musicType;
-        this.musicPath = musicPath;
+    public void setMusic(Music music) {
+        this.musicType = music.getMusicType().getCode();
+        this.musicPath = music.getMusicURL();
     }
 
     public SparseIntArray getRepeatAlarmIDs() {

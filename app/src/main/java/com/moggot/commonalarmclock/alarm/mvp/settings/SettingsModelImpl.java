@@ -1,8 +1,6 @@
 package com.moggot.commonalarmclock.alarm.mvp.settings;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
@@ -40,8 +38,7 @@ public class SettingsModelImpl implements SettingsModel {
         alarm.setIsSnoozeEnable(false);
         alarm.setIsMathEnable(true);
         alarm.setName("");
-        alarm.setMusicPath(createMusicPath());
-        alarm.setMusicType(createMusicType());
+        alarm.setMusic(new Music(context));
         alarm.setState(true);
     }
 
@@ -55,26 +52,6 @@ public class SettingsModelImpl implements SettingsModel {
         int requstCode = db.getRandomRequestCode();
         ids.put(Consts.TOMORROW, requstCode);
         return new Gson().toJson(ids);
-    }
-
-    private String createMusicPath() {
-        if (isNetworkAvailable())
-            return Consts.DATA_RADIO;
-        else
-            return Consts.DATA_DEFAULT_RINGTONE;
-    }
-
-    private int createMusicType() {
-        if (isNetworkAvailable())
-            return Consts.MUSIC_TYPE.RADIO.getCode();
-        else
-            return Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getCode();
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
     }
 
     @Override
@@ -157,12 +134,12 @@ public class SettingsModelImpl implements SettingsModel {
     }
 
     @Override
-    public void setMusic(int musicType, String musicPath) {
-        alarm.setMusic(musicType, musicPath);
+    public void setMusic(Music music) {
+        alarm.setMusic(music);
     }
 
     @Override
-    public int getMusicType() {
+    public int getMusicCode() {
         return alarm.getMusicType();
     }
 

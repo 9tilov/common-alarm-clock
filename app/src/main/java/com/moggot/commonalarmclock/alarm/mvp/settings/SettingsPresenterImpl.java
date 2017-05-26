@@ -29,7 +29,7 @@ public class SettingsPresenterImpl implements SettingsPresenter {
         view.setIsSnoozeEnable(model.getIsSnoozeEnable());
         view.setIsMathEnable(model.getIsMathEnable());
         view.setName(model.getName());
-        view.setMusic(model.getMusicType());
+        view.setMusicRadioButton(model.getMusicCode());
     }
 
     @Override
@@ -77,12 +77,12 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     }
 
     @Override
-    public void setMusic(int musicType, String musicPath) {
-        model.setMusic(musicType, musicPath);
+    public void setMusic(Music music) {
+        model.setMusic(music);
     }
 
     @Override
-    public int getMusicType() {
-        return model.getMusicType();
+    public int getMusicCode() {
+        return model.getMusicCode();
     }
 }

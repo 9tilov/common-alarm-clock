@@ -19,7 +19,7 @@ public class RingtonePlayer extends PlayerCreator {
         MediaPlayer mediaPlayer = null;
         try {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            Uri alarm = Uri.parse(music.getMusicPath());
+            Uri alarm = Uri.parse(music.getMusicURL());
             mediaPlayer = MediaPlayer.create(context, alarm);
 
             mediaPlayer.setLooping(true);

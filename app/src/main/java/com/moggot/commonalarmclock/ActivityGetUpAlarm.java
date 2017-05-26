@@ -53,8 +53,9 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         vibrator.vibrate(once, 0);
 
         Intent musicIntent = new Intent(ActivityGetUpAlarm.this, MusicService.class);
-        musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
-        musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
+//        musicIntent.putExtra(Consts.EXTRA_MUSIC, alarm.getmus)
+//        musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
+//        musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
         startService(musicIntent);
 
         FragmentCreator creator = new FragmentCreator(this);

@@ -18,7 +18,7 @@ public class FilePlayer extends PlayerCreator {
     public MediaPlayer create(Music music) {
         MediaPlayer mediaPlayer = null;
         try {
-            Uri uri = Uri.fromFile((new java.io.File(music.getMusicPath())));
+            Uri uri = Uri.fromFile((new java.io.File(music.getMusicURL())));
             mediaPlayer = MediaPlayer.create(context, uri);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setLooping(true);

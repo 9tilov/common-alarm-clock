@@ -22,7 +22,7 @@ public class RadioPlayer extends PlayerCreator {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mediaPlayer.setDataSource(music.getMusicPath());
+            mediaPlayer.setDataSource(music.getMusicURL());
         } catch (IOException e) {
             e.printStackTrace();
         }

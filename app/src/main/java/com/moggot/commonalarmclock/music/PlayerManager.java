@@ -19,14 +19,14 @@ public class PlayerManager {
 
     public MediaPlayer createPlayer(Music music) {
         PlayerCreator player;
-        switch (music.getType()) {
+        switch (music.getMusicType()) {
             case RADIO:
                 if (isNetworkAvailable())
                     player = new RadioPlayer(context);
                 else {
                     internetUnavailable();
                     player = new RingtonePlayer(context);
-                    music.setPath(Consts.DATA_DEFAULT_RINGTONE);
+                    music.setDefaultRingtone(Consts.DEFAULT_RINGTONE_URL);
                 }
                 break;
             case DEFAULT_RINGTONE:
@@ -41,7 +41,7 @@ public class PlayerManager {
                 else {
                     internetUnavailable();
                     player = new RingtonePlayer(context);
-                    music.setPath(Consts.DATA_DEFAULT_RINGTONE);
+                    music.setDefaultRingtone(Consts.DEFAULT_RINGTONE_URL);
                 }
                 break;
         }
