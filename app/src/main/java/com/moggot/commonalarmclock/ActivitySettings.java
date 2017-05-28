@@ -55,11 +55,8 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 
     private TextView tvAlarmTime;
     private SparseIntArray tbDaysOfWeek;
-    private CheckBox checkBoxMath, checkBoxSnooze;
     private RadioGroup rgMusic;
     private Button btnMusic;
-
-    private Alarm alarm;
 
     private boolean isMusicPlaying = false;
 
@@ -96,10 +93,10 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         tvAlarmTime = (TextView) findViewById(R.id.tvAlarmTime);
         tvAlarmTime.setOnClickListener(timeListiner);
 
-        checkBoxMath = (CheckBox) findViewById(R.id.checkBoxMath);
+        CheckBox checkBoxMath = (CheckBox) findViewById(R.id.checkBoxMath);
         checkBoxMath.setOnCheckedChangeListener(checkBoxListener);
 
-        checkBoxSnooze = (CheckBox) findViewById(R.id.checkBoxSnooze);
+        CheckBox checkBoxSnooze = (CheckBox) findViewById(R.id.checkBoxSnooze);
         checkBoxSnooze.setOnCheckedChangeListener(checkBoxListener);
 
         CheckBox checkBoxRepeat = (CheckBox) findViewById(R.id.checkBoxRepeat);
@@ -161,7 +158,6 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                     calendar.set(Calendar.SECOND, 0);
                     Date date = new Date(calendar.getTimeInMillis());
                     presenter.setDate(date);
-                    tvAlarmTime.setText(presenter.getDateAsString());
                 }
             }, presenter.getHour(), presenter.getMinute(), true);
             timePicker.show();
@@ -348,13 +344,6 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         super.onDestroy();
         Intent musicIntent = new Intent(ActivitySettings.this, MusicService.class);
         stopService(musicIntent);
-    }
-
-    private static String pad(int c) {
-        if (c >= 10)
-            return String.valueOf(c);
-        else
-            return "0" + String.valueOf(c);
     }
 
     private static boolean compareDays(SparseIntArray first, SparseIntArray second) {

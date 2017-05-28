@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void setupViews() {
-        this.adapter = new SwipeRecyclerViewAdapter(this);
+        this.adapter = new SwipeRecyclerViewAdapter(presenter);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.alarmRecyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

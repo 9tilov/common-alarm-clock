@@ -1,7 +1,5 @@
 package com.moggot.commonalarmclock.mvp.settings;
 
-import android.util.SparseIntArray;
-
 import com.moggot.commonalarmclock.music.Music;
 
 import java.util.Date;
@@ -17,8 +15,6 @@ public interface SettingsPresenter {
     int getHour();
 
     int getMinute();
-
-    String getDateAsString();
 
     void setDate(Date date);
 
@@ -37,7 +33,5 @@ public interface SettingsPresenter {
     void setDay(int dayCode);
 
     void deleteDay(int dayCode);
-
-    SparseIntArray getDays();
 
 }

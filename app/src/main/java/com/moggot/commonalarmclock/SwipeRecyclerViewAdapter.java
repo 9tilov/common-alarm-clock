@@ -1,33 +1,20 @@
 package com.moggot.commonalarmclock;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.moggot.commonalarmclock.mvp.main.adapter.AdapterPresenter;
-import com.moggot.commonalarmclock.mvp.main.adapter.AdapterPresenterImpl;
-import com.moggot.commonalarmclock.mvp.main.MainModelImpl;
+import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 
 public class SwipeRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
 
     private static final String LOG_TAG = SwipeRecyclerViewAdapter.class.getSimpleName();
 
-    private AdapterPresenter presenter;
+    private MainPresenter presenter;
 
-    private Context context;
-
-    public SwipeRecyclerViewAdapter(Context context) {
-        this.context = context;
-
-        setupMVP();
-        setHasStableIds(true);
-    }
-
-    private void setupMVP() {
-        AdapterPresenterImpl presenter = new AdapterPresenterImpl(context);
-        MainModelImpl model = new MainModelImpl(context.getApplicationContext());
-        presenter.setMainModel(model);
+    public SwipeRecyclerViewAdapter(MainPresenter presenter) {
         this.presenter = presenter;
+
+        setHasStableIds(true);
     }
 
     @Override
