@@ -77,6 +77,18 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
         firebaseAnalytics.init();
 
+        tbDaysOfWeek = new SparseIntArray();
+        tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
+        tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
+        tbDaysOfWeek.put(R.id.tbWednesday, Calendar.WEDNESDAY);
+        tbDaysOfWeek.put(R.id.tbThursday, Calendar.THURSDAY);
+        tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
+        tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
+        tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
+        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
+            (findViewById(tbDaysOfWeek.keyAt(i))).setOnClickListener(this);
+        }
+
         setupMVP();
         final long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
         presenter.setSettings(id);
@@ -92,18 +104,6 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 
         CheckBox checkBoxRepeat = (CheckBox) findViewById(R.id.checkBoxRepeat);
         checkBoxRepeat.setOnCheckedChangeListener(checkBoxListener);
-
-        tbDaysOfWeek = new SparseIntArray();
-        tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
-        tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
-        tbDaysOfWeek.put(R.id.tbWednesday, Calendar.WEDNESDAY);
-        tbDaysOfWeek.put(R.id.tbThursday, Calendar.THURSDAY);
-        tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
-        tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
-        tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
-        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
-            (findViewById(tbDaysOfWeek.keyAt(i))).setOnClickListener(this);
-        }
 
         EditText etName = (EditText) findViewById(R.id.etAlarmName);
         etName.addTextChangedListener(textWatcher);
@@ -172,16 +172,10 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         boolean on = ((ToggleButton) v).isChecked();
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.toggle_days);
         v.startAnimation(bounce);
-        SparseIntArray ids = presenter.getDays();
-        if (on) {
-            if (ids.get(Consts.TOMORROW) != 0)
-                ids.clear();
+        if (on)
             presenter.setDay(tbDaysOfWeek.get(v.getId()));
-        } else {
-            ids.delete(tbDaysOfWeek.get(v.getId()));
-        }
-
-
+        else
+            presenter.deleteDay(tbDaysOfWeek.get(v.getId()));
     }
 
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
@@ -310,7 +304,7 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                                 presenter.setMusic(music);
                             } else {
                                 notMusicFile();
-                                ((RadioButton) rgMusic.getChildAt(Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getCode())).setChecked(true);
+                                ((RadioButton) rgMusic.getChildAt(Music.MUSIC_TYPE.DEFAULT_RINGTONE.getCode())).setChecked(true);
                             }
                         } catch (Exception e) {
                             Log.e("FileSelector", "File select error", e);

@@ -6,33 +6,7 @@ public final class Consts {
 
     public static final int TOMORROW = 0;
 
-    public enum MUSIC_TYPE {
-        MUSIC_FILE(0),
-        RADIO(1),
-        DEFAULT_RINGTONE(2);
 
-        private final int code;
-
-        MUSIC_TYPE(int code) {
-            this.code = code;
-        }
-
-        public static MUSIC_TYPE fromInteger(int x) {
-            switch (x) {
-                case 0:
-                    return MUSIC_FILE;
-                case 1:
-                    return RADIO;
-                case 2:
-                    return DEFAULT_RINGTONE;
-            }
-            return null;
-        }
-
-        public int getCode() {
-            return this.code;
-        }
-    }
 
     public final static String EXTRA_ID = "_id";
     public final static String EXTRA_MUSIC = "music";

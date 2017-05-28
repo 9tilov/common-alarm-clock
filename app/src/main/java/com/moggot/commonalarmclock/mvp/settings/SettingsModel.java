@@ -40,6 +40,8 @@ public interface SettingsModel {
 
     void setDay(int dayCode);
 
+    void deleteDay(int dayCode);
+
     SparseIntArray getDays();
 
     SparseIntArray getRepeateIDs();

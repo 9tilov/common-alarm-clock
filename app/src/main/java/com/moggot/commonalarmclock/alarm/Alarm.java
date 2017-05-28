@@ -183,8 +183,8 @@ public class Alarm {
         return calendar.getTimeInMillis();
     }
 
-    public Consts.MUSIC_TYPE getMusicTypeEnum() {
-        return Consts.MUSIC_TYPE.fromInteger(musicType);
+    public Music.MUSIC_TYPE getMusicTypeEnum() {
+        return Music.MUSIC_TYPE.fromInteger(musicType);
     }
     // KEEP METHODS END
 

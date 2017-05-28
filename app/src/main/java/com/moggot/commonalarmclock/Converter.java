@@ -41,7 +41,7 @@ public class Converter {
             case Calendar.SATURDAY:
                 return res.getString(R.string.saturday_short);
             case Calendar.SUNDAY:
-                return res.getString(R.string.saturday_short);
+                return res.getString(R.string.sunday_short);
             default:
                 return "";
         }

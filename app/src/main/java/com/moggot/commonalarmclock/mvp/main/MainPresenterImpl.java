@@ -15,6 +15,7 @@ import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.Converter;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.music.Music;
 
 public class MainPresenterImpl implements MainPresenter {
 
@@ -112,7 +113,7 @@ public class MainPresenterImpl implements MainPresenter {
         return mainModel.getAlarm(position).hashCode();
     }
 
-    private void setMusicIcon(AlarmViewHolder viewHolder, Consts.MUSIC_TYPE musicType) {
+    private void setMusicIcon(AlarmViewHolder viewHolder, Music.MUSIC_TYPE musicType) {
         switch (musicType) {
             case RADIO:
                 viewHolder.music.setImageResource(R.drawable.ic_radio);

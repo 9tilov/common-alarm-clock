@@ -36,6 +36,8 @@ public interface SettingsPresenter {
 
     void setDay(int dayCode);
 
+    void deleteDay(int dayCode);
+
     SparseIntArray getDays();
 
 }

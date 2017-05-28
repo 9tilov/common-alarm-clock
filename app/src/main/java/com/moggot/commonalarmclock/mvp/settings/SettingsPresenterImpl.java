@@ -99,6 +99,11 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     }
 
     @Override
+    public void deleteDay(int dayCode) {
+        model.deleteDay(dayCode);
+    }
+
+    @Override
     public SparseIntArray getDays() {
         return model.getDays();
     }
