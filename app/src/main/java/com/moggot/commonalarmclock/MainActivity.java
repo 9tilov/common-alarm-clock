@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void setupViews() {
-        this.adapter = new SwipeRecyclerViewAdapter(presenter);
+        this.adapter = new SwipeRecyclerViewAdapter(this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.alarmRecyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void deleteAlarm(int position) {
         adapter.notifyItemRemoved(position);
     }
@@ -100,10 +105,5 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public Context getContext() {
-        return this;
     }
 }

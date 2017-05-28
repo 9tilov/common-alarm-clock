@@ -13,6 +13,4 @@ public interface MainModel {
     Alarm getAlarm(int position);
 
     int getAlarmsCount();
-
-    int getAlarmPosition(Alarm alarm);
 }

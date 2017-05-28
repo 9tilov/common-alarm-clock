@@ -31,11 +31,6 @@ public class MainModelImpl implements MainModel {
     }
 
     @Override
-    public int getAlarmPosition(Alarm alarm) {
-        return alarms.indexOf(alarm);
-    }
-
-    @Override
     public void loadData() {
         alarms = db.getAllAlarms();
     }
