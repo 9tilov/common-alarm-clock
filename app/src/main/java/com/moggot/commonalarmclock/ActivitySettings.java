@@ -26,13 +26,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.google.android.gms.analytics.Tracker;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.moggot.commonalarmclock.mvp.settings.SettingsModelImpl;
 import com.moggot.commonalarmclock.mvp.settings.SettingsPresenter;
 import com.moggot.commonalarmclock.mvp.settings.SettingsPresenterImpl;
 import com.moggot.commonalarmclock.mvp.settings.SettingsView;
-import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
+import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.MusicFileAnimationBounce;
 import com.moggot.commonalarmclock.animation.RadioAnimationBounce;
@@ -40,7 +39,6 @@ import com.moggot.commonalarmclock.animation.RingtoneAnimationBounce;
 import com.moggot.commonalarmclock.animation.SaveAlarmAnimationBounce;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.music.MusicService;
-import com.moggot.commonalarmclock.alarm.Alarm;
 
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -67,12 +65,8 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Tracker tracker = ((App) getApplication())
-                .getDefaultTracker();
-        tracker.enableAdvertisingIdCollection(true);
-
-        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
-        firebaseAnalytics.init();
+        Analysis analysis = new Analysis(this);
+        analysis.start();
 
         tbDaysOfWeek = new SparseIntArray();
         tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
@@ -149,17 +143,20 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
     View.OnClickListener timeListiner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(presenter.getDate());
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
             TimePickerDialog timePicker = new TimePickerDialog(ActivitySettings.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    Calendar calendar = Calendar.getInstance();
                     calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                     calendar.set(Calendar.MINUTE, selectedMinute);
                     calendar.set(Calendar.SECOND, 0);
                     Date date = new Date(calendar.getTimeInMillis());
                     presenter.setDate(date);
                 }
-            }, presenter.getHour(), presenter.getMinute(), true);
+            }, hour, minute, true);
             timePicker.show();
         }
     };
@@ -169,9 +166,9 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.toggle_days);
         v.startAnimation(bounce);
         if (on)
-            presenter.setDay(tbDaysOfWeek.get(v.getId()));
+            presenter.setDayOn(tbDaysOfWeek.get(v.getId()));
         else
-            presenter.deleteDay(tbDaysOfWeek.get(v.getId()));
+            presenter.setDayOff(tbDaysOfWeek.get(v.getId()));
     }
 
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
@@ -179,9 +176,9 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         public void onCheckedChanged(CompoundButton buttonView,
                                      boolean isChecked) {
             if (buttonView.getId() == R.id.checkBoxSnooze)
-                presenter.setIsSnoozeEnable(isChecked);
+                presenter.setSnoozeCheckbox(isChecked);
             if (buttonView.getId() == R.id.checkBoxMath)
-                presenter.setIsMathEnable(isChecked);
+                presenter.setMathCheckbox(isChecked);
             if (buttonView.getId() == R.id.checkBoxRepeat) {
                 if (isChecked)
                     ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);

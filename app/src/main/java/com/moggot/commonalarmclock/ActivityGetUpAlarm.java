@@ -9,9 +9,8 @@ import android.util.SparseIntArray;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
+import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.fragments.FragmentCreator;
 import com.moggot.commonalarmclock.music.MusicService;
 
@@ -20,7 +19,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
     private static final String LOG_TAG = ActivityGetUpAlarm.class.getSimpleName();
 
     private Alarm alarm;
-
     private Vibrator vibrator;
 
     @Override
@@ -28,12 +26,8 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_up_alarm);
 
-        Tracker tracker = ((App) getApplication())
-                .getDefaultTracker();
-        tracker.enableAdvertisingIdCollection(true);
-
-        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
-        firebaseAnalytics.init();
+        Analysis analysis = new Analysis(this);
+        analysis.start();
 
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
@@ -45,15 +39,9 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         if (id == 0)
             return;
 
-        DataBase db = new DataBase(getApplicationContext());
-        this.alarm = db.getAlarm(id);
-
-        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        long[] once = {0, 500, 500};
-        vibrator.vibrate(once, 0);
+        initVibration();
 
         Intent musicIntent = new Intent(ActivityGetUpAlarm.this, MusicService.class);
-//        musicIntent.putExtra(Consts.EXTRA_MUSIC, alarm.getmus)
 //        musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
 //        musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
         startService(musicIntent);
@@ -62,18 +50,14 @@ public class ActivityGetUpAlarm extends AppCompatActivity {
         creator.createFragment(alarm);
     }
 
+    private void initVibration() {
+        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        long[] once = {0, 500, 500};
+        vibrator.vibrate(once, 0);
+    }
+
     @Override
     public void onBackPressed() {
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override

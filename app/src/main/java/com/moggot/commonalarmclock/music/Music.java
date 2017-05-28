@@ -66,8 +66,8 @@ public class Music implements Parcelable {
 
     private void setMusicDependOnInternetConnection() {
         if (musicType == MUSIC_TYPE.RADIO) {
-            NetworkConnectionChecker connectionChecker = new NetworkConnectionChecker();
-            if (!connectionChecker.isNetworkAvailable(context)) {
+            NetworkConnectionChecker connectionChecker = new NetworkConnectionChecker(context);
+            if (!connectionChecker.isNetworkAvailable()) {
                 musicType = MUSIC_TYPE.DEFAULT_RINGTONE;
                 musicURL = Consts.DEFAULT_RINGTONE_URL;
             } else

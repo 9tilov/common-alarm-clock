@@ -12,15 +12,13 @@ public interface SettingsPresenter {
 
     void saveAlarm();
 
-    int getHour();
-
-    int getMinute();
+    Date getDate();
 
     void setDate(Date date);
 
-    void setIsSnoozeEnable(boolean enable);
+    void setSnoozeCheckbox(boolean enable);
 
-    void setIsMathEnable(boolean enable);
+    void setMathCheckbox(boolean enable);
 
     void setName(String name);
 
@@ -30,8 +28,7 @@ public interface SettingsPresenter {
 
     void setTomorrowDay();
 
-    void setDay(int dayCode);
+    void setDayOn(int dayCode);
 
-    void deleteDay(int dayCode);
-
+    void setDayOff(int dayCode);
 }

@@ -38,11 +38,9 @@ public interface SettingsModel {
 
     void setTomorrowDay();
 
-    void setDay(int dayCode);
+    void setDayOn(int dayCode);
 
-    void deleteDay(int dayCode);
-
-    SparseIntArray getDays();
+    void setDayOff(int dayCode);
 
     SparseIntArray getRepeateIDs();
 }

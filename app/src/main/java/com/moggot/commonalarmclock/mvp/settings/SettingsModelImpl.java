@@ -151,7 +151,7 @@ public class SettingsModelImpl implements SettingsModel {
     }
 
     @Override
-    public void setDay(int dayCode) {
+    public void setDayOn(int dayCode) {
         SparseIntArray ids = alarm.getRepeatAlarmIDs();
         if (ids.get(Consts.TOMORROW) != 0)
             ids.clear();
@@ -164,18 +164,13 @@ public class SettingsModelImpl implements SettingsModel {
     }
 
     @Override
-    public void deleteDay(int dayCode) {
+    public void setDayOff(int dayCode) {
         SparseIntArray ids = alarm.getRepeatAlarmIDs();
         ids.delete(dayCode);
         alarm.setRepeatAlarmIDs(ids);
 
         if (ids.size() == 0)
             setTomorrowDay();
-    }
-
-    @Override
-    public SparseIntArray getDays() {
-        return alarm.getRepeatAlarmIDs();
     }
 
     @Override

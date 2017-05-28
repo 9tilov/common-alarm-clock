@@ -7,11 +7,11 @@ import android.net.Uri;
 
 import java.io.IOException;
 
-public class FilePlayer extends PlayerCreator {
+public class File extends Creator {
 
     private Context context;
 
-    public FilePlayer(Context context) {
+    public File(Context context) {
         this.context = context;
     }
 

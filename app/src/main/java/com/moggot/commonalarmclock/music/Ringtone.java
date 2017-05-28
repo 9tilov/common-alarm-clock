@@ -7,11 +7,11 @@ import android.net.Uri;
 
 import java.io.IOException;
 
-public class RingtonePlayer extends PlayerCreator {
+public class Ringtone extends Creator {
 
     private Context context;
 
-    public RingtonePlayer(Context context) {
+    public Ringtone(Context context) {
         this.context = context;
     }
 

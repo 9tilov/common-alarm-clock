@@ -9,8 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.google.android.gms.analytics.Tracker;
-import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
+import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.mvp.main.MainModelImpl;
@@ -33,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
 
         startOnboarding();
-        initAnalytics();
+        Analysis analysis = new Analysis(this);
+        analysis.start();
 
         setupMVP();
         setupViews();
@@ -44,15 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
             Intent onboarding = new Intent(this, OnboardingActivity.class);
             startActivity(onboarding);
         }
-    }
-
-    private void initAnalytics() {
-        Tracker tracker = ((App) getApplication())
-                .getDefaultTracker();
-        tracker.enableAdvertisingIdCollection(true);
-
-        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
-        firebaseAnalytics.init();
     }
 
     private void setupViews() {

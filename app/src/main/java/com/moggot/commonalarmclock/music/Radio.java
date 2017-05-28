@@ -10,11 +10,11 @@ import java.io.IOException;
  * Created by toor on 15.05.17.
  */
 
-public class RadioPlayer extends PlayerCreator {
+public class Radio extends Creator {
 
     private Context context;
 
-    public RadioPlayer(Context context) {
+    public Radio(Context context) {
         this.context = context;
     }
 

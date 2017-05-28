@@ -3,15 +3,9 @@ package com.moggot.commonalarmclock.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.os.Bundle;
 
-import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
-
-/**
- * Created by toor on 13.03.17.
- */
 
 public class FragmentCreator {
 

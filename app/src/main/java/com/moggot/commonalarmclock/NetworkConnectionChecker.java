@@ -3,13 +3,28 @@ package com.moggot.commonalarmclock;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 public class NetworkConnectionChecker {
 
-    public boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
+    private Context context;
+
+    public NetworkConnectionChecker(Context context) {
+        this.context = context;
     }
 
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean available = (activeNetworkInfo != null && activeNetworkInfo.isConnected());
+        if (!available)
+            internetUnavailable();
+        return available;
+    }
+
+    private void internetUnavailable() {
+        Toast.makeText(context,
+                R.string.no_internet_connection,
+                Toast.LENGTH_SHORT).show();
+    }
 }

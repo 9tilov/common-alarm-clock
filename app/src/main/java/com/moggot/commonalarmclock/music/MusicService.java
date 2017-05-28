@@ -18,8 +18,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
         Music music = intent.getParcelableExtra(Consts.EXTRA_MUSIC);
 
-        PlayerManager playerManager = new PlayerManager(this);
-        mediaPlayer = playerManager.createPlayer(music);
+        PlayerCreator playerCreator = new PlayerCreator(this);
+        mediaPlayer = playerCreator.createPlayer(music);
         mediaPlayer.setOnPreparedListener(this);
 
         return super.onStartCommand(intent, flags, startID);

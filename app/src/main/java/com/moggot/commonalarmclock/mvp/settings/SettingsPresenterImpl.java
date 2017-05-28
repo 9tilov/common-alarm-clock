@@ -2,7 +2,6 @@ package com.moggot.commonalarmclock.mvp.settings;
 
 import com.moggot.commonalarmclock.music.Music;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class SettingsPresenterImpl implements SettingsPresenter {
@@ -38,17 +37,8 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     }
 
     @Override
-    public int getHour() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(model.getDate());
-        return calendar.get(Calendar.HOUR_OF_DAY);
-    }
-
-    @Override
-    public int getMinute() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(model.getDate());
-        return calendar.get(Calendar.MINUTE);
+    public Date getDate() {
+        return model.getDate();
     }
 
     @Override
@@ -58,12 +48,12 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     }
 
     @Override
-    public void setIsSnoozeEnable(boolean enable) {
+    public void setSnoozeCheckbox(boolean enable) {
         model.setIsSnoozeEnable(enable);
     }
 
     @Override
-    public void setIsMathEnable(boolean enable) {
+    public void setMathCheckbox(boolean enable) {
         model.setIsMathEnable(enable);
     }
 
@@ -88,12 +78,12 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     }
 
     @Override
-    public void setDay(int dayCode) {
-        model.setDay(dayCode);
+    public void setDayOn(int dayCode) {
+        model.setDayOn(dayCode);
     }
 
     @Override
-    public void deleteDay(int dayCode) {
-        model.deleteDay(dayCode);
+    public void setDayOff(int dayCode) {
+        model.setDayOff(dayCode);
     }
 }
