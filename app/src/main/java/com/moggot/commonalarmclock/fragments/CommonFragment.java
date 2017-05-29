@@ -1,58 +1,48 @@
 package com.moggot.commonalarmclock.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.observer.AlarmData;
-import com.moggot.commonalarmclock.observer.AlarmGetUpDisplay;
 
-public class FragmentCommon extends Fragment {
+public class CommonFragment extends Fragment {
 
-    private Alarm alarm;
+    private String name;
+    private static final String EXTRA_NAME = "name";
 
-    public FragmentCommon() {
+    public CommonFragment() {
     }
 
-    public static FragmentCommon newInstance(long id) {
-        FragmentCommon fragmentCommon = new FragmentCommon();
+    public static CommonFragment newInstance(String name) {
+        CommonFragment commonFragment = new CommonFragment();
         Bundle args = new Bundle();
-        args.putLong(Consts.EXTRA_ID, id);
-        fragmentCommon.setArguments(args);
-        return fragmentCommon;
+        args.putString(EXTRA_NAME, name);
+        commonFragment.setArguments(args);
+        return commonFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        long id = 0;
         if (getArguments() != null)
-            id = getArguments().getLong(Consts.EXTRA_ID);
-        DataBase db = new DataBase(getActivity().getApplicationContext());
-        alarm = db.getAlarm(id);
-
+            this.name = getArguments().getString(EXTRA_NAME);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_alarm_common, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        AlarmData alarmData = new AlarmData();
-        AlarmGetUpDisplay adapterDisplay = new AlarmGetUpDisplay(view, alarmData);
-        alarmData.setAlarm(alarm);
+        ((TextView) view.findViewById(R.id.tvName)).setText(name);
 
         Button btnStop = (Button) view.findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new View.OnClickListener() {
@@ -62,5 +52,4 @@ public class FragmentCommon extends Fragment {
             }
         });
     }
-
 }

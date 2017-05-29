@@ -47,6 +47,11 @@ public class Music implements Parcelable {
         setInternetRadio();
     }
 
+    public void setMusic(MUSIC_TYPE type, String musicURL) {
+        this.musicType = type;
+        this.musicURL = musicURL;
+    }
+
     public void setInternetRadio() {
         this.musicType = MUSIC_TYPE.RADIO;
         this.musicURL = Consts.RADIO_URL;
