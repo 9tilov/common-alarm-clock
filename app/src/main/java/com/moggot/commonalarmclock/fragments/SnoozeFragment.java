@@ -1,7 +1,6 @@
 package com.moggot.commonalarmclock.fragments;
 
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.SnoozeAlarm;
 
 public class SnoozeFragment extends Fragment {
 

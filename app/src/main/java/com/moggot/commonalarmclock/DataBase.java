@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.alarm.AlarmDao;
-import com.moggot.commonalarmclock.alarm.DaoMaster;
 import com.moggot.commonalarmclock.alarm.DaoSession;
 
 import java.lang.reflect.Type;
@@ -89,13 +88,5 @@ public class DataBase {
                 return time1.compareTo(time2);
             }
         });
-    }
-
-    public void resetAllAlarms() {
-        List<Alarm> alarms = getAllAlarms();
-        AlarmScheduler alarmScheduler = new AlarmScheduler(applicationContext);
-        for (Alarm alarm : alarms) {
-            alarmScheduler.cancelAlarm(alarm);
-        }
     }
 }

@@ -28,7 +28,7 @@ public class SettingsPresenterImpl implements SettingsPresenter {
         view.setIsSnoozeEnable(model.getIsSnoozeEnable());
         view.setIsMathEnable(model.getIsMathEnable());
         view.setName(model.getName());
-        view.setMusicRadioButton(model.getMusicCode());
+        view.setMusicButton(model.getMusicCode());
     }
 
     @Override

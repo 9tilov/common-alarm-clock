@@ -7,10 +7,6 @@ import android.content.Intent;
 import com.moggot.commonalarmclock.ActivitySettings;
 import com.moggot.commonalarmclock.Consts;
 
-/**
- * Created by toor on 15.03.17.
- */
-
 public class AddAlarmAnimationBounce extends AnimationBounce {
 
     public AddAlarmAnimationBounce(Context context) {

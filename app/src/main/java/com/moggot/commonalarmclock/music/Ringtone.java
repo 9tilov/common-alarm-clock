@@ -1,27 +1,17 @@
 package com.moggot.commonalarmclock.music;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
-import android.net.Uri;
 
 import java.io.IOException;
 
 public class Ringtone extends Creator {
 
-    private Context context;
-
-    public Ringtone(Context context) {
-        this.context = context;
-    }
-
     public MediaPlayer create(Music music) {
-        MediaPlayer mediaPlayer = null;
+        MediaPlayer mediaPlayer = new MediaPlayer();
         try {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            Uri alarm = Uri.parse(music.getMusicURL());
-            mediaPlayer = MediaPlayer.create(context, alarm);
-
+            mediaPlayer.setDataSource(music.getMusicURL());
             mediaPlayer.setLooping(true);
             mediaPlayer.prepare();
         } catch (IllegalArgumentException | SecurityException

@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.moggot.commonalarmclock.analytics.Analysis;
@@ -53,7 +52,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-
+    //переопределенный метод для того, чтобы нельзя было нажать кнопку Назад
     @Override
     public void onBackPressed() {
     }
@@ -62,13 +61,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
     public void onDestroy() {
         super.onDestroy();
         presenter.stopAlarmRing();
-//        SparseIntArray ids = alarm.getRepeatAlarmIDs();
-//        if (ids.get(Consts.TOMORROW) != 0) {
-//            AlarmContext alarmContext = new AlarmContext(alarm, getApplicationContext());
-//            AlarmScheduler alarmManager = new AlarmScheduler();
-//            alarmManager.cancelAlarm(alarmContext);
-//        }
-
     }
 
     @Override
@@ -90,6 +82,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
     }
 
     private void incorrectMathResult() {
-        Toast.makeText(getApplicationContext(), getString(R.string.incorrect_result), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.incorrect_result), Toast.LENGTH_SHORT).show();
     }
 }

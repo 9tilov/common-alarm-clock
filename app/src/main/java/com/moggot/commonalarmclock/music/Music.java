@@ -28,8 +28,9 @@ public class Music implements Parcelable {
                     return RADIO;
                 case 2:
                     return DEFAULT_RINGTONE;
+                default:
+                    return RADIO;
             }
-            return null;
         }
 
         public int getCode() {

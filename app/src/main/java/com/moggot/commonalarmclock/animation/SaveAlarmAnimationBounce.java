@@ -3,10 +3,6 @@ package com.moggot.commonalarmclock.animation;
 import android.app.Activity;
 import android.content.Context;
 
-/**
- * Created by toor on 15.03.17.
- */
-
 public class SaveAlarmAnimationBounce extends AnimationBounce {
 
     public SaveAlarmAnimationBounce(Context context) {

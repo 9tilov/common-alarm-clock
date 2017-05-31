@@ -1,8 +1,5 @@
 package com.moggot.commonalarmclock;
 
-/**
- * Created by moggot on 13.12.15.
- */
 public class MusicFile {
 
     private enum SupportedFileFormat {

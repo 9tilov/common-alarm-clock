@@ -20,23 +20,23 @@ public class PlayerCreator {
         switch (music.getMusicType()) {
             case RADIO:
                 if (connectionChecker.isNetworkAvailable())
-                    player = new Radio(context);
+                    player = new Radio();
                 else {
-                    player = new Ringtone(context);
+                    player = new Ringtone();
                     music.setDefaultRingtone(Consts.DEFAULT_RINGTONE_URL);
                 }
                 break;
             case DEFAULT_RINGTONE:
-                player = new Ringtone(context);
+                player = new Ringtone();
                 break;
             case MUSIC_FILE:
-                player = new File(context);
+                player = new File();
                 break;
             default:
                 if (connectionChecker.isNetworkAvailable())
-                    player = new Radio(context);
+                    player = new Radio();
                 else {
-                    player = new Ringtone(context);
+                    player = new Ringtone();
                     music.setDefaultRingtone(Consts.DEFAULT_RINGTONE_URL);
                 }
                 break;
