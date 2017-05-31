@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     private void setupMVP() {
         MainPresenterImpl presenter = new MainPresenterImpl(this);
-        MainModelImpl model = new MainModelImpl(getApplicationContext());
+        MainModelImpl model = new MainModelImpl(this);
         presenter.setMainModel(model);
         this.presenter = presenter;
     }

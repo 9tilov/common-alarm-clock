@@ -20,7 +20,7 @@ public class SettingsModelImpl implements SettingsModel {
     private Alarm alarm;
 
     public SettingsModelImpl(Context context) {
-        this.db = new DataBase(context.getApplicationContext());
+        this.db = new DataBase(context);
         this.context = context;
     }
 

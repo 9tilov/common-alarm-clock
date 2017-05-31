@@ -122,7 +122,7 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 
     private void setupMVP() {
         SettingsPresenterImpl presenter = new SettingsPresenterImpl(this);
-        SettingsModelImpl model = new SettingsModelImpl(getApplicationContext());
+        SettingsModelImpl model = new SettingsModelImpl(this);
         presenter.setModel(model);
         this.presenter = presenter;
     }

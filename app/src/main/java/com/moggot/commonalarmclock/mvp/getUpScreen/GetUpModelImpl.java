@@ -21,7 +21,7 @@ public class GetUpModelImpl implements GetUpModel {
 
     public GetUpModelImpl(Context context) {
         this.context = context;
-        this.db = new DataBase(context.getApplicationContext());
+        this.db = new DataBase(context);
     }
 
     public void loadAlarm(long id) {
