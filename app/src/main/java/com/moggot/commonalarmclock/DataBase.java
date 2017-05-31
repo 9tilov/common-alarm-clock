@@ -28,7 +28,7 @@ public class DataBase {
     private AlarmDao alarmDao;
 
     public DataBase(Context applicationContext) {
-        this.applicationContext = applicationContext;
+        this.applicationContext = applicationContext.getApplicationContext();
         alarmDao = setupDb();
     }
 
@@ -88,5 +88,9 @@ public class DataBase {
                 return time1.compareTo(time2);
             }
         });
+    }
+
+    public List<Alarm> getAllActiveAlarms() {
+        return alarmDao.queryBuilder().where(AlarmDao.Properties.State.eq(true)).build().list();
     }
 }
