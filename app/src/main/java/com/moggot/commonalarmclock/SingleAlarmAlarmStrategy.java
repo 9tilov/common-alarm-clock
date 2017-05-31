@@ -9,11 +9,11 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.Calendar;
 
-public class SingleAlarmStrategy implements Strategy {
+public class SingleAlarmAlarmStrategy implements AlarmStrategy {
 
     private Context context;
 
-    public SingleAlarmStrategy(Context context) {
+    public SingleAlarmAlarmStrategy(Context context) {
         this.context = context;
     }
 

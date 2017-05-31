@@ -18,5 +18,5 @@ public interface SettingsView extends BaseView {
 
     void setName(String name);
 
-    void setMusicRadioButton(int musicType);
+    void setMusicButton(int musicType);
 }

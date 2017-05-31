@@ -1,25 +1,16 @@
 package com.moggot.commonalarmclock.music;
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 
 import java.io.IOException;
 
 public class File extends Creator {
 
-    private Context context;
-
-    public File(Context context) {
-        this.context = context;
-    }
-
     public MediaPlayer create(Music music) {
-        MediaPlayer mediaPlayer = null;
+        MediaPlayer mediaPlayer = new MediaPlayer();
         try {
-            Uri uri = Uri.fromFile((new java.io.File(music.getMusicURL())));
-            mediaPlayer = MediaPlayer.create(context, uri);
+            mediaPlayer.setDataSource(music.getMusicURL());
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setLooping(true);
             mediaPlayer.prepare();

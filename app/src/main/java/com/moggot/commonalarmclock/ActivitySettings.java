@@ -4,8 +4,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -51,12 +49,11 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 
     private static final String LOG_TAG = ActivitySettings.class.getSimpleName();
 
-    private TextView tvAlarmTime;
     private SparseIntArray tbDaysOfWeek;
     private RadioGroup rgMusic;
     private Button btnMusic;
 
-    private boolean isMusicPlaying = false;
+    private boolean isMusicPlaying;
 
     private SettingsPresenter presenter;
 
@@ -65,26 +62,38 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        this.isMusicPlaying = false;
+
+        initViews();
+
         Analysis analysis = new Analysis(this);
         analysis.start();
 
-        tbDaysOfWeek = new SparseIntArray();
-        tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
-        tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
-        tbDaysOfWeek.put(R.id.tbWednesday, Calendar.WEDNESDAY);
-        tbDaysOfWeek.put(R.id.tbThursday, Calendar.THURSDAY);
-        tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
-        tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
-        tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
-        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
-            (findViewById(tbDaysOfWeek.keyAt(i))).setOnClickListener(this);
-        }
+        mapDayButtonToCalendarDay();
 
         setupMVP();
         final long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
         presenter.setSettings(id);
 
-        tvAlarmTime = (TextView) findViewById(R.id.tvAlarmTime);
+        Button btnSave = (Button) findViewById(R.id.btnSaveAlarm);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.saveAlarm();
+                AnimationBounce animationBounce = new SaveAlarmAnimationBounce(ActivitySettings.this);
+                animationBounce.animate(view);
+            }
+        });
+
+    }
+
+    private void initViews() {
+        this.btnMusic = (Button) findViewById(R.id.btnMusic);
+        this.rgMusic = (RadioGroup) findViewById(R.id.rgMusicType);
+        rgMusic.setOnCheckedChangeListener(rgListener);
+        EditText etName = (EditText) findViewById(R.id.etAlarmName);
+        etName.addTextChangedListener(textWatcher);
+        TextView tvAlarmTime = (TextView) findViewById(R.id.tvAlarmTime);
         tvAlarmTime.setOnClickListener(timeListiner);
 
         CheckBox checkBoxMath = (CheckBox) findViewById(R.id.checkBoxMath);
@@ -95,42 +104,20 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 
         CheckBox checkBoxRepeat = (CheckBox) findViewById(R.id.checkBoxRepeat);
         checkBoxRepeat.setOnCheckedChangeListener(checkBoxListener);
+    }
 
-        EditText etName = (EditText) findViewById(R.id.etAlarmName);
-        etName.addTextChangedListener(textWatcher);
-
-        rgMusic = (RadioGroup) findViewById(R.id.rgMusicType);
-        rgMusic.setOnCheckedChangeListener(rgListener);
-
-        btnMusic = (Button) findViewById(R.id.btnMusic);
-
-        Button btnSave = (Button) findViewById(R.id.btnSaveAlarm);
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if (id == 0)
-//                    db.saveAlarm(alarm);
-//                else {
-//                    Alarm loadedAlarm = db.getAlarm(id);
-//                    if (!compareDays(loadedAlarm.getRepeatAlarmIDs(), alarm.getRepeatAlarmIDs())) {
-//                        AlarmContext alarmContext = new AlarmContext(loadedAlarm, getApplicationContext());
-//                        AlarmScheduler alarmManager = new AlarmScheduler();
-//                        alarmManager.cancelAlarm(alarmContext);
-//                    }
-//                    db.updateAlarm(alarm);
-//                }
-//                AlarmContext alarmContext = new AlarmContext(alarm, getApplicationContext());
-//                AlarmScheduler alarmManager = new AlarmScheduler();
-//                alarmManager.setAlarm(alarmContext);
-
-//                presenter.saveAlarm();
-                presenter.saveAlarm();
-                AnimationBounce animationBounce = new SaveAlarmAnimationBounce(ActivitySettings.this);
-                animationBounce.animate(view);
-            }
-        });
-
+    private void mapDayButtonToCalendarDay() {
+        this.tbDaysOfWeek = new SparseIntArray();
+        tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
+        tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);
+        tbDaysOfWeek.put(R.id.tbWednesday, Calendar.WEDNESDAY);
+        tbDaysOfWeek.put(R.id.tbThursday, Calendar.THURSDAY);
+        tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
+        tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
+        tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
+        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
+            (findViewById(tbDaysOfWeek.keyAt(i))).setOnClickListener(this);
+        }
     }
 
     private void setupMVP() {
@@ -143,23 +130,36 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
     View.OnClickListener timeListiner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            final Calendar calendar = Calendar.getInstance();
-            calendar.setTime(presenter.getDate());
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            int minute = calendar.get(Calendar.MINUTE);
             TimePickerDialog timePicker = new TimePickerDialog(ActivitySettings.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-                    calendar.set(Calendar.MINUTE, selectedMinute);
-                    calendar.set(Calendar.SECOND, 0);
-                    Date date = new Date(calendar.getTimeInMillis());
-                    presenter.setDate(date);
+                    setSelectedTime(selectedHour, selectedMinute);
                 }
-            }, hour, minute, true);
+            }, getCurrentHour(), getCurrentMinute(), true);
             timePicker.show();
         }
     };
+
+    private int getCurrentHour() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(presenter.getDate());
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
+
+    private int getCurrentMinute() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(presenter.getDate());
+        return calendar.get(Calendar.MINUTE);
+    }
+
+    private void setSelectedTime(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        Date date = new Date(calendar.getTimeInMillis());
+        presenter.setDate(date);
+    }
 
     public void onClick(View v) {
         boolean on = ((ToggleButton) v).isChecked();
@@ -181,28 +181,33 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
                 presenter.setMathCheckbox(isChecked);
             if (buttonView.getId() == R.id.checkBoxRepeat) {
                 if (isChecked)
-                    ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
+                    showDays();
                 else {
-                    RelativeLayout rlDays = ((RelativeLayout) findViewById(R.id.rlDays));
-                    for (int i = 0; i < rlDays.getChildCount(); ++i) {
-                        ((ToggleButton) rlDays.getChildAt(i)).setChecked(false);
-                        presenter.setTomorrowDay();
-                    }
-                    ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.GONE);
+                    hideDays();
+                    presenter.setTomorrowDay();
                 }
             }
         }
     };
 
+    private void showDays() {
+        ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.VISIBLE);
+    }
+
+    private void hideDays() {
+        RelativeLayout rlDays = ((RelativeLayout) findViewById(R.id.rlDays));
+        for (int i = 0; i < rlDays.getChildCount(); ++i)
+            ((ToggleButton) rlDays.getChildAt(i)).setChecked(false);
+        ((RelativeLayout) findViewById(R.id.rlDays)).setVisibility(View.GONE);
+    }
+
     TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
         }
 
         @Override
@@ -218,26 +223,22 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
             switch (checkedID) {
                 case R.id.rbFile:
                     if (isMusicPlaying) {
-                        isMusicPlaying = false;
-                        Intent dummyIntent = new Intent(ActivitySettings.this, MusicService.class);
-                        stopService(dummyIntent);
+                        stopPlayingRadio();
                     }
                     btnMusic.setBackgroundResource(R.drawable.ic_music_file);
                     break;
                 case R.id.rbRadio:
-                    if (isNetworkAvailable()) {
+                    NetworkConnectionChecker connectionChecker = new NetworkConnectionChecker(ActivitySettings.this);
+                    if (connectionChecker.isNetworkAvailable()) {
                         btnMusic.setBackgroundResource(R.drawable.ic_radio);
                         music.setInternetRadio();
                     } else {
-                        internetUnavailable();
                         ((RadioButton) rgMusic.getChildAt(presenter.getMusicCode())).setChecked(true);
                     }
                     break;
                 case R.id.rbRingtones:
                     if (isMusicPlaying) {
-                        isMusicPlaying = false;
-                        Intent dummyIntent = new Intent(ActivitySettings.this, MusicService.class);
-                        stopService(dummyIntent);
+                        stopPlayingRadio();
                     }
                     btnMusic.setBackgroundResource(R.drawable.ic_note);
                     music.setDefaultRingtone(Consts.DEFAULT_RINGTONE_URL);
@@ -255,29 +256,37 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         switch (rgMusic.getCheckedRadioButtonId()) {
             case R.id.rbFile:
                 animationBounce = new MusicFileAnimationBounce(this);
-                animationBounce.animate(view);
                 break;
             case R.id.rbRadio:
-                Intent musicIntent = new Intent(this, MusicService.class);
-                musicIntent.putExtra(Consts.EXTRA_MUSIC, new Music(this));
-                if (isMusicPlaying) {
-                    isMusicPlaying = false;
-                    btnMusic.setBackgroundResource(R.drawable.ic_radio);
-                    stopService(musicIntent);
-                } else {
-                    isMusicPlaying = true;
-                    btnMusic.setBackgroundResource(R.drawable.ic_radio_pressed);
-                    startService(musicIntent);
-                }
-
+                if (isMusicPlaying)
+                    stopPlayingRadio();
+                else
+                    startPlayingRadio();
                 animationBounce = new RadioAnimationBounce(this);
-                animationBounce.animate(view);
                 break;
             case R.id.rbRingtones:
                 animationBounce = new RingtoneAnimationBounce(this);
-                animationBounce.animate(view);
                 break;
+            default:
+                animationBounce = new RingtoneAnimationBounce(this);
         }
+        animationBounce.animate(view);
+    }
+
+    private void startPlayingRadio() {
+        Intent musicIntent = new Intent(this, MusicService.class);
+        musicIntent.putExtra(Consts.EXTRA_MUSIC, new Music(this));
+        isMusicPlaying = true;
+        btnMusic.setBackgroundResource(R.drawable.ic_radio_pressed);
+        startService(musicIntent);
+    }
+
+    private void stopPlayingRadio() {
+        Intent musicIntent = new Intent(this, MusicService.class);
+        musicIntent.putExtra(Consts.EXTRA_MUSIC, new Music(this));
+        isMusicPlaying = false;
+        btnMusic.setBackgroundResource(R.drawable.ic_radio);
+        stopService(musicIntent);
     }
 
     @Override
@@ -319,20 +328,8 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
-    }
-
     private void notMusicFile() {
         Toast.makeText(this, R.string.not_music_file,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    private void internetUnavailable() {
-        Toast.makeText(this,
-                R.string.no_internet_connection,
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -341,38 +338,6 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
         super.onDestroy();
         Intent musicIntent = new Intent(ActivitySettings.this, MusicService.class);
         stopService(musicIntent);
-    }
-
-    private static boolean compareDays(SparseIntArray first, SparseIntArray second) {
-        // compare null
-        if (first == null) {
-            return (second == null);
-        }
-        if (second == null) {
-            return false;
-        }
-
-        // compare count
-        int count = first.size();
-        if (second.size() != count) {
-            return false;
-        }
-
-        // for each pair
-        for (int index = 0; index < count; ++index) {
-            // compare key
-            int key = first.keyAt(index);
-            if (key != second.keyAt(index)) {
-                return false;
-            }
-
-            // compare value
-            int value = first.valueAt(index);
-            if (second.valueAt(index) != value) {
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override
@@ -434,7 +399,26 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
     }
 
     @Override
-    public void setMusicRadioButton(int musicType) {
+    public void setMusicButton(int musicType) {
         ((RadioButton) ((RadioGroup) findViewById(R.id.rgMusicType)).getChildAt(musicType)).setChecked(true);
+        setMusicButtonDrawable(musicType);
+    }
+
+    private void setMusicButtonDrawable(int musicType) {
+        Music.MUSIC_TYPE type = Music.MUSIC_TYPE.fromInteger(musicType);
+        switch (type) {
+            case MUSIC_FILE:
+                btnMusic.setBackgroundResource(R.drawable.ic_music_file);
+                break;
+            case RADIO:
+                btnMusic.setBackgroundResource(R.drawable.ic_radio);
+                break;
+            case DEFAULT_RINGTONE:
+                btnMusic.setBackgroundResource(R.drawable.ic_note);
+                break;
+            default:
+                btnMusic.setBackgroundResource(R.drawable.ic_radio);
+                break;
+        }
     }
 }

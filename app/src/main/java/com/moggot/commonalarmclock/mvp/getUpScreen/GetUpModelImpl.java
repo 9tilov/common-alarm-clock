@@ -10,6 +10,8 @@ import com.moggot.commonalarmclock.SnoozeAlarm;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 
+import java.util.Calendar;
+
 public class GetUpModelImpl implements GetUpModel {
 
     private DataBase db;
@@ -73,6 +75,7 @@ public class GetUpModelImpl implements GetUpModel {
     public void snoozeAlarm() {
         SnoozeAlarm snoozeAlarm = new SnoozeAlarm(context);
         int requestCode = db.getRandomRequestCode();
-        snoozeAlarm.setAlarm(alarm, requestCode);
+        Calendar calendar = Calendar.getInstance();
+        snoozeAlarm.setAlarm(alarm, requestCode, calendar.getTimeInMillis());
     }
 }

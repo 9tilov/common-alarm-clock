@@ -9,13 +9,11 @@ import android.util.Log;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
-    private static final String LOG_TAG = "AlarmManagerBroadcast";
+    private static final String LOG_TAG = AlarmManagerBroadcastReceiver.class.getSimpleName();
 
     @SuppressLint("InlinedApi")
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        Log.v(LOG_TAG, "startbroadcts");
         Bundle extras = intent.getExtras();
         long id = extras.getLong(Consts.EXTRA_ID);
         intent = new Intent(context, ActivityGetUpAlarm.class);

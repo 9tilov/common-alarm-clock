@@ -2,7 +2,7 @@ package com.moggot.commonalarmclock;
 
 import com.moggot.commonalarmclock.alarm.Alarm;
 
-public interface Strategy {
+public interface AlarmStrategy {
 
     void setAlarm(Alarm alarm);
 

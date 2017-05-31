@@ -9,10 +9,6 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 
-/**
- * Created by toor on 15.03.17.
- */
-
 public class MusicFileAnimationBounce extends AnimationBounce {
 
     public MusicFileAnimationBounce(Context context) {
@@ -45,5 +41,4 @@ public class MusicFileAnimationBounce extends AnimationBounce {
         } catch (ActivityNotFoundException e) {
         }
     }
-
 }

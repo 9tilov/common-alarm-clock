@@ -6,8 +6,6 @@ public final class Consts {
 
     public static final int TOMORROW = 0;
 
-
-
     public final static String EXTRA_ID = "_id";
     public final static String EXTRA_MUSIC = "music";
 

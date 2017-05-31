@@ -10,15 +10,15 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.Calendar;
 
-public class RepeatAlarmStrategy implements Strategy {
+public class RepeatAlarmAlarmStrategy implements AlarmStrategy {
 
     private Context context;
 
-    public RepeatAlarmStrategy(Context context) {
+    public RepeatAlarmAlarmStrategy(Context context) {
         this.context = context;
     }
 
-    private static final String LOG_TAG = RepeatAlarmStrategy.class.getSimpleName();
+    private static final String LOG_TAG = RepeatAlarmAlarmStrategy.class.getSimpleName();
 
     public void setAlarm(Alarm alarm) {
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);

@@ -67,7 +67,8 @@ public class MathFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 hideKeyboard(etResult);
-                example.setResult(Integer.valueOf(etResult.getText().toString()));
+                if (!etResult.getText().toString().isEmpty())
+                    example.setResult(Integer.valueOf(etResult.getText().toString()));
                 listener.checkMathExample(example);
             }
         });

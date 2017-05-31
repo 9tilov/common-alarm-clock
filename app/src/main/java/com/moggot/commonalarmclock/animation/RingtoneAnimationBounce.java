@@ -8,10 +8,6 @@ import android.net.Uri;
 
 import com.moggot.commonalarmclock.Consts;
 
-/**
- * Created by toor on 15.03.17.
- */
-
 public class RingtoneAnimationBounce extends AnimationBounce {
 
     public RingtoneAnimationBounce(Context context) {

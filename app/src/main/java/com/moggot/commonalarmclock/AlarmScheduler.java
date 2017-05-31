@@ -13,20 +13,20 @@ public class AlarmScheduler {
     }
 
     public void setAlarm(Alarm alarm) {
-        Strategy strategy;
+        AlarmStrategy alarmStrategy;
         if (alarm.getRepeatAlarmIDs().get(Consts.TOMORROW) != 0)
-            strategy = new SingleAlarmStrategy(context);
+            alarmStrategy = new SingleAlarmAlarmStrategy(context);
         else
-            strategy = new RepeatAlarmStrategy(context);
-        strategy.setAlarm(alarm);
+            alarmStrategy = new RepeatAlarmAlarmStrategy(context);
+        alarmStrategy.setAlarm(alarm);
     }
 
     public void cancelAlarm(Alarm alarm) {
-        Strategy strategy;
+        AlarmStrategy alarmStrategy;
         if (alarm.getRepeatAlarmIDs().get(Consts.TOMORROW) != 0)
-            strategy = new SingleAlarmStrategy(context);
+            alarmStrategy = new SingleAlarmAlarmStrategy(context);
         else
-            strategy = new RepeatAlarmStrategy(context);
-        strategy.cancelAlarm(alarm);
+            alarmStrategy = new RepeatAlarmAlarmStrategy(context);
+        alarmStrategy.cancelAlarm(alarm);
     }
 }

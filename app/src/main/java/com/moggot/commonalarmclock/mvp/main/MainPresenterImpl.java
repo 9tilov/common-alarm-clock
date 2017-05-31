@@ -43,7 +43,7 @@ public class MainPresenterImpl implements MainPresenter {
             public void run() {
                 updateList();
             }
-        }, 400);
+        }, 300);
     }
 
     private void updateList() {
