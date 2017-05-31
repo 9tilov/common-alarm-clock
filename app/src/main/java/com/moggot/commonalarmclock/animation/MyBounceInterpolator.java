@@ -1,5 +1,7 @@
 package com.moggot.commonalarmclock.animation;
 
+import android.view.animation.Interpolator;
+
 //
 // Interpolator to be used with Android view AddAlarmAnimationBounce class to achieve the spring-bounce effect.
 //
@@ -37,7 +39,7 @@ package com.moggot.commonalarmclock.animation;
 //    </set>
 //
 //
-public class MyBounceInterpolator implements android.view.animation.Interpolator {
+public class MyBounceInterpolator implements Interpolator {
     /**
      * The amplitude of the bounces. The higher value (10, for example) produces more pronounced bounces.
      * The lower values (0.1, for example) produce less noticeable wobbles.

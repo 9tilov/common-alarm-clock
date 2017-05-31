@@ -6,10 +6,6 @@ import android.view.animation.AnimationUtils;
 
 import com.moggot.commonalarmclock.R;
 
-/**
- * Created by toor on 15.03.17.
- */
-
 public abstract class AnimationBounce {
 
     protected Context context;

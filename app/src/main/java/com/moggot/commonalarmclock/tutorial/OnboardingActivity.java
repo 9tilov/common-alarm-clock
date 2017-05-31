@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro2;
-import com.google.android.gms.analytics.Tracker;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
-import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
+import com.moggot.commonalarmclock.analytics.Analysis;
 
 public class OnboardingActivity extends AppIntro2 {
 
@@ -15,12 +13,8 @@ public class OnboardingActivity extends AppIntro2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Tracker tracker = ((AnalyticsApplication) getApplication())
-                .getDefaultTracker();
-        tracker.enableAdvertisingIdCollection(true);
-
-        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
-        firebaseAnalytics.init();
+        Analysis analysis = new Analysis(this);
+        analysis.start();
 
         SharedPreference.SaveTutorialStatus(this, false);
         addSlide(OnboardingFragment.newInstance(R.layout.onboarding_screen1));

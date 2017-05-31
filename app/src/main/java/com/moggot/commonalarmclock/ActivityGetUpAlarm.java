@@ -1,97 +1,88 @@
 package com.moggot.commonalarmclock;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.SparseIntArray;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
-import com.google.android.gms.analytics.Tracker;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.analytics.AnalyticsApplication;
-import com.moggot.commonalarmclock.analytics.FirebaseAnalysis;
-import com.moggot.commonalarmclock.fragments.FragmentCreator;
-import com.moggot.commonalarmclock.music.MusicService;
+import com.moggot.commonalarmclock.analytics.Analysis;
+import com.moggot.commonalarmclock.fragments.MathFragment;
+import com.moggot.commonalarmclock.fragments.SnoozeFragment;
+import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpModelImpl;
+import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpPresenter;
+import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpPresenterImpl;
+import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpView;
 
-public class ActivityGetUpAlarm extends AppCompatActivity {
+public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
+        , SnoozeFragment.SnoozeListener
+        , MathFragment.ResultListener {
 
     private static final String LOG_TAG = ActivityGetUpAlarm.class.getSimpleName();
 
-    private Alarm alarm;
-
-    private Vibrator vibrator;
+    private GetUpPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_up_alarm);
 
-        Tracker tracker = ((AnalyticsApplication) getApplication())
-                .getDefaultTracker();
-        tracker.enableAdvertisingIdCollection(true);
+        Analysis analysis = new Analysis(this);
+        analysis.start();
 
-        FirebaseAnalysis firebaseAnalytics = new FirebaseAnalysis(this);
-        firebaseAnalytics.init();
+        setWindowProperties();
+        setupMVP();
 
-        final Window win = getWindow();
-        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        Intent intent = getIntent();
-        long id = intent.getLongExtra(Consts.EXTRA_ID, 0);
-        if (id == 0)
-            return;
-
-        DataBase db = new DataBase(this);
-        this.alarm = db.getAlarm(id);
-
-        this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        long[] once = {0, 500, 500};
-        vibrator.vibrate(once, 0);
-
-        Intent musicIntent = new Intent(ActivityGetUpAlarm.this, MusicService.class);
-        musicIntent.putExtra(Consts.EXTRA_TYPE, alarm.getMusicType());
-        musicIntent.putExtra(Consts.EXTRA_PATH, alarm.getMusicPath());
-        startService(musicIntent);
-
-        FragmentCreator creator = new FragmentCreator(this);
-        creator.createFragment(alarm);
+        long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
+        presenter.startAlarmRing(id);
     }
 
+    void setupMVP() {
+        GetUpPresenterImpl presenter = new GetUpPresenterImpl(this);
+        GetUpModelImpl model = new GetUpModelImpl(this);
+        presenter.setModel(model);
+        this.presenter = presenter;
+    }
+
+    private void setWindowProperties() {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    //переопределенный метод для того, чтобы нельзя было нажать кнопку Назад
     @Override
     public void onBackPressed() {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        vibrator.cancel();
-        Intent intent = new Intent(this, MusicService.class);
-        stopService(intent);
-        SparseIntArray ids = alarm.getRepeatAlarmIDs();
-        if (ids.get(Consts.TOMORROW) != 0) {
-            AlarmContext alarmContext = new AlarmContext(alarm, this);
-            AlarmManager alarmManager = new AlarmManager();
-            alarmManager.cancelAlarm(alarmContext);
-        }
+        presenter.stopAlarmRing();
+    }
 
-        intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void onClickSnooze() {
+        presenter.snooze();
+    }
+
+    @Override
+    public void checkMathExample(MathExample example) {
+        if (example.isResultCorrect())
+            presenter.replaceFragment();
+        else
+            incorrectMathResult();
+    }
+
+    private void incorrectMathResult() {
+        Toast.makeText(this, getString(R.string.incorrect_result), Toast.LENGTH_SHORT).show();
     }
 }

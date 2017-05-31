@@ -16,15 +16,10 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public int onStartCommand(Intent intent, int flags, int startID) {
 
-        Consts.MUSIC_TYPE type = Consts.MUSIC_TYPE.fromInteger(intent.getIntExtra(Consts.EXTRA_TYPE, Consts.MUSIC_TYPE.DEFAULT_RINGTONE.getType()));
-        if (type == null)
-            throw new NullPointerException("type is null");
-        String path = intent.getStringExtra(Consts.EXTRA_PATH);
+        Music music = intent.getParcelableExtra(Consts.EXTRA_MUSIC);
 
-        Music music = new Music(type, path);
-        PlayerManager playerManager = new PlayerManager(this);
-
-        mediaPlayer = playerManager.createPlayer(music);
+        PlayerCreator playerCreator = new PlayerCreator(this);
+        mediaPlayer = playerCreator.createPlayer(music);
         mediaPlayer.setOnPreparedListener(this);
 
         return super.onStartCommand(intent, flags, startID);

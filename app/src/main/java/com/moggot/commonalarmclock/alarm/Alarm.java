@@ -11,6 +11,7 @@ import android.util.SparseIntArray;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.music.Music;
 
 import java.util.Calendar;
 import java.lang.reflect.Type;
@@ -143,9 +144,9 @@ public class Alarm {
 
     // KEEP METHODS - put your custom methods here
 
-    public void setMusic(Integer musicType, String musicPath) {
-        this.musicType = musicType;
-        this.musicPath = musicPath;
+    public void setMusic(Music music) {
+        this.musicType = music.getMusicType().getCode();
+        this.musicPath = music.getMusicURL();
     }
 
     public SparseIntArray getRepeatAlarmIDs() {
@@ -176,8 +177,8 @@ public class Alarm {
         return calendar.getTimeInMillis();
     }
 
-    public Consts.MUSIC_TYPE getMusicTypeEnum() {
-        return Consts.MUSIC_TYPE.fromInteger(musicType);
+    public Music.MUSIC_TYPE getMusicTypeEnum() {
+        return Music.MUSIC_TYPE.fromInteger(musicType);
     }
     // KEEP METHODS END
 

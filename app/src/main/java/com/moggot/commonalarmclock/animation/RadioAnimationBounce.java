@@ -2,10 +2,6 @@ package com.moggot.commonalarmclock.animation;
 
 import android.content.Context;
 
-/**
- * Created by toor on 15.03.17.
- */
-
 public class RadioAnimationBounce extends AnimationBounce {
 
     public RadioAnimationBounce(Context context) {

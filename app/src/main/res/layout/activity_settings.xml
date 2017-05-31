@@ -209,8 +209,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="true"
+                android:maxLines="1"
                 android:focusableInTouchMode="true"
                 android:hint="@string/alarm_name"
+                android:maxLength="20"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:weightSum="2" />
 
 
