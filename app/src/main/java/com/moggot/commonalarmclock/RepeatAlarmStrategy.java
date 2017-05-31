@@ -10,23 +10,22 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.Calendar;
 
-/**
- * Created by toor on 01.03.17.
- */
+public class RepeatAlarmStrategy implements Strategy {
 
-public class RepeatAlarm implements AlarmType {
+    private Context context;
 
-    private static final String LOG_TAG = RepeatAlarm.class.getSimpleName();
+    public RepeatAlarmStrategy(Context context) {
+        this.context = context;
+    }
 
-    public void setAlarm(AlarmContext alarmContext) {
-        Context context = alarmContext.getActivityContext();
-        Alarm alarm = alarmContext.getAlarm();
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    private static final String LOG_TAG = RepeatAlarmStrategy.class.getSimpleName();
 
+    public void setAlarm(Alarm alarm) {
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
         SparseIntArray ids = alarm.getRepeatAlarmIDs();
 
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         for (int i = 0; i < ids.size(); ++i) {
             PendingIntent pi = PendingIntent.getBroadcast(context, ids.valueAt(i), intent, 0);
 
@@ -44,9 +43,7 @@ public class RepeatAlarm implements AlarmType {
         }
     }
 
-    public void cancelAlarm(AlarmContext alarmContext) {
-        Context context = alarmContext.getActivityContext();
-        Alarm alarm = alarmContext.getAlarm();
+    public void cancelAlarm(Alarm alarm) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);

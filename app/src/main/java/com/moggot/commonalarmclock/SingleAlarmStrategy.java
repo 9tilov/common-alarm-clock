@@ -9,19 +9,19 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.Calendar;
 
-/**
- * Created by toor on 28.02.17.
- */
+public class SingleAlarmStrategy implements Strategy {
 
-public class SingleAlarm implements AlarmType {
+    private Context context;
 
-    public void setAlarm(AlarmContext alarmContext) {
-        Alarm alarm = alarmContext.getAlarm();
+    public SingleAlarmStrategy(Context context) {
+        this.context = context;
+    }
+
+    public void setAlarm(Alarm alarm) {
         long alarmPeriod = alarm.getTimeInMillis();
         Calendar calendar = Calendar.getInstance();
         while (alarmPeriod < calendar.getTimeInMillis())
             alarmPeriod += AlarmManager.INTERVAL_DAY;
-        Context context = alarmContext.getActivityContext();
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
         PendingIntent pi = PendingIntent.getBroadcast(context, alarm.getRepeatAlarmIDs().valueAt(0), intent, 0);
@@ -29,9 +29,7 @@ public class SingleAlarm implements AlarmType {
         am.set(AlarmManager.RTC_WAKEUP, alarmPeriod, pi);
     }
 
-    public void cancelAlarm(AlarmContext alarmContext) {
-        Context context = alarmContext.getActivityContext();
-        Alarm alarm = alarmContext.getAlarm();
+    public void cancelAlarm(Alarm alarm) {
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarm.getRepeatAlarmIDs().valueAt(0),

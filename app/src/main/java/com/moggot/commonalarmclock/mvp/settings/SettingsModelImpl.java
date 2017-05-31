@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
+import com.moggot.commonalarmclock.AlarmScheduler;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
@@ -19,7 +20,7 @@ public class SettingsModelImpl implements SettingsModel {
     private Alarm alarm;
 
     public SettingsModelImpl(Context context) {
-        this.db = new DataBase(context);
+        this.db = new DataBase(context.getApplicationContext());
         this.context = context;
     }
 
@@ -56,10 +57,26 @@ public class SettingsModelImpl implements SettingsModel {
 
     @Override
     public void saveAlarm() {
-        if (alarm.getId() == null)
+        alarm.setState(true);
+        Long id = alarm.getId();
+        if (id == null)
             db.addAlarm(alarm);
-        else
+        else {
+            Alarm loadedAlarm = db.getAlarm(id);
+            cancelOldAlarm(loadedAlarm);
             db.editAlarm(alarm);
+        }
+        addAlarmToShedule(alarm);
+    }
+
+    private void cancelOldAlarm(Alarm oldAlarm) {
+        AlarmScheduler alarmScheduler = new AlarmScheduler(context);
+        alarmScheduler.cancelAlarm(oldAlarm);
+    }
+
+    private void addAlarmToShedule(Alarm alarm) {
+        AlarmScheduler alarmScheduler = new AlarmScheduler(context);
+        alarmScheduler.setAlarm(alarm);
     }
 
     @Override

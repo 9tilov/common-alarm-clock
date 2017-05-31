@@ -10,7 +10,9 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
 
 public class MathFragment extends Fragment {
@@ -20,7 +22,7 @@ public class MathFragment extends Fragment {
     private ResultListener listener;
 
     public interface ResultListener {
-        void setMathResult(int result);
+        void checkMathExample(MathExample example);
     }
 
     public MathFragment() {
@@ -50,6 +52,11 @@ public class MathFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        final MathExample example = createExample();
+
+        TextView etExample = (TextView) view.findViewById(R.id.tvMathExample);
+        etExample.setText(example.getNum1() + "+" + example.getNum2());
+
         final EditText etResult = (EditText) view.findViewById(R.id.etResult);
         etResult.requestFocus();
         if (etResult.requestFocus())
@@ -59,12 +66,24 @@ public class MathFragment extends Fragment {
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(etResult.getWindowToken(), 0);
-                listener.setMathResult(Integer.valueOf(etResult.getText().toString()));
+                hideKeyboard(etResult);
+                example.setResult(Integer.valueOf(etResult.getText().toString()));
+                listener.checkMathExample(example);
             }
         });
     }
+
+    private void hideKeyboard(EditText editText) {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    private MathExample createExample() {
+        MathExample example = new MathExample();
+        example.createExample();
+        return example;
+    }
+
 
     @Override
     public void onDestroy() {

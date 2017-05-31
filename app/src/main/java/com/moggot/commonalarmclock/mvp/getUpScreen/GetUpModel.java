@@ -1,5 +1,6 @@
 package com.moggot.commonalarmclock.mvp.getUpScreen;
 
+import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 
 /**
@@ -21,4 +22,8 @@ public interface GetUpModel {
     boolean getIsSnoozeEnable();
 
     boolean getIsMathEnable();
+
+    void cancelSingleAlarm();
+
+    void snoozeAlarm();
 }

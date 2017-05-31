@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.fragments.MathFragment;
@@ -33,7 +35,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
         setWindowProperties();
         setupMVP();
 
-        long id = getIntent().getLongExtra(Consts.EXTRA_ID, 0);
+        long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
         presenter.startAlarmRing(id);
     }
 
@@ -63,7 +65,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
 //        SparseIntArray ids = alarm.getRepeatAlarmIDs();
 //        if (ids.get(Consts.TOMORROW) != 0) {
 //            AlarmContext alarmContext = new AlarmContext(alarm, getApplicationContext());
-//            AlarmManager alarmManager = new AlarmManager();
+//            AlarmScheduler alarmManager = new AlarmScheduler();
 //            alarmManager.cancelAlarm(alarmContext);
 //        }
 
@@ -80,9 +82,14 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
     }
 
     @Override
-    public void setMathResult(int result) {
-        MathExample mathExample = new MathExample();
-        if (mathExample.checkResult(result))
+    public void checkMathExample(MathExample example) {
+        if (example.isResultCorrect())
             presenter.replaceFragment();
+        else
+            incorrectMathResult();
+    }
+
+    private void incorrectMathResult() {
+        Toast.makeText(getApplicationContext(), getString(R.string.incorrect_result), Toast.LENGTH_SHORT).show();
     }
 }

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.alarm.AlarmDao;
+import com.moggot.commonalarmclock.alarm.DaoMaster;
 import com.moggot.commonalarmclock.alarm.DaoSession;
 
 import java.lang.reflect.Type;
@@ -32,6 +33,11 @@ public class DataBase {
         alarmDao = setupDb();
     }
 
+    private AlarmDao setupDb() {
+        DaoSession masterSession = ((App) applicationContext).getDaoSession();
+        return masterSession.getAlarmDao();
+    }
+
     public void addAlarm(Alarm alarm) {
         alarmDao.insert(alarm);
     }
@@ -46,6 +52,25 @@ public class DataBase {
 
     public Alarm getAlarm(long id) {
         return alarmDao.load(id);
+    }
+
+    public int getRandomRequestCode() {
+        HashSet<Integer> unique = new HashSet<>();
+        List<Alarm> alarms = getAllAlarms();
+        for (Alarm alarm : alarms) {
+            Type type = new TypeToken<SparseIntArray>() {
+            }.getType();
+            SparseIntArray ids = new Gson().fromJson(alarm.getRequestCodes(), type);
+            for (int i = 0; i < ids.size(); ++i) {
+                unique.add(ids.valueAt(i));
+            }
+        }
+        Random rnd = new Random();
+        int requestCode;
+        do {
+            requestCode = rnd.nextInt(Integer.MAX_VALUE);
+        } while (unique.contains(requestCode));
+        return requestCode;
     }
 
     public List<Alarm> getAllAlarms() {
@@ -66,27 +91,11 @@ public class DataBase {
         });
     }
 
-    private AlarmDao setupDb() {
-        DaoSession masterSession = ((App) applicationContext).getDaoSession();
-        return masterSession.getAlarmDao();
-    }
-
-    public int getRandomRequestCode() {
-        HashSet<Integer> unique = new HashSet<>();
+    public void resetAllAlarms() {
         List<Alarm> alarms = getAllAlarms();
+        AlarmScheduler alarmScheduler = new AlarmScheduler(applicationContext);
         for (Alarm alarm : alarms) {
-            Type type = new TypeToken<SparseIntArray>() {
-            }.getType();
-            SparseIntArray ids = new Gson().fromJson(alarm.getRequestCodes(), type);
-            for (int i = 0; i < ids.size(); ++i) {
-                unique.add(ids.valueAt(i));
-            }
+            alarmScheduler.cancelAlarm(alarm);
         }
-        Random rnd = new Random();
-        int requestCode;
-        do {
-            requestCode = rnd.nextInt(Integer.MAX_VALUE);
-        } while (unique.contains(requestCode));
-        return requestCode;
     }
 }

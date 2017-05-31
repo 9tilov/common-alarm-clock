@@ -36,7 +36,6 @@ public class App extends Application {
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // Чтобы включить ведение журнала отладки, используйте adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(R.xml.app_tracker);
         }
         return mTracker;

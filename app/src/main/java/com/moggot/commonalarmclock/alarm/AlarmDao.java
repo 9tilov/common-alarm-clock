@@ -25,8 +25,8 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
         public final static Property RequestCodes = new Property(2, String.class, "requestCodes", false, "REQUEST_CODES");
-        public final static Property IsSnoozeEnable = new Property(3, Boolean.class, "setSnoozeCheckbox", false, "IS_SNOOZE_ENABLE");
-        public final static Property IsMathEnable = new Property(4, Boolean.class, "setMathCheckbox", false, "IS_MATH_ENABLE");
+        public final static Property IsSnoozeEnable = new Property(3, Boolean.class, "isSnoozeEnable", false, "IS_SNOOZE_ENABLE");
+        public final static Property IsMathEnable = new Property(4, Boolean.class, "isMathEnable", false, "IS_MATH_ENABLE");
         public final static Property Name = new Property(5, String.class, "name", false, "NAME");
         public final static Property MusicPath = new Property(6, String.class, "musicPath", false, "MUSIC_PATH");
         public final static Property MusicType = new Property(7, int.class, "musicType", false, "MUSIC_TYPE");
@@ -49,8 +49,8 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"DATE\" INTEGER NOT NULL ," + // 1: date
                 "\"REQUEST_CODES\" TEXT NOT NULL ," + // 2: requestCodes
-                "\"IS_SNOOZE_ENABLE\" INTEGER," + // 3: setSnoozeCheckbox
-                "\"IS_MATH_ENABLE\" INTEGER," + // 4: setMathCheckbox
+                "\"IS_SNOOZE_ENABLE\" INTEGER," + // 3: isSnoozeEnable
+                "\"IS_MATH_ENABLE\" INTEGER," + // 4: isMathEnable
                 "\"NAME\" TEXT," + // 5: name
                 "\"MUSIC_PATH\" TEXT NOT NULL ," + // 6: musicPath
                 "\"MUSIC_TYPE\" INTEGER NOT NULL ," + // 7: musicType
@@ -134,8 +134,8 @@ public class AlarmDao extends AbstractDao<Alarm, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             new java.util.Date(cursor.getLong(offset + 1)), // date
             cursor.getString(offset + 2), // requestCodes
-            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // setSnoozeCheckbox
-            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0, // setMathCheckbox
+            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // isSnoozeEnable
+            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0, // isMathEnable
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // name
             cursor.getString(offset + 6), // musicPath
             cursor.getInt(offset + 7), // musicType

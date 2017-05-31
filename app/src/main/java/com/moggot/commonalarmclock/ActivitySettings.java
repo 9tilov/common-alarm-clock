@@ -115,13 +115,13 @@ public class ActivitySettings extends AppCompatActivity implements SettingsView,
 //                    Alarm loadedAlarm = db.getAlarm(id);
 //                    if (!compareDays(loadedAlarm.getRepeatAlarmIDs(), alarm.getRepeatAlarmIDs())) {
 //                        AlarmContext alarmContext = new AlarmContext(loadedAlarm, getApplicationContext());
-//                        AlarmManager alarmManager = new AlarmManager();
+//                        AlarmScheduler alarmManager = new AlarmScheduler();
 //                        alarmManager.cancelAlarm(alarmContext);
 //                    }
 //                    db.updateAlarm(alarm);
 //                }
 //                AlarmContext alarmContext = new AlarmContext(alarm, getApplicationContext());
-//                AlarmManager alarmManager = new AlarmManager();
+//                AlarmScheduler alarmManager = new AlarmScheduler();
 //                alarmManager.setAlarm(alarmContext);
 
 //                presenter.saveAlarm();

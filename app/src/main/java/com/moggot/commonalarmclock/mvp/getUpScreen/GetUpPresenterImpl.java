@@ -2,12 +2,15 @@ package com.moggot.commonalarmclock.mvp.getUpScreen;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.MainActivity;
 import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.SnoozeAlarm;
+import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.fragments.CommonFragment;
 import com.moggot.commonalarmclock.fragments.MathFragment;
 import com.moggot.commonalarmclock.fragments.SnoozeFragment;
@@ -77,10 +80,12 @@ public class GetUpPresenterImpl implements GetUpPresenter {
         model.stopVibro();
         stopService();
         startMainActivity();
+        model.cancelSingleAlarm();
     }
 
     @Override
     public void snooze() {
+        model.snoozeAlarm();
         ((Activity) view.getContext()).finish();
     }
 

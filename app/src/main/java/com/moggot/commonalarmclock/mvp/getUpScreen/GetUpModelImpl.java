@@ -3,7 +3,10 @@ package com.moggot.commonalarmclock.mvp.getUpScreen;
 import android.content.Context;
 import android.os.Vibrator;
 
+import com.moggot.commonalarmclock.AlarmScheduler;
+import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
+import com.moggot.commonalarmclock.SnoozeAlarm;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 
@@ -16,10 +19,9 @@ public class GetUpModelImpl implements GetUpModel {
 
     public GetUpModelImpl(Context context) {
         this.context = context;
-        this.db = new DataBase(context);
+        this.db = new DataBase(context.getApplicationContext());
     }
 
-    @Override
     public void loadAlarm(long id) {
         alarm = db.getAlarm(id);
     }
@@ -56,5 +58,21 @@ public class GetUpModelImpl implements GetUpModel {
     @Override
     public boolean getIsMathEnable() {
         return alarm.getIsMathEnable();
+    }
+
+    @Override
+    public void cancelSingleAlarm() {
+        if (alarm.getRepeatAlarmIDs().get(Consts.TOMORROW) != 0) {
+            AlarmScheduler alarmScheduler = new AlarmScheduler(context);
+            alarmScheduler.cancelAlarm(alarm);
+            alarm.setState(false);
+        }
+    }
+
+    @Override
+    public void snoozeAlarm() {
+        SnoozeAlarm snoozeAlarm = new SnoozeAlarm(context);
+        int requestCode = db.getRandomRequestCode();
+        snoozeAlarm.setAlarm(alarm, requestCode);
     }
 }
