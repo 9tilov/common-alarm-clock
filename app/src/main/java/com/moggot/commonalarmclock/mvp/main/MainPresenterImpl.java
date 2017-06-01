@@ -29,21 +29,26 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void setMainModel(MainModel mainModel) {
-        this.mainModel = mainModel;
+    public void initialize() {
+        this.mainModel = new MainModelImpl(view.getContext());
         mainModel.loadData();
+        view.setupViews();
     }
 
-    //Задержка нужна, потому что без нее не работает анимация в onActivityResult
+    //Задержка нужна для работы анимации в onActivityResult
     @Override
-    public void onActivityResult() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                updateList();
-            }
-        }, 300);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateList();
+                    }
+                }, 300);
+                break;
+        }
     }
 
     private void updateList() {

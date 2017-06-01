@@ -315,6 +315,7 @@
             android:layout_height="@dimen/save_btn_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:onClick="onClickSave"
             android:background="@drawable/ic_save" />
     </RelativeLayout>
 

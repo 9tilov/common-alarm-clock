@@ -1,34 +1,30 @@
 package com.moggot.commonalarmclock.mvp.settings;
 
-import com.moggot.commonalarmclock.music.Music;
-
-import java.util.Date;
+import android.content.Intent;
+import android.text.Editable;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 
 public interface SettingsPresenter {
 
-    void setModel(SettingsModel model);
-
-    void setSettings(long id);
+    void initialize(long id);
 
     void saveAlarm();
 
-    Date getDate();
+    void timerPickerOnClick();
 
-    void setDate(Date date);
+    void onClickDay(View v, int dayCode);
 
-    void setSnoozeCheckbox(boolean enable);
+    void onCheckedChangedCheckBox(CompoundButton buttonView, boolean isChecked);
 
-    void setMathCheckbox(boolean enable);
+    void onCheckedChangedRadioGroup(RadioGroup radioGroup, int checkedID);
 
-    void setName(String name);
+    void onClickButtonMusic(View view, int radioButtonID);
 
-    void setMusic(Music music);
+    void afterTextChanged(Editable s);
 
-    int getMusicCode();
+    void onDestroy();
 
-    void setTomorrowDay();
-
-    void setDayOn(int dayCode);
-
-    void setDayOff(int dayCode);
+    void onActivityResult(int requestCode, int resultCode, Intent data);
 }

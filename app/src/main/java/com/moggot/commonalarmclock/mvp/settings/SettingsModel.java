@@ -43,4 +43,6 @@ public interface SettingsModel {
     void setDayOff(int dayCode);
 
     SparseIntArray getRepeateIDs();
+
+    boolean isNetworkAvailable();
 }

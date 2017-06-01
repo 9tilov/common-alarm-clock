@@ -6,11 +6,17 @@ import com.moggot.commonalarmclock.mvp.BaseView;
 
 public interface SettingsView extends BaseView {
 
+    void setupViews();
+
     void setTime(String time);
 
     void setDaysCheckbox(boolean isChecked);
 
     void setDays(SparseIntArray ids);
+
+    void showDays();
+
+    void hideDays();
 
     void setIsSnoozeEnable(boolean isSnoozeEnable);
 
@@ -19,4 +25,9 @@ public interface SettingsView extends BaseView {
     void setName(String name);
 
     void setMusicButton(int musicType);
+
+    void setButtonRadioDrawable(boolean isPlaying);
+
+    void showToastNoMusicFile();
+
 }

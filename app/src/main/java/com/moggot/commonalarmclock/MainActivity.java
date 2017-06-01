@@ -12,7 +12,6 @@ import android.view.View;
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.mvp.main.MainModelImpl;
 import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 import com.moggot.commonalarmclock.mvp.main.MainPresenterImpl;
 import com.moggot.commonalarmclock.mvp.main.MainView;
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         Analysis analysis = new Analysis(this);
         analysis.start();
 
-        setupMVP();
-        setupViews();
+        this.presenter = new MainPresenterImpl(this);
+        presenter.initialize();
     }
 
     private void startOnboarding() {
@@ -46,7 +45,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
-    private void setupViews() {
+    public void onClickAdd(View view) {
+        AnimationBounce animation = new AddAlarmAnimationBounce(this);
+        animation.animate(view);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void setupViews() {
         this.adapter = new SwipeRecyclerViewAdapter(presenter);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.alarmRecyclerView);
         recyclerView.setAdapter(adapter);
@@ -55,32 +65,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(this, presenter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    private void setupMVP() {
-        MainPresenterImpl presenter = new MainPresenterImpl(this);
-        MainModelImpl model = new MainModelImpl(this);
-        presenter.setMainModel(model);
-        this.presenter = presenter;
-    }
-
-    public void onClickAdd(View view) {
-        AnimationBounce animation = new AddAlarmAnimationBounce(this);
-        animation.animate(view);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
-                presenter.onActivityResult();
-                break;
-        }
-    }
-
-    @Override
-    public Context getContext() {
-        return this;
     }
 
     @Override
@@ -96,5 +80,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.onActivityResult(requestCode, resultCode, data);
     }
 }

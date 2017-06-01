@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.moggot.commonalarmclock.AlarmScheduler;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
+import com.moggot.commonalarmclock.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 
@@ -193,5 +194,11 @@ public class SettingsModelImpl implements SettingsModel {
     @Override
     public SparseIntArray getRepeateIDs() {
         return alarm.getRepeatAlarmIDs();
+    }
+
+    @Override
+    public boolean isNetworkAvailable() {
+        NetworkConnectionChecker connectionChecker = new NetworkConnectionChecker(context);
+        return connectionChecker.isNetworkAvailable();
     }
 }
