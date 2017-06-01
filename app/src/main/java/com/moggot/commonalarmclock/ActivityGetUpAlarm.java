@@ -8,7 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.fragments.MathFragment;
 import com.moggot.commonalarmclock.fragments.SnoozeFragment;
 import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpModelImpl;
@@ -28,9 +27,6 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_up_alarm);
-
-        Analysis analysis = new Analysis(this);
-        analysis.start();
 
         setWindowProperties();
         setupMVP();

@@ -14,12 +14,14 @@ import android.widget.TextView;
 
 import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.analytics.Analysis;
 
 public class MathFragment extends Fragment {
 
     private final static String LOG_TAG = MathFragment.class.getSimpleName();
 
     private ResultListener listener;
+    private Analysis analysis;
 
     public interface ResultListener {
         void checkMathExample(MathExample example);
@@ -42,6 +44,20 @@ public class MathFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement ResultListener");
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.analysis = new Analysis(getContext());
+        analysis.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        analysis.sendScreenName(getClass().getSimpleName());
     }
 
     @Override
