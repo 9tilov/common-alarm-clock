@@ -13,7 +13,6 @@ public class SwipeRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
 
     public SwipeRecyclerViewAdapter(MainPresenter presenter) {
         this.presenter = presenter;
-
         setHasStableIds(true);
     }
 
