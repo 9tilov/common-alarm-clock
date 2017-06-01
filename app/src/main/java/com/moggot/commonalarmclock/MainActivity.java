@@ -22,12 +22,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-
-    //dev1
-    //dev2
-    //hot1
-    //hot2
-    //dev3
     private SwipeRecyclerViewAdapter adapter;
     private MainPresenter presenter;
 
