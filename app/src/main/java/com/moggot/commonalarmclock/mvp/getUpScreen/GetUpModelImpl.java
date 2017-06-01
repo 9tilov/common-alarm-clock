@@ -3,10 +3,10 @@ package com.moggot.commonalarmclock.mvp.getUpScreen;
 import android.content.Context;
 import android.os.Vibrator;
 
-import com.moggot.commonalarmclock.AlarmScheduler;
+import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
-import com.moggot.commonalarmclock.SnoozeAlarm;
+import com.moggot.commonalarmclock.schedule.SnoozeAlarm;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 

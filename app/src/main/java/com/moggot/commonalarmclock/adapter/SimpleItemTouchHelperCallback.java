@@ -1,10 +1,12 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+
+import com.moggot.commonalarmclock.R;
 
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 

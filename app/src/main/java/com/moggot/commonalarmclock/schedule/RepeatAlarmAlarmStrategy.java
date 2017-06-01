@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.schedule;
 
 import android.app.*;
 import android.app.AlarmManager;
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.SparseIntArray;
 
+import com.moggot.commonalarmclock.AlarmManagerBroadcastReceiver;
+import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.Calendar;

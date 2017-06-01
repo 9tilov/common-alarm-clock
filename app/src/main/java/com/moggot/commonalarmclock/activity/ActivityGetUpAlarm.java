@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.activity;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.MathExample;
+import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.fragments.MathFragment;
 import com.moggot.commonalarmclock.fragments.SnoozeFragment;
 import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpPresenter;

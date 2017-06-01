@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.mvp.settings.SettingsPresenter;
 import com.moggot.commonalarmclock.mvp.settings.SettingsPresenterImpl;
 import com.moggot.commonalarmclock.mvp.settings.SettingsView;

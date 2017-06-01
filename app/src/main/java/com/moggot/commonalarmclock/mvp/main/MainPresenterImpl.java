@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.moggot.commonalarmclock.ActivitySettings;
-import com.moggot.commonalarmclock.AlarmViewHolder;
+import com.moggot.commonalarmclock.activity.ActivitySettings;
+import com.moggot.commonalarmclock.adapter.AlarmViewHolder;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.Converter;
 import com.moggot.commonalarmclock.R;

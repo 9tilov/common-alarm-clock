@@ -1,9 +1,10 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.schedule;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.List;

@@ -1,7 +1,8 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.schedule;
 
 import android.content.Context;
 
+import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 public class AlarmScheduler {

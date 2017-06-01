@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

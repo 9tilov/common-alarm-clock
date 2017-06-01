@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.moggot.commonalarmclock.activity.ActivityGetUpAlarm;
+import com.moggot.commonalarmclock.schedule.RestoreAlarmsAfterRebootService;
+
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
     private static final String LOG_TAG = AlarmManagerBroadcastReceiver.class.getSimpleName();

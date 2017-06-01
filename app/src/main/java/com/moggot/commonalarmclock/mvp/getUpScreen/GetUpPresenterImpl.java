@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.MainActivity;
+import com.moggot.commonalarmclock.activity.MainActivity;
 import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.fragments.CommonFragment;

@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
+import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationBounce;

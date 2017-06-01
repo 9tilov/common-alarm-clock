@@ -2,7 +2,7 @@ package com.moggot.commonalarmclock.mvp.main;
 
 import android.content.Context;
 
-import com.moggot.commonalarmclock.AlarmScheduler;
+import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 

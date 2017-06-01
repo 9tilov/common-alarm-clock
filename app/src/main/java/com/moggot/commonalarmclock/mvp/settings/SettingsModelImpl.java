@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
-import com.moggot.commonalarmclock.AlarmScheduler;
+import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.NetworkConnectionChecker;
