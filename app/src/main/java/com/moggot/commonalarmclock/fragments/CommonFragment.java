@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.analytics.Analysis;
 
 public class CommonFragment extends Fragment {
 
     private String name;
+    private Analysis analysis;
     private static final String EXTRA_NAME = "name";
 
     public CommonFragment() {
@@ -30,8 +32,17 @@ public class CommonFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.analysis = new Analysis(getContext());
+        analysis.start();
+
         if (getArguments() != null)
             this.name = getArguments().getString(EXTRA_NAME);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        analysis.sendScreenName(getClass().getSimpleName());
     }
 
     @Override

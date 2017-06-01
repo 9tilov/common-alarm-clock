@@ -1,14 +1,14 @@
 package com.moggot.commonalarmclock.mvp.getUpScreen;
 
+import com.moggot.commonalarmclock.MathExample;
+
 public interface GetUpPresenter {
 
-    void setModel(GetUpModel model);
+    void initialize(long id);
 
-    void startAlarmRing(long id);
+    void onDestroy();
 
-    void stopAlarmRing();
+    void onClickSnooze();
 
-    void snooze();
-
-    void replaceFragment();
+    void checkMathExample(MathExample example);
 }
