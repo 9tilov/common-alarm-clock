@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.MainActivity;
+import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.fragments.CommonFragment;
 import com.moggot.commonalarmclock.fragments.MathFragment;
@@ -24,12 +25,10 @@ public class GetUpPresenterImpl implements GetUpPresenter {
     }
 
     @Override
-    public void setModel(GetUpModel model) {
-        this.model = model;
-    }
+    public void initialize(long id) {
+        view.setupView();
 
-    @Override
-    public void startAlarmRing(long id) {
+        this.model = new GetUpModelImpl(view.getContext());
         model.loadAlarm(id);
         model.startVibro();
         showFragment(model.getIsMathEnable(), model.getIsSnoozeEnable());
@@ -73,7 +72,7 @@ public class GetUpPresenterImpl implements GetUpPresenter {
     }
 
     @Override
-    public void stopAlarmRing() {
+    public void onDestroy() {
         model.stopVibro();
         stopService();
         startMainActivity();
@@ -81,9 +80,26 @@ public class GetUpPresenterImpl implements GetUpPresenter {
     }
 
     @Override
-    public void snooze() {
+    public void onClickSnooze() {
         model.snoozeAlarm();
         ((Activity) view.getContext()).finish();
+    }
+
+    @Override
+    public void checkMathExample(MathExample example) {
+        if (example.isResultCorrect())
+            replaceFragment();
+        else
+            view.showToastIncorrectResult();
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction ft = ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction();
+        if (model.getIsSnoozeEnable())
+            ft.add(R.id.frgmCont, SnoozeFragment.newInstance(model.getAlarmName()));
+        else
+            ft.add(R.id.frgmCont, CommonFragment.newInstance(model.getAlarmName()));
+        ft.commit();
     }
 
     private void stopService() {
@@ -96,15 +112,5 @@ public class GetUpPresenterImpl implements GetUpPresenter {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         view.getContext().startActivity(intent);
-    }
-
-    @Override
-    public void replaceFragment() {
-        FragmentTransaction ft = ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction();
-        if (model.getIsSnoozeEnable())
-            ft.add(R.id.frgmCont, SnoozeFragment.newInstance(model.getAlarmName()));
-        else
-            ft.add(R.id.frgmCont, CommonFragment.newInstance(model.getAlarmName()));
-        ft.commit();
     }
 }
