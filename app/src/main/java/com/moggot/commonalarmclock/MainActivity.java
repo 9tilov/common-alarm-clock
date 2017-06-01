@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     //dev1
     //dev2
     //hot1
+    //hot2
     private SwipeRecyclerViewAdapter adapter;
     private MainPresenter presenter;
 
