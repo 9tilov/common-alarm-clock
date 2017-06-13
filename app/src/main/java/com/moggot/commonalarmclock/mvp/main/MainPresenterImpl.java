@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.moggot.commonalarmclock.activity.ActivitySettings;
 import com.moggot.commonalarmclock.adapter.AlarmViewHolder;
@@ -15,24 +14,30 @@ import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.Converter;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.animation.AnimationBounce;
+import com.moggot.commonalarmclock.animation.CallbackAnimation;
 import com.moggot.commonalarmclock.music.Music;
 
-public class MainPresenterImpl implements MainPresenter {
+public class MainPresenterImpl implements MainPresenter, CallbackAnimation {
 
-    private static final String LOG_TAG = MainPresenterImpl.class.getSimpleName();
-
-    private MainView view;
+    private MainView mainView;
     private MainModel mainModel;
 
-    public MainPresenterImpl(MainView view) {
-        this.view = view;
+    public MainPresenterImpl(MainView mainView) {
+        this.mainView = mainView;
     }
 
     @Override
     public void initialize() {
-        this.mainModel = new MainModelImpl(view.getContext());
+        this.mainModel = new MainModelImpl(mainView.getContext());
         mainModel.loadData();
-        view.setupViews();
+        mainView.setupViews();
+    }
+
+    @Override
+    public void onClickAdd(View view) {
+        AnimationBounce animationBounce = new AnimationBounce(view);
+        animationBounce.animate(view.getId(), this);
     }
 
     //Задержка нужна для работы анимации в onActivityResult
@@ -41,52 +46,41 @@ public class MainPresenterImpl implements MainPresenter {
         switch (requestCode) {
             case Consts.REQUEST_CODE_ACTIVITY_SETTINGS:
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateList();
-                    }
-                }, 300);
+                handler.postDelayed(this::updateList, 300);
                 break;
         }
     }
 
     private void updateList() {
         mainModel.loadData();
-        view.notifyDataSetChanged();
+        mainView.notifyDataSetChanged();
     }
 
     @Override
     public void onItemDismiss(int adapterPosition, int layoutPosition) {
         mainModel.deleteAlarm(adapterPosition);
-        view.deleteAlarm(layoutPosition);
+        mainView.deleteAlarm(layoutPosition);
     }
 
     @Override
     public void onItemShow(int layoutPosition) {
-        view.notifyItemRangeChanged(layoutPosition, mainModel.getAlarmsCount());
+        mainView.notifyItemRangeChanged(layoutPosition, mainModel.getAlarmsCount());
     }
 
     @Override
     public AlarmViewHolder createViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.alarm_item, parent, false);
         final AlarmViewHolder viewHolder = new AlarmViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int adapterPosition = viewHolder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION)
-                    onItemClicked(adapterPosition);
-            }
+        view.setOnClickListener(v -> {
+            int adapterPosition = viewHolder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION)
+                onItemClicked(adapterPosition);
         });
 
-        viewHolder.state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int adapterPosition = viewHolder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION)
-                    onItemChangeState(adapterPosition, isChecked);
-            }
+        viewHolder.state.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int adapterPosition = viewHolder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION)
+                onItemChangeState(adapterPosition, isChecked);
         });
         return viewHolder;
     }
@@ -94,7 +88,7 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void bindViewHolder(AlarmViewHolder viewHolder, int position) {
         Alarm alarm = mainModel.getAlarm(position);
-        Converter converter = new Converter(view.getContext().getResources());
+        Converter converter = new Converter(mainView.getContext().getResources());
         viewHolder.time.setText(converter.getTimeAsString(alarm.getTimeInMillis()));
         viewHolder.days.setText(converter.getDaysAsString(alarm.getRepeatAlarmIDs()));
         viewHolder.name.setText(alarm.getName());
@@ -144,9 +138,9 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onItemClicked(int position) {
-        Intent intent = new Intent(view.getContext(), ActivitySettings.class);
+        Intent intent = new Intent(mainView.getContext(), ActivitySettings.class);
         intent.putExtra(Consts.EXTRA_ID, mainModel.getAlarm(position).getId());
-        ((Activity) view.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
+        ((Activity) mainView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
     }
 
     @Override
@@ -154,5 +148,11 @@ public class MainPresenterImpl implements MainPresenter {
         Alarm alarm = mainModel.getAlarm(position);
         alarm.setState(newState);
         mainModel.editAlarm(alarm, position);
+    }
+
+    @Override
+    public void actionOfAnimationEnd(int actionID) {
+        Intent intent = new Intent(mainView.getContext(), ActivitySettings.class);
+        ((Activity) mainView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
     }
 }

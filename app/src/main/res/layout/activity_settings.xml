@@ -304,7 +304,7 @@
         android:layout_weight="15">
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/settingsView"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/separator" />

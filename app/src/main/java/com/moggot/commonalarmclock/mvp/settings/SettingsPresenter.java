@@ -10,7 +10,7 @@ public interface SettingsPresenter {
 
     void initialize(long id);
 
-    void saveAlarm();
+    void onClickSave(View view);
 
     void timerPickerOnClick();
 

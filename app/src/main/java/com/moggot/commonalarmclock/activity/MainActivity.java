@@ -13,8 +13,6 @@ import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
 import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
 import com.moggot.commonalarmclock.analytics.Analysis;
-import com.moggot.commonalarmclock.animation.AddAlarmAnimationBounce;
-import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 import com.moggot.commonalarmclock.mvp.main.MainPresenterImpl;
 import com.moggot.commonalarmclock.mvp.main.MainView;
@@ -22,8 +20,6 @@ import com.moggot.commonalarmclock.tutorial.OnboardingActivity;
 import com.moggot.commonalarmclock.tutorial.SharedPreference;
 
 public class MainActivity extends AppCompatActivity implements MainView {
-
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private SwipeRecyclerViewAdapter adapter;
     private MainPresenter presenter;
@@ -49,8 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     public void onClickAdd(View view) {
-        AnimationBounce animation = new AddAlarmAnimationBounce(this);
-        animation.animate(view);
+        presenter.onClickAdd(view);
     }
 
     @Override

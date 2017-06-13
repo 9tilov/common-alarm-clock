@@ -24,8 +24,6 @@ import com.moggot.commonalarmclock.mvp.settings.SettingsPresenter;
 import com.moggot.commonalarmclock.mvp.settings.SettingsPresenterImpl;
 import com.moggot.commonalarmclock.mvp.settings.SettingsView;
 import com.moggot.commonalarmclock.analytics.Analysis;
-import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.animation.SaveAlarmAnimationBounce;
 import com.moggot.commonalarmclock.music.Music;
 
 import android.view.View.OnClickListener;
@@ -76,9 +74,7 @@ public class ActivitySettings extends AppCompatActivity implements
     }
 
     public void onClickSave(View view) {
-        presenter.saveAlarm();
-        AnimationBounce animationBounce = new SaveAlarmAnimationBounce(ActivitySettings.this);
-        animationBounce.animate(view);
+        presenter.onClickSave(view);
     }
 
     View.OnClickListener timeListiner = new View.OnClickListener() {
@@ -194,14 +190,9 @@ public class ActivitySettings extends AppCompatActivity implements
     public void setName(String name) {
         final EditText etName = (EditText) findViewById(R.id.etAlarmName);
         etName.setText(name);
-        etName.setOnFocusChangeListener(new View.OnFocusChangeListener()
-
-        {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etName.setSelection(etName.getText().length());
-                }
+        etName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                etName.setSelection(etName.getText().length());
             }
         });
     }
@@ -255,4 +246,5 @@ public class ActivitySettings extends AppCompatActivity implements
     public void afterTextChanged(Editable s) {
         presenter.afterTextChanged(s);
     }
+
 }
