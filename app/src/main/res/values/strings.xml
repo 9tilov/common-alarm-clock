@@ -29,6 +29,9 @@
     <string name="music_file">Music file</string>
     <string name="default_ringtones">Default ringtones</string>
     <string name="incorrect_result">Incorrect answer</string>
+    <string name="select_tone">Select tone</string>
+    <string name="open_default_ringtones_error">Can\'t open default ringtones</string>
+    <string name="open_file_browser_error">Can\'t open file browser</string>
 
     <string name="not_music_file">It\'s not a music file</string>
 

@@ -27,6 +27,7 @@
     <string name="music_file">Файл</string>
     <string name="default_ringtones">Рингтоны</string>
     <string name="incorrect_result">Неправильный ответ</string>
+    <string name="select_tone">Выберите мелодию</string>
 
     <string name="not_music_file">Это не музыкальный файл</string>
 

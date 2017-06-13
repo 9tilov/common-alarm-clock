@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -229,7 +230,7 @@ public class SettingsPresenterImpl implements SettingsPresenter, CallbackAnimati
                 ((Activity) settingsView.getContext()).finish();
                 break;
             case R.id.rbFile:
-                showChooser();
+                showFileBrowser();
                 break;
             case R.id.rbRadio:
                 if (isMusicPlaying)
@@ -243,21 +244,36 @@ public class SettingsPresenterImpl implements SettingsPresenter, CallbackAnimati
         }
     }
 
-    private void showChooser() {
+    private void showFileBrowser() {
         Intent target = FileUtils.createGetContentIntent();
         Intent intent = Intent.createChooser(target, settingsView.getContext().getString(R.string.app_name));
         try {
             ((Activity) settingsView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_FILE_CHOSER);
-        } catch (ActivityNotFoundException e) {
-            Log.v("ActivityNotFoundException");
+        } catch (ActivityNotFoundException | ClassCastException e) {
+            showFileBrowserError();
+            Log.v(e.getMessage());
         }
     }
 
     private void showRingtones() {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-        ((Activity) settingsView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_DEFAULT_RINGTONE);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, settingsView.getContext().getString(R.string.select_tone));
+        Uri uri = RingtoneManager.getActualDefaultRingtoneUri(settingsView.getContext().getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, uri);
+        try {
+            ((Activity) settingsView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_DEFAULT_RINGTONE);
+        } catch (ClassCastException e) {
+            showDefaultRingtonError();
+            Log.v(e.getMessage());
+        }
+    }
+
+    private void showDefaultRingtonError() {
+        Toast.makeText(settingsView.getContext(), settingsView.getContext().getString(R.string.open_default_ringtones_error), Toast.LENGTH_SHORT).show();
+    }
+
+    private void showFileBrowserError() {
+        Toast.makeText(settingsView.getContext(), settingsView.getContext().getString(R.string.open_file_browser_error), Toast.LENGTH_SHORT).show();
     }
 }
