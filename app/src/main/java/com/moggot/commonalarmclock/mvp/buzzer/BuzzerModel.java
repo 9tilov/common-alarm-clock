@@ -1,8 +1,8 @@
-package com.moggot.commonalarmclock.mvp.getUpScreen;
+package com.moggot.commonalarmclock.mvp.buzzer;
 
 import com.moggot.commonalarmclock.music.Music;
 
-public interface GetUpModel {
+public interface BuzzerModel {
 
     void loadAlarm(long id);
 

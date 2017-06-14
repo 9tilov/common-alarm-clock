@@ -49,7 +49,7 @@ public class ActivitySettings extends AppCompatActivity implements
         setContentView(R.layout.activity_settings);
 
         Analysis analysis = new Analysis(this);
-        analysis.start();
+        analysis.sendScreenName(this.getClass().getSimpleName());
 
         mapDayButtonToCalendarDay();
 

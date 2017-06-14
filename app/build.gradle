@@ -40,6 +40,7 @@ ext {
     gson_version = '2.7'
     junit_veraion = '4.12'
     butter_knife_version = '8.6.0'
+    roboelectric_version = '3.3.2'
 }
 
 dependencies {
@@ -67,7 +68,9 @@ dependencies {
     compile "com.jakewharton:butterknife:$butter_knife_version"
     apt "com.jakewharton:butterknife-compiler:$butter_knife_version"
 
+    testCompile "org.robolectric:robolectric:$roboelectric_version"
     testCompile "junit:junit:$junit_veraion"
+    compile 'com.android.support:support-v4:25.3.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -51,7 +51,7 @@ public class MathFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         this.analysis = new Analysis(getContext());
-        analysis.start();
+        analysis.sendScreenName(this.getClass().getSimpleName());
     }
 
     @Override

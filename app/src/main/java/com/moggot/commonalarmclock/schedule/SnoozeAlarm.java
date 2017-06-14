@@ -1,30 +1,46 @@
 package com.moggot.commonalarmclock.schedule;
 
-import android.app.*;
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.moggot.commonalarmclock.AlarmManagerBroadcastReceiver;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.presentation.App;
+import com.moggot.commonalarmclock.presentation.modules.AlarmModule;
 
-public class SnoozeAlarm {
+import javax.inject.Inject;
 
-    private static final String LOG_TAG = SnoozeAlarm.class.getSimpleName();
+public class SnoozeAlarm implements AlarmStrategy {
 
-    private Context context;
+    private int requestCode;
+    private long currentTime;
 
-    public SnoozeAlarm(Context context) {
-        this.context = context;
+    @Inject
+    Intent intent;
+
+    @Inject
+    AlarmManager alarmManager;
+
+    @Inject
+    Context context;
+
+    public SnoozeAlarm(int requestCode, long currentTime) {
+        this.requestCode = requestCode;
+        this.currentTime = currentTime;
+
     }
 
-    public void setAlarm(Alarm alarm, int requestCode, long currentTime) {
-        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
+    public void setAlarm(Alarm alarm) {
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());
         PendingIntent pi = PendingIntent.getBroadcast(context, requestCode, intent, 0);
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         currentTime += Consts.SNOOZE_TIME_IN_MINUTES * 60000;
-        am.set(AlarmManager.RTC_WAKEUP, currentTime, pi);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime, pi);
+    }
+
+    @Override
+    public void cancelAlarm(Alarm alarm) {
+
     }
 }

@@ -1,6 +1,6 @@
 package com.moggot.commonalarmclock.analytics;
 
-import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,27 +10,40 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.moggot.commonalarmclock.App;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
 
 public class Analysis {
 
-    private Context context;
+    private Context appContext;
     private Tracker tracker;
 
-    public Analysis(Context context) {
-        this.context = context;
+    public Analysis(Context appContext) {
+        this.appContext = appContext;
+
+        start();
     }
 
-    public void start() {
+    private void start() {
         analyticsInit();
         firebaseInit();
     }
 
     private void analyticsInit() {
-        this.tracker = ((App) ((Activity) context).getApplication())
-                .getDefaultTracker();
+        this.tracker = createDefaultTracker();
+    }
+
+    /**
+     * Получает счетчик {@link Tracker}, используемый по умолчанию для этого приложения {@link Application}.
+     *
+     * @return tracker
+     */
+    synchronized private Tracker createDefaultTracker() {
+        if (tracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(appContext);
+            tracker = analytics.newTracker(R.xml.app_tracker);
+        }
+        return tracker;
     }
 
     public void sendScreenName(String name) {
@@ -42,9 +55,9 @@ public class Analysis {
 
     private void firebaseInit() {
         FirebaseAnalytics firebaseAnalytics;
-        if (!(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED))
+        if (!(ActivityCompat.checkSelfPermission(appContext, android.Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED))
             return;
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(appContext);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, Consts.FIREBASE_ITEM_ID);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, Consts.FIREBASE_ITEM_NAME);

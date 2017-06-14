@@ -1,13 +1,14 @@
 package com.moggot.commonalarmclock;
 
 import android.content.Context;
-import android.util.Log;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.alarm.AlarmDao;
+import com.moggot.commonalarmclock.alarm.DaoMaster;
 import com.moggot.commonalarmclock.alarm.DaoSession;
 
 import java.lang.reflect.Type;
@@ -26,6 +27,7 @@ public class DataBase {
 
     private Context applicationContext;
     private AlarmDao alarmDao;
+    private static final String DB_NAME = "alarm_db";
 
     public DataBase(Context applicationContext) {
         this.applicationContext = applicationContext.getApplicationContext();
@@ -33,8 +35,10 @@ public class DataBase {
     }
 
     private AlarmDao setupDb() {
-        DaoSession masterSession = ((App) applicationContext).getDaoSession();
-        return masterSession.getAlarmDao();
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(applicationContext, DB_NAME);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoSession daoSession = new DaoMaster(db).newSession();
+        return daoSession.getAlarmDao();
     }
 
     public void addAlarm(Alarm alarm) {

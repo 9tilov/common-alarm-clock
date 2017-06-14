@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.getUpScreen;
+package com.moggot.commonalarmclock.mvp.buzzer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,12 +15,12 @@ import com.moggot.commonalarmclock.fragments.SnoozeFragment;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.music.MusicService;
 
-public class GetUpPresenterImpl implements GetUpPresenter {
+public class BuzzerPresenterImpl implements BuzzerPresenter {
 
-    private GetUpModel model;
-    private GetUpView view;
+    private BuzzerModel model;
+    private BuzzerView view;
 
-    public GetUpPresenterImpl(GetUpView view) {
+    public BuzzerPresenterImpl(BuzzerView view) {
         this.view = view;
     }
 
@@ -28,7 +28,7 @@ public class GetUpPresenterImpl implements GetUpPresenter {
     public void initialize(long id) {
         view.setupView();
 
-        this.model = new GetUpModelImpl(view.getContext());
+        this.model = new BuzzerModelImpl(view.getContext());
         model.loadAlarm(id);
         model.startVibro();
         showFragment(model.getIsMathEnable(), model.getIsSnoozeEnable());

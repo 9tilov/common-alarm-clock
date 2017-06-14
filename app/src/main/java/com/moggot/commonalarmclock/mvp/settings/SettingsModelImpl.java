@@ -1,22 +1,15 @@
 package com.moggot.commonalarmclock.mvp.settings;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.telecom.Call;
 import android.util.SparseIntArray;
-import android.view.View;
 
 import com.google.gson.Gson;
-import com.moggot.commonalarmclock.activity.ActivitySettings;
-import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.animation.CallbackAnimation;
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
+import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 
 import java.util.Calendar;
 import java.util.Date;

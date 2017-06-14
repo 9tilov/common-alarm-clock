@@ -9,8 +9,6 @@ import com.moggot.commonalarmclock.adapter.ItemTouchHelperAdapter;
 
 public interface MainPresenter extends ItemTouchHelperAdapter {
 
-    void initialize();
-
     void onClickAdd(View view);
 
     void onActivityResult(int requestCode, int resultCode, Intent data);

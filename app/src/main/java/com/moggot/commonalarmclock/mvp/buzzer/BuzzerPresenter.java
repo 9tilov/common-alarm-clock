@@ -1,8 +1,8 @@
-package com.moggot.commonalarmclock.mvp.getUpScreen;
+package com.moggot.commonalarmclock.mvp.buzzer;
 
 import com.moggot.commonalarmclock.MathExample;
 
-public interface GetUpPresenter {
+public interface BuzzerPresenter {
 
     void initialize(long id);
 

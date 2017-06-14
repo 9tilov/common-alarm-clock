@@ -1,8 +1,8 @@
-package com.moggot.commonalarmclock.mvp.getUpScreen;
+package com.moggot.commonalarmclock.mvp.buzzer;
 
 import com.moggot.commonalarmclock.mvp.BaseView;
 
-public interface GetUpView extends BaseView {
+public interface BuzzerView extends BaseView {
 
     void setupView();
 

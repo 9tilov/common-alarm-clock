@@ -20,8 +20,6 @@ public class RepeatAlarmAlarmStrategy implements AlarmStrategy {
         this.context = context;
     }
 
-    private static final String LOG_TAG = RepeatAlarmAlarmStrategy.class.getSimpleName();
-
     public void setAlarm(Alarm alarm) {
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(Consts.EXTRA_ID, alarm.getId());

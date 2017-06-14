@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.getUpScreen;
+package com.moggot.commonalarmclock.mvp.buzzer;
 
 import android.content.Context;
 import android.os.Vibrator;
@@ -12,14 +12,14 @@ import com.moggot.commonalarmclock.music.Music;
 
 import java.util.Calendar;
 
-public class GetUpModelImpl implements GetUpModel {
+public class BuzzerModelImpl implements BuzzerModel {
 
     private DataBase db;
     private Alarm alarm;
     private Vibrator vibrator;
     private Context context;
 
-    public GetUpModelImpl(Context context) {
+    public BuzzerModelImpl(Context context) {
         this.context = context;
         this.db = new DataBase(context);
     }
@@ -73,9 +73,9 @@ public class GetUpModelImpl implements GetUpModel {
 
     @Override
     public void snoozeAlarm() {
-        SnoozeAlarm snoozeAlarm = new SnoozeAlarm(context);
         int requestCode = db.getRandomRequestCode();
         Calendar calendar = Calendar.getInstance();
-        snoozeAlarm.setAlarm(alarm, requestCode, calendar.getTimeInMillis());
+        SnoozeAlarm snoozeAlarm = new SnoozeAlarm(requestCode, calendar.getTimeInMillis());
+        snoozeAlarm.setAlarm(alarm);
     }
 }

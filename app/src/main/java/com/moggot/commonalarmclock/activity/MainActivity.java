@@ -2,7 +2,6 @@ package com.moggot.commonalarmclock.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,33 +11,44 @@ import android.view.View;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
 import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
-import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 import com.moggot.commonalarmclock.mvp.main.MainPresenterImpl;
 import com.moggot.commonalarmclock.mvp.main.MainView;
-import com.moggot.commonalarmclock.tutorial.OnboardingActivity;
-import com.moggot.commonalarmclock.tutorial.SharedPreference;
+import com.moggot.commonalarmclock.presentation.App;
+import com.moggot.commonalarmclock.presentation.component.AppComponent;
+import com.moggot.commonalarmclock.presentation.modules.MainScreenModule;
+import com.moggot.commonalarmclock.activity.tutorial.OnboardingActivity;
+import com.moggot.commonalarmclock.data.SharedPreference;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+import javax.inject.Inject;
+
+public class MainActivity extends BaseActivity implements MainView {
 
     private SwipeRecyclerViewAdapter adapter;
     private MainPresenter presenter;
+
+    @Inject
+    SharedPreference sharedPreference;
+
+    @Override
+    protected void injectDependencies(AppComponent appComponent) {
+        appComponent.inject(App.getInstance());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         startOnboarding();
-        Analysis analysis = new Analysis(this);
-        analysis.start();
 
         this.presenter = new MainPresenterImpl(this);
-        presenter.initialize();
     }
 
     private void startOnboarding() {
-        if (SharedPreference.LoadTutorialStatus(this)) {
+        if (sharedPreference.loadTutorialStatus()) {
             Intent onboarding = new Intent(this, OnboardingActivity.class);
             startActivity(onboarding);
         }

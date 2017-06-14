@@ -12,17 +12,17 @@ import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.fragments.MathFragment;
 import com.moggot.commonalarmclock.fragments.SnoozeFragment;
-import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpPresenter;
-import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpPresenterImpl;
-import com.moggot.commonalarmclock.mvp.getUpScreen.GetUpView;
+import com.moggot.commonalarmclock.mvp.buzzer.BuzzerPresenter;
+import com.moggot.commonalarmclock.mvp.buzzer.BuzzerPresenterImpl;
+import com.moggot.commonalarmclock.mvp.buzzer.BuzzerView;
 
-public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
+public class ActivityBuzzer extends AppCompatActivity implements BuzzerView
         , SnoozeFragment.SnoozeListener
         , MathFragment.ResultListener {
 
-    private static final String LOG_TAG = ActivityGetUpAlarm.class.getSimpleName();
+    private static final String LOG_TAG = ActivityBuzzer.class.getSimpleName();
 
-    private GetUpPresenter presenter;
+    private BuzzerPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class ActivityGetUpAlarm extends AppCompatActivity implements GetUpView
         setContentView(R.layout.activity_get_up_alarm);
 
         long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
-        presenter = new GetUpPresenterImpl(this);
+        presenter = new BuzzerPresenterImpl(this);
         presenter.initialize(id);
     }
 

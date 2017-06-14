@@ -25,10 +25,11 @@ public class MainPresenterImpl implements MainPresenter, CallbackAnimation {
 
     public MainPresenterImpl(MainView mainView) {
         this.mainView = mainView;
+
+        initialize();
     }
 
-    @Override
-    public void initialize() {
+    private void initialize() {
         this.mainModel = new MainModelImpl(mainView.getContext());
         mainModel.loadData();
         mainView.setupViews();

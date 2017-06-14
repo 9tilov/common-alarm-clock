@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.moggot.commonalarmclock.activity.ActivityGetUpAlarm;
+import com.moggot.commonalarmclock.activity.ActivityBuzzer;
 import com.moggot.commonalarmclock.schedule.RestoreAlarmsAfterRebootService;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
@@ -20,7 +20,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
             context.startService(new Intent(context, RestoreAlarmsAfterRebootService.class));
             return;
         }
-        intent = new Intent(context, ActivityGetUpAlarm.class);
+        intent = new Intent(context, ActivityBuzzer.class);
         intent.putExtra(Consts.EXTRA_ID, id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
