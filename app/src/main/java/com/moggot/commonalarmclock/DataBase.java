@@ -30,7 +30,7 @@ public class DataBase {
     private static final String DB_NAME = "alarm_db";
 
     public DataBase(Context applicationContext) {
-        this.applicationContext = applicationContext.getApplicationContext();
+        this.applicationContext = applicationContext;
         alarmDao = setupDb();
     }
 

@@ -6,8 +6,9 @@ import android.view.ViewGroup;
 
 import com.moggot.commonalarmclock.adapter.AlarmViewHolder;
 import com.moggot.commonalarmclock.adapter.ItemTouchHelperAdapter;
+import com.moggot.commonalarmclock.mvp.BasePresenter;
 
-public interface MainPresenter extends ItemTouchHelperAdapter {
+public interface MainPresenter extends ItemTouchHelperAdapter, BasePresenter {
 
     void onClickAdd(View view);
 

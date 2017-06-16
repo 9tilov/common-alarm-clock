@@ -1,10 +1,9 @@
 package com.moggot.commonalarmclock.mvp.buzzer;
 
 import com.moggot.commonalarmclock.MathExample;
+import com.moggot.commonalarmclock.mvp.BasePresenter;
 
-public interface BuzzerPresenter {
-
-    void initialize(long id);
+public interface BuzzerPresenter extends BasePresenter{
 
     void onDestroy();
 

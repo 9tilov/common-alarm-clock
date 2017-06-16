@@ -2,8 +2,9 @@ package com.moggot.commonalarmclock.presentation.modules;
 
 import android.content.Context;
 
-import com.moggot.commonalarmclock.presentation.scopes.AlarmScope;
 import com.moggot.commonalarmclock.schedule.AlarmScheduler;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,7 +12,7 @@ import dagger.Provides;
 @Module
 public class AlarmModule {
 
-    @AlarmScope
+    @Singleton
     @Provides
     public AlarmScheduler provideAlarmScheduler(Context context) {
         return new AlarmScheduler(context);

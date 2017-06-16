@@ -26,13 +26,6 @@ public class MainPresenterImpl implements MainPresenter, CallbackAnimation {
     public MainPresenterImpl(MainView mainView) {
         this.mainView = mainView;
 
-        initialize();
-    }
-
-    private void initialize() {
-        this.mainModel = new MainModelImpl(mainView.getContext());
-        mainModel.loadData();
-        mainView.setupViews();
     }
 
     @Override
@@ -155,5 +148,17 @@ public class MainPresenterImpl implements MainPresenter, CallbackAnimation {
     public void actionOfAnimationEnd(int actionID) {
         Intent intent = new Intent(mainView.getContext(), ActivitySettings.class);
         ((Activity) mainView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
+    }
+
+    @Override
+    public void initialize(long id) {
+        this.mainModel = new MainModelImpl(mainView.getContext());
+        mainModel.loadData();
+        mainView.setupViews();
+    }
+
+    @Override
+    public void onDestroy() {
+
     }
 }

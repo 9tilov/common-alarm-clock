@@ -11,13 +11,13 @@ import com.moggot.commonalarmclock.presentation.component.AppComponent;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
-    protected abstract void injectDependencies(AppComponent appComponent);
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies(App.getInstance().getAppComponent());
     }
+
+    protected abstract void injectDependencies(AppComponent appComponent);
 
     @Override
     public Context getContext() {

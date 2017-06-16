@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 
-public interface SettingsPresenter {
+import com.moggot.commonalarmclock.mvp.BasePresenter;
 
-    void initialize(long id);
+public interface SettingsPresenter extends BasePresenter {
 
     void onClickSave(View view);
 

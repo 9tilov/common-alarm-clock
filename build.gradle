@@ -26,3 +26,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    support_version = '25.3.1'
+    greendao_version = '3.2.2'
+    analytics_version = '11.0.1'
+    firebase_version = '10.2.0'
+    dagger_version = '2.9'
+    appintro_version = 'v4.2.0'
+    gson_version = '2.7'
+    junit_veraion = '4.12'
+    butter_knife_version = '8.6.0'
+    roboelectric_version = '3.3.2'
+}
