@@ -55,7 +55,7 @@ public class ActivitySettings extends AppCompatActivity implements
 
         long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
         presenter = new SettingsPresenterImpl(this);
-        presenter.initialize(id);
+        presenter.init(id);
 
     }
 
@@ -126,8 +126,7 @@ public class ActivitySettings extends AppCompatActivity implements
         return this;
     }
 
-    @Override
-    public void setupViews() {
+    private void setupViews() {
         ((RadioGroup) findViewById(R.id.rgMusicType)).setOnCheckedChangeListener(rgListener);
         ((EditText) findViewById(R.id.etAlarmName)).addTextChangedListener(this);
         findViewById(R.id.tvAlarmTime).setOnClickListener(timeListiner);

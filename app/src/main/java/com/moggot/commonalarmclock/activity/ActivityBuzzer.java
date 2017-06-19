@@ -31,7 +31,7 @@ public class ActivityBuzzer extends AppCompatActivity implements BuzzerView
 
         long id = getIntent().getLongExtra(Consts.EXTRA_ID, Consts.NO_ID);
         presenter = new BuzzerPresenterImpl(this);
-        presenter.initialize(id);
+        presenter.init(id);
     }
 
     //переопределенный метод для того, чтобы нельзя было нажать кнопку Назад
@@ -60,8 +60,7 @@ public class ActivityBuzzer extends AppCompatActivity implements BuzzerView
         presenter.checkMathExample(example);
     }
 
-    @Override
-    public void setupView() {
+    private void setupViews() {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON

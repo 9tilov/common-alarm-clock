@@ -6,7 +6,7 @@ import android.util.SparseIntArray;
 import com.google.gson.Gson;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
-import com.moggot.commonalarmclock.NetworkConnectionChecker;
+import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.schedule.AlarmScheduler;

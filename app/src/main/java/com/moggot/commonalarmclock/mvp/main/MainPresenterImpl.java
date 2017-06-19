@@ -3,6 +3,7 @@ package com.moggot.commonalarmclock.mvp.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,28 @@ import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.CallbackAnimation;
+import com.moggot.commonalarmclock.domain.utils.ActivityUtils;
+import com.moggot.commonalarmclock.fragments.SettingsFragment;
 import com.moggot.commonalarmclock.music.Music;
+
+import javax.inject.Inject;
+
+import static com.moggot.commonalarmclock.Consts.NO_ID;
 
 public class MainPresenterImpl implements MainPresenter, CallbackAnimation {
 
     private MainView mainView;
     private MainModel mainModel;
 
+    @Inject
     public MainPresenterImpl(MainView mainView) {
         this.mainView = mainView;
+        init();
+    }
 
+    private void init() {
+        this.mainModel = new MainModelImpl(mainView.getContext());
+        mainModel.loadData();
     }
 
     @Override
@@ -145,16 +158,9 @@ public class MainPresenterImpl implements MainPresenter, CallbackAnimation {
     }
 
     @Override
-    public void actionOfAnimationEnd(int actionID) {
-        Intent intent = new Intent(mainView.getContext(), ActivitySettings.class);
-        ((Activity) mainView.getContext()).startActivityForResult(intent, Consts.REQUEST_CODE_ACTIVITY_SETTINGS);
-    }
-
-    @Override
-    public void initialize(long id) {
-        this.mainModel = new MainModelImpl(mainView.getContext());
-        mainModel.loadData();
-        mainView.setupViews();
+    public void endAnimationAction(int actionID) {
+        SettingsFragment settingsFragment = SettingsFragment.newInstance(NO_ID);
+        ActivityUtils.addFragmentToActivity(((FragmentActivity) mainView.getContext()).getSupportFragmentManager(), settingsFragment, R.id.root_frame);
     }
 
     @Override

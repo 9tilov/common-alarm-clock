@@ -38,4 +38,5 @@ ext {
     junit_veraion = '4.12'
     butter_knife_version = '8.6.0'
     roboelectric_version = '3.3.2'
+    espresso_version = '2.2.2'
 }

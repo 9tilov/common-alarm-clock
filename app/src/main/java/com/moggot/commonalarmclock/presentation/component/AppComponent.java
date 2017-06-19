@@ -1,6 +1,7 @@
 package com.moggot.commonalarmclock.presentation.component;
 
 import com.moggot.commonalarmclock.activity.MainActivity;
+import com.moggot.commonalarmclock.activity.tutorial.OnboardingActivity;
 import com.moggot.commonalarmclock.presentation.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.modules.AppModule;
 import com.moggot.commonalarmclock.presentation.modules.BuzzerScreenModule;
@@ -18,6 +19,7 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(MainActivity mainActivity);
+    void inject(OnboardingActivity onboardingActivity);
 
     MainScreenComponent plus(MainScreenModule mainScreenModule);
 

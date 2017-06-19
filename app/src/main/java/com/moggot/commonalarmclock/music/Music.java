@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.NetworkConnectionChecker;
+import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 
 public class Music implements Parcelable {
 

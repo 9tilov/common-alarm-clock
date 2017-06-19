@@ -2,9 +2,8 @@ package com.moggot.commonalarmclock.presentation.modules;
 
 import android.content.Context;
 
-import com.moggot.commonalarmclock.Log;
 import com.moggot.commonalarmclock.analytics.Analysis;
-import com.moggot.commonalarmclock.domain.NetworkManager;
+import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 
 import javax.inject.Singleton;
 
@@ -16,19 +15,13 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    public NetworkManager provideNetworkManager(Context context) {
-        return new NetworkManager(context);
+    public NetworkConnectionChecker provideNetworkConnectionChecker(Context context) {
+        return new NetworkConnectionChecker(context);
     }
 
     @Provides
     @Singleton
     public Analysis provideAnalysis(Context context) {
         return new Analysis(context);
-    }
-
-    @Provides
-    @Singleton
-    public Log provideLogger() {
-        return new Log();
     }
 }

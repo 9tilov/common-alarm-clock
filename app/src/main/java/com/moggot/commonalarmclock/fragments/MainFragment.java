@@ -1,30 +1,37 @@
 package com.moggot.commonalarmclock.fragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
+import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
+import com.moggot.commonalarmclock.mvp.main.MainPresenter;
+import com.moggot.commonalarmclock.mvp.main.MainView;
+import com.moggot.commonalarmclock.presentation.App;
+import com.moggot.commonalarmclock.presentation.modules.MainScreenModule;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MainFragment extends Fragment {
+import javax.inject.Inject;
 
-    private OnFragmentInteractionListener mListener;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    public MainFragment() {
-        // Required empty public constructor
-    }
+public class MainFragment extends Fragment implements MainView, View.OnClickListener {
+
+    @Inject
+    MainPresenter presenter;
+    SwipeRecyclerViewAdapter adapter;
+
+    @BindView(R.id.btnAddAlarm)
+    protected Button btnAdd;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -34,54 +41,61 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        if (getArguments() != null) {
-        }
+        App.getInstance().getAppComponent().plus(new MainScreenModule(this)).inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        setupViews(view);
+    }
+
+    private void setupViews(View view) {
+        ButterKnife.bind(this, view);
+        btnAdd.setOnClickListener(this);
+        this.adapter = new SwipeRecyclerViewAdapter(presenter);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.alarmRecyclerView);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(getContext(), presenter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void deleteAlarm(int position) {
+        adapter.notifyItemRemoved(position);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void notifyItemRangeChanged(int positionStart, int itemCount) {
+        adapter.notifyItemRangeChanged(positionStart, itemCount);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onClick(View v) {
+        presenter.onClickAdd(v);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

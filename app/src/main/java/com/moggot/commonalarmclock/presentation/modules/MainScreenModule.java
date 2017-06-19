@@ -25,7 +25,7 @@ public class MainScreenModule {
 
     @ScreenScope
     @Provides
-    public MainPresenter provideMainPresenter() {
-        return new MainPresenterImpl(mainView);
+    public MainPresenter provideMainPresenter(MainPresenterImpl presenter) {
+        return presenter;
     }
 }

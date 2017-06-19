@@ -7,23 +7,26 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.data.SharedPreference;
+import com.moggot.commonalarmclock.presentation.App;
 
 import javax.inject.Inject;
 
 public class OnboardingActivity extends AppIntro2 {
 
-//    @Inject
-//    Analysis analysis;
-//
-//    @Inject
-//    SharedPreference sharedPreference;
+    @Inject
+    Analysis analysis;
+
+    @Inject
+    SharedPreference sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        analysis.sendScreenName(this.getClass().getSimpleName());
-//        sharedPreference.saveTutorialStatus(false);
+        App.getInstance().getAppComponent().inject(this);
+
+        analysis.sendScreenName(this.getClass().getSimpleName());
+        sharedPreference.saveTutorialStatus(false);
 
         addSlides();
         showSkipButton(false);

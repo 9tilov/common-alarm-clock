@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.NetworkConnectionChecker;
+import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 
 public class PlayerCreator {
 

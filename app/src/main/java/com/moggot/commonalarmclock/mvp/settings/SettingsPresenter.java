@@ -10,6 +10,8 @@ import com.moggot.commonalarmclock.mvp.BasePresenter;
 
 public interface SettingsPresenter extends BasePresenter {
 
+    void init(long id);
+
     void onClickSave(View view);
 
     void timerPickerOnClick();

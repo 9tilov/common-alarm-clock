@@ -1,9 +1,11 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.domain.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
+
+import com.moggot.commonalarmclock.R;
 
 public class NetworkConnectionChecker {
 

@@ -25,9 +25,7 @@ public class BuzzerPresenterImpl implements BuzzerPresenter {
     }
 
     @Override
-    public void initialize(long id) {
-        view.setupView();
-
+    public void init(long id) {
         this.model = new BuzzerModelImpl(view.getContext());
         model.loadAlarm(id);
         model.startVibro();

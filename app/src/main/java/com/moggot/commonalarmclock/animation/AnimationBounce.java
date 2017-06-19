@@ -18,17 +18,17 @@ public class AnimationBounce {
         initAnimation();
     }
 
+    public final void animate(int actionID, CallbackAnimation callbackAnimation) {
+        initButton(view);
+        startAnimation(actionID, callbackAnimation);
+    }
+
     private void initAnimation() {
         double animationDuration = 0.5 * 1000;
         animation.setDuration((long) animationDuration);
 
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.50, 15);
         animation.setInterpolator(interpolator);
-    }
-
-    public final void animate(int actionID, CallbackAnimation callbackAnimation) {
-        initButton(view);
-        startAnimation(actionID, callbackAnimation);
     }
 
     private void initButton(View view) {
@@ -47,7 +47,7 @@ public class AnimationBounce {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
-                callbackAnimation.actionOfAnimationEnd(actionID);
+                callbackAnimation.endAnimationAction(actionID);
             }
         });
     }

@@ -25,7 +25,7 @@ public class SettingsScreenModule {
 
     @ScreenScope
     @Provides
-    public SettingsPresenter provideSettingsPresenter() {
-        return new SettingsPresenterImpl(settingsView);
+    public SettingsPresenter provideSettingsPresenter(SettingsPresenterImpl presenter) {
+        return presenter;
     }
 }

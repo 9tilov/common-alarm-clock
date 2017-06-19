@@ -101,7 +101,6 @@ public class MathFragment extends Fragment {
         return example;
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

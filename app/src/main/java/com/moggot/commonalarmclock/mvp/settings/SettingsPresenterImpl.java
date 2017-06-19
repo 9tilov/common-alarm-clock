@@ -26,6 +26,8 @@ import com.moggot.commonalarmclock.music.MusicService;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import static android.app.Activity.RESULT_OK;
 
 public class SettingsPresenterImpl implements SettingsPresenter, CallbackAnimation {
@@ -35,17 +37,16 @@ public class SettingsPresenterImpl implements SettingsPresenter, CallbackAnimati
 
     private boolean isMusicPlaying;
 
+    @Inject
     public SettingsPresenterImpl(SettingsView settingsView) {
         this.settingsView = settingsView;
         this.isMusicPlaying = false;
     }
 
     @Override
-    public void initialize(long id) {
+    public void init(long id) {
         this.model = new SettingsModelImpl(settingsView.getContext());
         model.loadAlarm(id);
-
-        settingsView.setupViews();
 
         settingsView.setTime(model.getDateAsString());
         settingsView.setDaysCheckbox(model.getDaysCheckboxState());
@@ -224,7 +225,7 @@ public class SettingsPresenterImpl implements SettingsPresenter, CallbackAnimati
     }
 
     @Override
-    public void actionOfAnimationEnd(int actionID) {
+    public void endAnimationAction(int actionID) {
         switch (actionID) {
             case R.id.btnSaveAlarm:
                 ((Activity) settingsView.getContext()).finish();

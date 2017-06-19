@@ -7,8 +7,6 @@ import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 
 public class SwipeRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
 
-    private static final String LOG_TAG = SwipeRecyclerViewAdapter.class.getSimpleName();
-
     private MainPresenter presenter;
 
     public SwipeRecyclerViewAdapter(MainPresenter presenter) {
