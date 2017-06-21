@@ -1,25 +1,24 @@
 package com.moggot.commonalarmclock.mvp.main;
 
-import android.content.Context;
-
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import com.moggot.commonalarmclock.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MainModelImpl implements MainModel {
 
-    private static final String LOG_TAG = MainModelImpl.class.getSimpleName();
-
     private DataBase db;
-    private Context context;
     private List<Alarm> alarms;
+    private AlarmScheduler alarmScheduler;
 
-    public MainModelImpl(Context context) {
-        this.context = context;
-        this.db = new DataBase(context);
+    @Inject
+    public MainModelImpl(DataBase dataBase, AlarmScheduler alarmScheduler) {
+        this.db = dataBase;
+        this.alarmScheduler = alarmScheduler;
         this.alarms = new ArrayList<>();
     }
 
@@ -48,7 +47,6 @@ public class MainModelImpl implements MainModel {
     }
 
     private void deleteAlarmFromShedule(Alarm alarm) {
-        AlarmScheduler alarmScheduler = new AlarmScheduler(context);
         alarmScheduler.cancelAlarm(alarm);
     }
 
@@ -61,7 +59,6 @@ public class MainModelImpl implements MainModel {
     }
 
     private void editSheduleWithState(Alarm alarm) {
-        AlarmScheduler alarmScheduler = new AlarmScheduler(context);
         if (alarm.getState())
             alarmScheduler.setAlarm(alarm);
         else

@@ -1,26 +1,27 @@
 package com.moggot.commonalarmclock.animation;
 
+import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.moggot.commonalarmclock.R;
 
-public class AnimationBounce {
+public abstract class AnimationBounce {
 
-    protected View view;
-    protected final Animation animation;
+    private final Animation animation;
+    protected Context context;
 
-    public AnimationBounce(View view) {
-        this.view = view;
-        this.animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.bounce);
+    public AnimationBounce(Context context) {
+        this.context = context;
+        this.animation = AnimationUtils.loadAnimation(context, R.anim.bounce);
 
         initAnimation();
     }
 
-    public final void animate(int actionID, CallbackAnimation callbackAnimation) {
+    public final void animate(View view) {
         initButton(view);
-        startAnimation(actionID, callbackAnimation);
+        startAnimation();
     }
 
     private void initAnimation() {
@@ -35,7 +36,9 @@ public class AnimationBounce {
         view.startAnimation(animation);
     }
 
-    private void startAnimation(final int actionID, final CallbackAnimation callbackAnimation) {
+    protected abstract void animationAction();
+
+    private void startAnimation() {
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
@@ -47,7 +50,7 @@ public class AnimationBounce {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
-                callbackAnimation.endAnimationAction(actionID);
+                animationAction();
             }
         });
     }

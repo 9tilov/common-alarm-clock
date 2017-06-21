@@ -1,7 +1,5 @@
 package com.moggot.commonalarmclock.mvp.buzzer;
 
-import com.moggot.commonalarmclock.music.Music;
-
 public interface BuzzerModel {
 
     void loadAlarm(long id);
@@ -12,7 +10,9 @@ public interface BuzzerModel {
 
     String getAlarmName();
 
-    Music getMusic();
+    int getMusicType();
+
+    String getMusicPath();
 
     boolean getIsSnoozeEnable();
 

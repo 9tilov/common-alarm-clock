@@ -1,32 +1,34 @@
 package com.moggot.commonalarmclock.mvp.settings;
 
-import android.content.Intent;
 import android.text.Editable;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 
-import com.moggot.commonalarmclock.mvp.BasePresenter;
+import com.moggot.commonalarmclock.music.Music;
 
-public interface SettingsPresenter extends BasePresenter {
+public interface SettingsPresenter {
 
     void init(long id);
 
-    void onClickSave(View view);
+    void setupViews();
 
-    void timerPickerOnClick();
+    void saveAlarm();
 
-    void onClickDay(View v, int dayCode);
+    int getHour();
 
-    void onCheckedChangedCheckBox(CompoundButton buttonView, boolean isChecked);
+    int getMinute();
 
-    void onCheckedChangedRadioGroup(RadioGroup radioGroup, int checkedID);
+    void setSelectedTime(int hour, int minute);
 
-    void onClickButtonMusic(View view, int radioButtonID);
+    void setDayOn(int dayCode);
+
+    void setDayOff(int dayCode);
+
+    void setCheckedSnooze(boolean isChecked);
+
+    void setCheckedRepeate(boolean isChecked);
+
+    void setCheckedMath(boolean isChecked);
+
+    void setMusic(Music music);
 
     void afterTextChanged(Editable s);
-
-    void onDestroy();
-
-    void onActivityResult(int requestCode, int resultCode, Intent data);
 }

@@ -44,5 +44,4 @@ public interface SettingsModel {
 
     SparseIntArray getRepeateIDs();
 
-    boolean isNetworkAvailable();
 }

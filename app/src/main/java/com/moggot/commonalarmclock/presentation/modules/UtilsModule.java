@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
+import com.moggot.commonalarmclock.music.MusicPlayer;
 
 import javax.inject.Singleton;
 
@@ -23,5 +24,11 @@ public class UtilsModule {
     @Singleton
     public Analysis provideAnalysis(Context context) {
         return new Analysis(context);
+    }
+
+    @Provides
+    @Singleton
+    public MusicPlayer provideMusicPlayer(Context context) {
+        return new MusicPlayer(context);
     }
 }

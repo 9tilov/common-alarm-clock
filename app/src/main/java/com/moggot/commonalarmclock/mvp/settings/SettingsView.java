@@ -8,9 +8,9 @@ public interface SettingsView extends BaseView {
 
     void setTime(String time);
 
-    void setDaysCheckbox(boolean isChecked);
+    void setDaysCheckboxChecked(boolean isChecked);
 
-    void setDays(SparseIntArray ids);
+    void setDaysButtons(SparseIntArray ids);
 
     void showDays();
 
@@ -22,9 +22,5 @@ public interface SettingsView extends BaseView {
 
     void setName(String name);
 
-    void setMusicButton(int musicType);
-
-    void setButtonRadioDrawable(boolean isPlaying);
-
-    void showToastNoMusicFile();
+    void setRadioButtonAndMusicButton(int radioGroupID);
 }

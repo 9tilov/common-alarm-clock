@@ -24,10 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.ActivitySettings"
-            android:label="@string/title_create_alarm"
-            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".AlarmManagerBroadcastReceiver"

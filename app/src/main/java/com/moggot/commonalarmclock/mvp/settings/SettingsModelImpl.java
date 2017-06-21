@@ -1,12 +1,10 @@
 package com.moggot.commonalarmclock.mvp.settings;
 
-import android.content.Context;
 import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
-import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.schedule.AlarmScheduler;
@@ -14,15 +12,21 @@ import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import static com.moggot.commonalarmclock.music.Music.DEFAULT_RINGTONE_URL;
+import static com.moggot.commonalarmclock.music.Music.MUSIC_TYPE.RADIO;
+
 public class SettingsModelImpl implements SettingsModel {
 
     private DataBase db;
-    private Context context;
     private Alarm alarm;
+    private AlarmScheduler alarmScheduler;
 
-    public SettingsModelImpl(Context context) {
-        this.db = new DataBase(context);
-        this.context = context;
+    @Inject
+    public SettingsModelImpl(DataBase dataBase, AlarmScheduler alarmScheduler) {
+        this.db = dataBase;
+        this.alarmScheduler = alarmScheduler;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class SettingsModelImpl implements SettingsModel {
         alarm.setIsSnoozeEnable(false);
         alarm.setIsMathEnable(true);
         alarm.setName("");
-        alarm.setMusic(new Music(context));
+        alarm.setMusic(new Music(RADIO, DEFAULT_RINGTONE_URL));
         alarm.setState(true);
     }
 
@@ -71,12 +75,10 @@ public class SettingsModelImpl implements SettingsModel {
     }
 
     private void cancelOldAlarm(Alarm oldAlarm) {
-        AlarmScheduler alarmScheduler = new AlarmScheduler(context);
         alarmScheduler.cancelAlarm(oldAlarm);
     }
 
     private void addAlarmToShedule(Alarm alarm) {
-        AlarmScheduler alarmScheduler = new AlarmScheduler(context);
         alarmScheduler.setAlarm(alarm);
     }
 
@@ -194,11 +196,5 @@ public class SettingsModelImpl implements SettingsModel {
     @Override
     public SparseIntArray getRepeateIDs() {
         return alarm.getRepeatAlarmIDs();
-    }
-
-    @Override
-    public boolean isNetworkAvailable() {
-        NetworkConnectionChecker connectionChecker = new NetworkConnectionChecker(context);
-        return connectionChecker.isNetworkAvailable();
     }
 }

@@ -1,7 +1,5 @@
 package com.moggot.commonalarmclock;
 
-import android.media.RingtoneManager;
-
 public interface Consts {
 
     int TOMORROW = 0;
@@ -20,7 +18,4 @@ public interface Consts {
     int SNOOZE_TIME_IN_MINUTES = 5;
 
     int NO_ID = 0;
-
-    String RADIO_URL = "http://pulseedm.cdnstream1.com:8124/1373_128";
-    String DEFAULT_RINGTONE_URL = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
 }

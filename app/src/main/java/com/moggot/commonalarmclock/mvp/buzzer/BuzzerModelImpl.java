@@ -3,12 +3,11 @@ package com.moggot.commonalarmclock.mvp.buzzer;
 import android.content.Context;
 import android.os.Vibrator;
 
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.DataBase;
-import com.moggot.commonalarmclock.schedule.SnoozeAlarm;
 import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.music.Music;
+import com.moggot.commonalarmclock.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.schedule.SnoozeAlarm;
 
 import java.util.Calendar;
 
@@ -46,10 +45,13 @@ public class BuzzerModelImpl implements BuzzerModel {
     }
 
     @Override
-    public Music getMusic() {
-        Music music = new Music(context);
-        music.setMusic(alarm.getMusicTypeEnum(), alarm.getMusicPath());
-        return music;
+    public int getMusicType() {
+        return alarm.getMusicType();
+    }
+
+    @Override
+    public String getMusicPath() {
+        return alarm.getMusicPath();
     }
 
     @Override

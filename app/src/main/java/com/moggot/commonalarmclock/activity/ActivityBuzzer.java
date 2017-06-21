@@ -42,7 +42,7 @@ public class ActivityBuzzer extends AppCompatActivity implements BuzzerView
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
+//        presenter.onDestroy();
     }
 
     @Override

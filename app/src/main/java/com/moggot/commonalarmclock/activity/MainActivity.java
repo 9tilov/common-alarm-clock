@@ -2,6 +2,7 @@ package com.moggot.commonalarmclock.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.activity.tutorial.OnboardingActivity;
@@ -43,7 +44,8 @@ public class MainActivity extends BaseActivity {
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.root_frame);
         if (mainFragment == null) {
             mainFragment = MainFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mainFragment, R.id.root_frame);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            ActivityUtils.addFragmentToActivity(fragmentManager, mainFragment, R.id.root_frame);
         }
     }
 

@@ -9,8 +9,6 @@ import com.moggot.commonalarmclock.Consts;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener {
 
-    private final static String LOG_TAG = MusicService.class.getSimpleName();
-
     private MediaPlayer mediaPlayer = null;
     private boolean isServiceStopped = false;
 
@@ -18,8 +16,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
         Music music = intent.getParcelableExtra(Consts.EXTRA_MUSIC);
 
-        PlayerCreator playerCreator = new PlayerCreator(this);
-        mediaPlayer = playerCreator.createPlayer(music);
+        mediaPlayer = MusicPlayer.createPlayer(music);
         mediaPlayer.setOnPreparedListener(this);
 
         return super.onStartCommand(intent, flags, startID);

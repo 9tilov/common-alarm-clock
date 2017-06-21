@@ -15,6 +15,9 @@ import com.moggot.commonalarmclock.fragments.SnoozeFragment;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.music.MusicService;
 
+import static com.moggot.commonalarmclock.music.Music.MUSIC_TYPE.RADIO;
+import static com.moggot.commonalarmclock.music.Music.RADIO_URL;
+
 public class BuzzerPresenterImpl implements BuzzerPresenter {
 
     private BuzzerModel model;
@@ -64,18 +67,19 @@ public class BuzzerPresenterImpl implements BuzzerPresenter {
 
     private void startService() {
         Intent musicIntent = new Intent(view.getContext(), MusicService.class);
-        Music music = model.getMusic();
+//        Music music = model.getMusic();
+        Music music = new Music(RADIO, RADIO_URL);
         musicIntent.putExtra(Consts.EXTRA_MUSIC, music);
         view.getContext().startService(musicIntent);
     }
 
-    @Override
-    public void onDestroy() {
-        model.stopVibro();
-        stopService();
-        startMainActivity();
-        model.cancelSingleAlarm();
-    }
+//    @Override
+//    public void onDestroy() {
+//        model.stopVibro();
+//        stopService();
+//        startMainActivity();
+//        model.cancelSingleAlarm();
+//    }
 
     @Override
     public void onClickSnooze() {

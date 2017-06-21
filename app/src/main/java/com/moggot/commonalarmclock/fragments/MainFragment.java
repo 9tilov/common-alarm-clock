@@ -1,6 +1,5 @@
 package com.moggot.commonalarmclock.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +13,8 @@ import android.widget.Button;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
 import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
+import com.moggot.commonalarmclock.animation.AnimationAddButton;
+import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.mvp.main.MainPresenter;
 import com.moggot.commonalarmclock.mvp.main.MainView;
 import com.moggot.commonalarmclock.presentation.App;
@@ -24,14 +25,18 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainFragment extends Fragment implements MainView, View.OnClickListener {
+public class MainFragment extends Fragment implements MainView {
 
     @Inject
     MainPresenter presenter;
-    SwipeRecyclerViewAdapter adapter;
+
+    private SwipeRecyclerViewAdapter adapter;
 
     @BindView(R.id.btnAddAlarm)
-    protected Button btnAdd;
+    Button btnAdd;
+
+    @BindView(R.id.alarmRecyclerView)
+    RecyclerView recyclerView;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -53,19 +58,25 @@ public class MainFragment extends Fragment implements MainView, View.OnClickList
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setupViews(view);
+
+        presenter.updateList();
     }
 
     private void setupViews(View view) {
         ButterKnife.bind(this, view);
-        btnAdd.setOnClickListener(this);
-        this.adapter = new SwipeRecyclerViewAdapter(presenter);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.alarmRecyclerView);
+        btnAdd.setOnClickListener(this::addAlarm);
+        this.adapter = new SwipeRecyclerViewAdapter(getContext(), presenter);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(getContext(), presenter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void addAlarm(View view) {
+        AnimationBounce animationBounce = new AnimationAddButton(getContext());
+        animationBounce.animate(view);
     }
 
     @Override
@@ -83,19 +94,4 @@ public class MainFragment extends Fragment implements MainView, View.OnClickList
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        presenter.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onClick(View v) {
-        presenter.onClickAdd(v);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-    }
 }
