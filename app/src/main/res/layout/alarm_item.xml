@@ -9,139 +9,87 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/listview_item_height"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/listview_item_height"
-            android:orientation="horizontal"
-            android:weightSum="10">
+        <TextView
+            android:id="@+id/tvAdapterTime"
+            style="@style/TextAdapterTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="time" />
 
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="vertical"
-                android:weightSum="13">
+        <TextView
+            android:id="@+id/tvAdapterDays"
+            style="@style/TextAdapterDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="days" />
 
-                <TextView
-                    android:id="@+id/tvAdapterTime"
-                    style="@style/TextAdapterTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="8"
-                    android:gravity="center"
-                    android:text="time" />
+        <TextView
+            android:id="@+id/tvAdapterName"
+            style="@style/TextAdapterAlarmName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:ellipsize="end"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:text="alarm_name" />
 
-                <TextView
-                    android:id="@+id/tvAdapterDays"
-                    style="@style/TextAdapterDays"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_gravity="center"
-                    android:layout_weight="5"
-                    android:gravity="center"
-                    android:text="days" />
-            </LinearLayout>
+        <ImageView
+            android:id="@+id/ivAdapterSnooze"
+            android:layout_width="@dimen/icon_alarm_type"
+            android:layout_height="@dimen/icon_alarm_type"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/ivAdapterMusicType"
+            android:layout_toStartOf="@+id/ivAdapterMusicType"
+            android:src="@drawable/ic_snooze"
+            android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:weightSum="2">
+        <ImageView
+            android:id="@+id/ivAdapterMusicType"
+            android:layout_width="@dimen/icon_alarm_type"
+            android:layout_height="@dimen/icon_alarm_type"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_radio"
+            android:visibility="visible" />
 
+        <ImageView
+            android:id="@+id/ivAdapterMath"
+            android:layout_width="@dimen/icon_alarm_type"
+            android:layout_height="@dimen/icon_alarm_type"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@+id/ivAdapterMusicType"
+            android:layout_toRightOf="@+id/ivAdapterMusicType"
+            android:src="@drawable/ic_function"
+            android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/ivAdapterMusicType"
-                            android:layout_width="@dimen/icon_alarm_type"
-                            android:layout_height="@dimen/icon_alarm_type"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_radio"
-                            android:visibility="visible" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/ivAdapterSnooze"
-                            android:layout_width="@dimen/icon_alarm_type"
-                            android:layout_height="@dimen/icon_alarm_type"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_snooze"
-                            android:visibility="invisible" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/ivAdapterMath"
-                            android:layout_width="@dimen/icon_alarm_type"
-                            android:layout_height="@dimen/icon_alarm_type"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_function"
-                            android:visibility="invisible" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvAdapterName"
-                    style="@style/TextAdapterAlarmName"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:gravity="center"
-                    android:text="alarm_name" />
-
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="horizontal">
-
-
-                <ToggleButton
-                    android:id="@+id/tgAdapterState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/toggle_btn"
-                    android:checked="true"
-                    android:textOff=""
-                    android:textOn="" />
-            </RelativeLayout>
-        </LinearLayout>
+        <ToggleButton
+            android:id="@+id/tgAdapterState"
+            android:layout_width="@dimen/toggle_btn_width"
+            android:layout_height="@dimen/toggle_btn_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/toggle_btn"
+            android:checked="true"
+            android:textOff=""
+            android:textOn="" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

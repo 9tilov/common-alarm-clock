@@ -22,6 +22,8 @@
     <dimen name="math_result_btn_width">200dip</dimen>
 
     <dimen name="add_btn_size">50dip</dimen>
+    <dimen name="toggle_btn_width">70dip</dimen>
+    <dimen name="toggle_btn_height">50dip</dimen>
     <dimen name="save_btn_size">50dip</dimen>
     <dimen name="btn_music_icons">40dip</dimen>
     <dimen name="btn_delete">30dip</dimen>

@@ -19,21 +19,15 @@
             android:background="@color/background"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvTitleAlarmTime"
+                style="@style/TextTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/background_title">
-
-                <TextView
-                    android:id="@+id/tvTitleAlarmTime"
-                    style="@style/TextTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/title_set_time"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@color/background_title"
+                android:gravity="center"
+                android:text="@string/title_set_time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
             <TextView
@@ -45,21 +39,15 @@
                 android:text="@string/default_time" />
 
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvTitleDaysOfWeek"
+                style="@style/TextTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/background_title">
-
-                <TextView
-                    android:id="@+id/tvTitleDaysOfWeek"
-                    style="@style/TextTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/title_days_of_week"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@color/background_title"
+                android:gravity="center"
+                android:text="@string/title_days_of_week"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
                 android:id="@+id/checkBoxRepeat"
@@ -158,24 +146,15 @@
                     android:textOn="" />
             </RelativeLayout>
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textViewAlarmType"
+                style="@style/TextTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/background_title">
-
-                <TextView
-                    android:id="@+id/textViewAlarmType"
-                    style="@style/TextTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/title_alarm_type"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:background="@color/background_title"
+                android:gravity="center"
+                android:text="@string/title_alarm_type"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,30 +188,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="true"
-                android:maxLines="1"
                 android:focusableInTouchMode="true"
                 android:hint="@string/alarm_name"
-                android:maxLength="20"
+                android:background="@android:color/transparent"
                 android:imeOptions="actionDone"
                 android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1"
                 android:weightSum="2" />
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textViewSound"
+                style="@style/TextTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/background_title">
-
-                <TextView
-                    android:id="@+id/textViewSound"
-                    style="@style/TextTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/title_sounds_and_music"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@color/background_title"
+                android:gravity="center"
+                android:text="@string/title_sounds_and_music"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -304,7 +277,7 @@
         android:layout_weight="15">
 
         <View
-            android:id="@+id/settingsView"
+            android:id="@+id/settingsFragmentView"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/separator" />
@@ -315,8 +288,8 @@
             android:layout_height="@dimen/save_btn_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:onClick="onClickSave"
-            android:background="@drawable/ic_save" />
+            android:background="@drawable/ic_save"
+            android:onClick="onClickSave" />
     </RelativeLayout>
 
 </LinearLayout>

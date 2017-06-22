@@ -1,1 +1,1 @@
-include ':app', ':greendao_gen', ':aFileChooser'
+include ':app', ':greendao_gen', ':aFileChooser', ':viewserver'
