@@ -1,7 +1,6 @@
 package com.moggot.commonalarmclock.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -47,19 +46,14 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     private void showDialog(final RecyclerView.ViewHolder viewHolder) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); //alert for confirm to delete
         builder.setMessage(context.getString(R.string.dialog_title_remove)).setCancelable(false);    //set message
-        builder.setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() { //when click on DELETE
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                helper.onItemDismiss(viewHolder.getAdapterPosition(), viewHolder.getLayoutPosition());
-                return;
-            }
-        }).setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {  //not removing items if cancel is done
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                helper.onItemShow(viewHolder.getLayoutPosition());
-                return;
-            }
-        }).show();
+        builder.setPositiveButton(context.getString(R.string.yes), (dialog, which) -> {
+            helper.onItemDismiss(viewHolder.getAdapterPosition(), viewHolder.getLayoutPosition());
+            return;
+        }).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
+            helper.onItemShow(viewHolder.getLayoutPosition());
+            return;
+        })
+                .show();
     }
 
 }

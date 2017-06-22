@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view.fragments;
+package com.moggot.commonalarmclock.presentation.mvp.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,16 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.android.debug.hv.ViewServer;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
 import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
 import com.moggot.commonalarmclock.animation.AnimationAddButton;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.mvp.presenter.MainFragmentPresenter;
-import com.moggot.commonalarmclock.mvp.view.MainFragmentView;
-import com.moggot.commonalarmclock.presentation.App;
-import com.moggot.commonalarmclock.presentation.modules.AlarmModule;
-import com.moggot.commonalarmclock.presentation.modules.MainScreenModule;
+import com.moggot.commonalarmclock.presentation.di.App;
+import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
+import com.moggot.commonalarmclock.presentation.di.modules.MainScreenModule;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.MainFragmentPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.view.MainFragmentView;
 
 import javax.inject.Inject;
 
@@ -46,7 +47,7 @@ public class MainFragment extends Fragment implements MainFragmentView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setRetainInstance(true);
         App.getInstance().getAppComponent().plus(new AlarmModule()).plus(new MainScreenModule()).inject(this);
     }
 
@@ -58,8 +59,8 @@ public class MainFragment extends Fragment implements MainFragmentView {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        presenter.bindView(this);
         setupViews(view);
-
         presenter.updateList();
     }
 
@@ -78,12 +79,6 @@ public class MainFragment extends Fragment implements MainFragmentView {
     private void addAlarm(View view) {
         AnimationBounce animationBounce = new AnimationAddButton(getContext());
         animationBounce.animate(view);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.bindView(this);
     }
 
     @Override

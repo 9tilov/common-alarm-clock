@@ -3,7 +3,6 @@ package com.moggot.commonalarmclock.adapter;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +12,16 @@ import com.moggot.commonalarmclock.Converter;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.domain.utils.ActivityUtils;
-import com.moggot.commonalarmclock.fragments.SettingsFragment;
 import com.moggot.commonalarmclock.music.Music;
-import com.moggot.commonalarmclock.mvp.main.MainPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.MainFragmentPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.view.fragments.SettingsFragment;
 
 public class SwipeRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
 
-    private MainPresenter presenter;
+    private MainFragmentPresenter presenter;
     private Context context;
 
-    public SwipeRecyclerViewAdapter(Context context, MainPresenter presenter) {
+    public SwipeRecyclerViewAdapter(Context context, MainFragmentPresenter presenter) {
         this.presenter = presenter;
         this.context = context;
 

@@ -1,9 +1,9 @@
-package com.moggot.commonalarmclock.presentation.modules;
+package com.moggot.commonalarmclock.presentation.di.modules;
 
-import com.moggot.commonalarmclock.mvp.presenter.BuzzerActivityPresenter;
-import com.moggot.commonalarmclock.mvp.presenter.BuzzerActivityPresenterImpl;
-import com.moggot.commonalarmclock.mvp.view.BuzzerActivityView;
-import com.moggot.commonalarmclock.presentation.scopes.ScreenScope;
+import com.moggot.commonalarmclock.presentation.di.scopes.ScreenScope;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.BuzzerActivityPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.BuzzerActivityPresenterImpl;
+import com.moggot.commonalarmclock.presentation.mvp.view.BuzzerActivityView;
 
 import dagger.Module;
 import dagger.Provides;

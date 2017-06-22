@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.model;
+package com.moggot.commonalarmclock.presentation.mvp.model;
 
 import android.util.SparseIntArray;
 

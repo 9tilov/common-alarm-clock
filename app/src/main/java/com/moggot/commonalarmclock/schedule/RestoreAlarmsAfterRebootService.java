@@ -4,7 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.moggot.commonalarmclock.DataBase;
+import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 
 import java.util.List;

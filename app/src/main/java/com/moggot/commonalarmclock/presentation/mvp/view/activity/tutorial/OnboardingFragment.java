@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view.activity.tutorial;
+package com.moggot.commonalarmclock.presentation.mvp.view.activity.tutorial;
 
 import android.os.Build;
 import android.os.Bundle;

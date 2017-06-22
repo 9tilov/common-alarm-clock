@@ -1,10 +1,10 @@
-package com.moggot.commonalarmclock.presentation.modules;
+package com.moggot.commonalarmclock.presentation.di.modules;
 
-import com.moggot.commonalarmclock.mvp.presenter.MainFragmentPresenter;
-import com.moggot.commonalarmclock.mvp.presenter.MainFragmentPresenterImpl;
-import com.moggot.commonalarmclock.mvp.presenter.SettingsFragmentPresenter;
-import com.moggot.commonalarmclock.mvp.presenter.SettingsFragmentPresenterImpl;
-import com.moggot.commonalarmclock.presentation.scopes.ScreenScope;
+import com.moggot.commonalarmclock.presentation.di.scopes.ScreenScope;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.MainFragmentPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.MainFragmentPresenterImpl;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.SettingsFragmentPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.SettingsFragmentPresenterImpl;
 
 import dagger.Module;
 import dagger.Provides;

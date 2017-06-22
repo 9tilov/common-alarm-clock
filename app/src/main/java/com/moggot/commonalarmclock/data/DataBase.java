@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,7 @@ import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.alarm.AlarmDao;
 import com.moggot.commonalarmclock.alarm.DaoMaster;
 import com.moggot.commonalarmclock.alarm.DaoSession;
+import com.moggot.commonalarmclock.domain.utils.Log;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -23,8 +24,6 @@ import java.util.Random;
 
 public class DataBase {
 
-    private static final String LOG_TAG = DataBase.class.getSimpleName();
-
     private Context applicationContext;
     private AlarmDao alarmDao;
     private static final String DB_NAME = "alarm_db";
@@ -32,6 +31,8 @@ public class DataBase {
     public DataBase(Context applicationContext) {
         this.applicationContext = applicationContext;
         alarmDao = setupDb();
+
+        Log.v("createDB");
     }
 
     private AlarmDao setupDb() {

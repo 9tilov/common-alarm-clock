@@ -1,13 +1,11 @@
-package com.moggot.commonalarmclock.mvp.model;
+package com.moggot.commonalarmclock.presentation.mvp.model;
 
-import com.moggot.commonalarmclock.DataBase;
+import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.schedule.AlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class MainModelImpl implements MainModel {
 

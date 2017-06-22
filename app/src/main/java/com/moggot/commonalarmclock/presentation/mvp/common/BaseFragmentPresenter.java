@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.common;
+package com.moggot.commonalarmclock.presentation.mvp.common;
 
 public interface BaseFragmentPresenter<View> {
 

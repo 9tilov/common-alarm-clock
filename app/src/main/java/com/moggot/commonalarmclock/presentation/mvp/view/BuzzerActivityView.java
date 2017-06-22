@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view;
+package com.moggot.commonalarmclock.presentation.mvp.view;
 
 public interface BuzzerActivityView {
 

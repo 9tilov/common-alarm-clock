@@ -3,11 +3,10 @@ package com.moggot.commonalarmclock.animation;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.domain.utils.ActivityUtils;
-import com.moggot.commonalarmclock.fragments.SettingsFragment;
+import com.moggot.commonalarmclock.presentation.mvp.view.fragments.SettingsFragment;
 
 import static com.moggot.commonalarmclock.Consts.NO_ID;
 

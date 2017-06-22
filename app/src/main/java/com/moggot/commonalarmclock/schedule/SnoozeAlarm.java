@@ -7,8 +7,6 @@ import android.content.Intent;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.presentation.App;
-import com.moggot.commonalarmclock.presentation.modules.AlarmModule;
 
 import javax.inject.Inject;
 

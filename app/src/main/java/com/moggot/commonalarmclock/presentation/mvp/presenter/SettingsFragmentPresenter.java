@@ -1,10 +1,10 @@
-package com.moggot.commonalarmclock.mvp.presenter;
+package com.moggot.commonalarmclock.presentation.mvp.presenter;
 
 import android.text.Editable;
 
 import com.moggot.commonalarmclock.music.Music;
-import com.moggot.commonalarmclock.mvp.common.BaseFragmentPresenter;
-import com.moggot.commonalarmclock.mvp.view.SettingsFragmentView;
+import com.moggot.commonalarmclock.presentation.mvp.common.BaseFragmentPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.view.SettingsFragmentView;
 
 public interface SettingsFragmentPresenter extends BaseFragmentPresenter<SettingsFragmentView> {
 

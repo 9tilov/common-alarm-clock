@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.Log;
+import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
 
 public class AnimationRingtoneButton extends AnimationBounce {

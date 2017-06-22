@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view.fragments;
+package com.moggot.commonalarmclock.presentation.mvp.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

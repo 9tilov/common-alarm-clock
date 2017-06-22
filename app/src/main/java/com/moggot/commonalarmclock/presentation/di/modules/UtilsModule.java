@@ -1,10 +1,9 @@
-package com.moggot.commonalarmclock.presentation.modules;
+package com.moggot.commonalarmclock.presentation.di.modules;
 
 import android.content.Context;
 
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
-import com.moggot.commonalarmclock.music.MusicPlayer;
 
 import javax.inject.Singleton;
 

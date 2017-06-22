@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view.activity;
+package com.moggot.commonalarmclock.presentation.mvp.view.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +9,11 @@ import android.widget.Toast;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.mvp.view.fragments.MathFragment;
-import com.moggot.commonalarmclock.mvp.view.fragments.SnoozeFragment;
-import com.moggot.commonalarmclock.mvp.presenter.BuzzerActivityPresenter;
-import com.moggot.commonalarmclock.mvp.presenter.BuzzerActivityPresenterImpl;
-import com.moggot.commonalarmclock.mvp.view.BuzzerActivityView;
+import com.moggot.commonalarmclock.presentation.mvp.view.fragments.MathFragment;
+import com.moggot.commonalarmclock.presentation.mvp.view.fragments.SnoozeFragment;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.BuzzerActivityPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.BuzzerActivityPresenterImpl;
+import com.moggot.commonalarmclock.presentation.mvp.view.BuzzerActivityView;
 
 public class BuzzerActivity extends AppCompatActivity implements BuzzerActivityView
         , SnoozeFragment.SnoozeListener

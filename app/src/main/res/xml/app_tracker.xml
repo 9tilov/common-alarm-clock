@@ -17,8 +17,8 @@
     <!-- How long a session exists before giving up -->
     <integer name="ga_sessionTimeout">-1</integer>
 
-    <screenName name="com.moggot.commonalarmclock.activity.MainActivity">MainActivity</screenName>
-    <screenName name="com.moggot.commonalarmclock.activity.ActivitySettings">ActivitySettings</screenName>
-    <screenName name="com.moggot.commonalarmclock.activity.tutorial.OnboardingActivity">OnboardingActivity</screenName>
+    <screenName name="com.moggot.commonalarmclock.mvp.view.activity.MainActivity">MainActivity</screenName>
+    <screenName name="com.moggot.commonalarmclock.mvp.view.activity.ActivitySettings">ActivitySettings</screenName>
+    <screenName name="com.moggot.commonalarmclock.mvp.view.activity.tutorial.OnboardingActivity">OnboardingActivity</screenName>
 
 </resources>

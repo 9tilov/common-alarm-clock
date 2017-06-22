@@ -1,8 +1,8 @@
-package com.moggot.commonalarmclock.presentation.modules;
+package com.moggot.commonalarmclock.presentation.di.modules;
 
 import android.content.Context;
 
-import com.moggot.commonalarmclock.DataBase;
+import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.data.SharedPreference;
 
 import javax.inject.Singleton;

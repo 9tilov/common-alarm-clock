@@ -3,7 +3,7 @@ package com.moggot.commonalarmclock;
 import android.os.Build;
 import android.widget.FrameLayout;
 
-import com.moggot.commonalarmclock.activity.MainActivity;
+import com.moggot.commonalarmclock.presentation.mvp.view.activity.MainActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,5 +35,4 @@ public class MainActivityTest {
         FrameLayout root = (FrameLayout) activity.findViewById(R.id.root_frame);
         assertNotNull("Container not found", root);
     }
-
 }

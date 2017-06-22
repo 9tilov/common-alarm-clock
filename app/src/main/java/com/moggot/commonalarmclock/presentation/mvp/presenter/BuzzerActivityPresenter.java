@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.presenter;
+package com.moggot.commonalarmclock.presentation.mvp.presenter;
 
 import com.moggot.commonalarmclock.MathExample;
 

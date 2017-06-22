@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view.fragments;
+package com.moggot.commonalarmclock.presentation.mvp.view.fragments;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -20,18 +20,18 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.Log;
+import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.animation.AnimationBounce;
 import com.moggot.commonalarmclock.animation.AnimationSaveButton;
 import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.music.MusicPlayer;
-import com.moggot.commonalarmclock.mvp.presenter.SettingsFragmentPresenter;
-import com.moggot.commonalarmclock.mvp.view.SettingsFragmentView;
-import com.moggot.commonalarmclock.presentation.App;
-import com.moggot.commonalarmclock.presentation.modules.AlarmModule;
-import com.moggot.commonalarmclock.presentation.modules.MainScreenModule;
+import com.moggot.commonalarmclock.presentation.di.App;
+import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
+import com.moggot.commonalarmclock.presentation.di.modules.MainScreenModule;
+import com.moggot.commonalarmclock.presentation.mvp.presenter.SettingsFragmentPresenter;
+import com.moggot.commonalarmclock.presentation.mvp.view.SettingsFragmentView;
 
 import java.util.Calendar;
 
@@ -98,6 +98,7 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         App.getInstance().getAppComponent().plus(new AlarmModule()).plus(new MainScreenModule()).inject(this);
 
         if (getArguments() != null) {
@@ -114,9 +115,10 @@ public class SettingsFragment extends Fragment implements
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        presenter.bindView(this);
+        mapDayButtonToCalendarDay(view);
         setListeners(view);
         presenter.setupViews();
-        mapDayButtonToCalendarDay(view);
     }
 
     private void setListeners(View view) {
@@ -191,12 +193,6 @@ public class SettingsFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.bindView(this);
     }
 
     @Override

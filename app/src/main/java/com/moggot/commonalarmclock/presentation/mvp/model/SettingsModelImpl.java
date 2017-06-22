@@ -1,10 +1,10 @@
-package com.moggot.commonalarmclock.mvp.model;
+package com.moggot.commonalarmclock.presentation.mvp.model;
 
 import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.DataBase;
+import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.alarm.Alarm;
 import com.moggot.commonalarmclock.music.Music;
 import com.moggot.commonalarmclock.schedule.AlarmScheduler;

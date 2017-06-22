@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.mvp.view.activity.tutorial;
+package com.moggot.commonalarmclock.presentation.mvp.view.activity.tutorial;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.analytics.Analysis;
 import com.moggot.commonalarmclock.data.SharedPreference;
-import com.moggot.commonalarmclock.presentation.App;
+import com.moggot.commonalarmclock.presentation.di.App;
 
 import javax.inject.Inject;
 

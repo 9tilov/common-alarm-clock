@@ -1,10 +1,10 @@
-package com.moggot.commonalarmclock.presentation;
+package com.moggot.commonalarmclock.presentation.di;
 
 import android.app.Application;
 
-import com.moggot.commonalarmclock.presentation.component.AppComponent;
-import com.moggot.commonalarmclock.presentation.component.DaggerAppComponent;
-import com.moggot.commonalarmclock.presentation.modules.AppModule;
+import com.moggot.commonalarmclock.presentation.di.component.AppComponent;
+import com.moggot.commonalarmclock.presentation.di.component.DaggerAppComponent;
+import com.moggot.commonalarmclock.presentation.di.modules.AppModule;
 
 public class App extends Application {
 

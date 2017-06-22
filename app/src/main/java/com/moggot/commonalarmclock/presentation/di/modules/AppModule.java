@@ -1,4 +1,4 @@
-package com.moggot.commonalarmclock.presentation.modules;
+package com.moggot.commonalarmclock.presentation.di.modules;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
