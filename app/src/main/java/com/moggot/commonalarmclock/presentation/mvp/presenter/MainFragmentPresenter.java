@@ -16,4 +16,6 @@ public interface MainFragmentPresenter extends BaseFragmentPresenter<MainFragmen
     int getItemsCount();
 
     long getItemId(int position);
+
+    void openSettings(long id);
 }

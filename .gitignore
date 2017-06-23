@@ -6,5 +6,6 @@
 /build
 /aFileChooser/build
 /captures
+/viewserver/build
 .externalNativeBuild
 app/*.apk

@@ -1,22 +1,19 @@
-package com.moggot.commonalarmclock;
+package com.moggot.commonalarmclock.domain.utils;
 
 import android.content.res.Resources;
 import android.util.SparseIntArray;
+
+import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.R;
 
 import java.util.Calendar;
 
 public class Converter {
 
-    private Resources res;
-
-    public Converter(Resources res) {
-        this.res = res;
-    }
-
-    public String getDaysAsString(SparseIntArray ids) {
+    public static String getDaysAsString(Resources res, SparseIntArray ids) {
         StringBuilder days = new StringBuilder();
         for (int i = 0; i < ids.size(); ++i) {
-            String day = dayByteToString(ids.keyAt(i));
+            String day = dayByteToString(res, ids.keyAt(i));
             days.append(day);
             if (i < ids.size() - 1)
                 days.append(" ");
@@ -24,7 +21,7 @@ public class Converter {
         return days.toString();
     }
 
-    private String dayByteToString(int day) {
+    private static String dayByteToString(Resources res, int day) {
         switch (day) {
             case Consts.TOMORROW:
                 return res.getString(R.string.tomorrow);
@@ -47,34 +44,32 @@ public class Converter {
         }
     }
 
-    public String getTimeAsString(long timeInMillis) {
+    public static String getTimeAsString(long timeInMillis) {
         Calendar calendar = createCalendar(timeInMillis);
         return getHoursAsString(calendar) + ":" + getMinutesAsString(calendar);
     }
 
-    private Calendar createCalendar(long timeInMillis) {
+    private static Calendar createCalendar(long timeInMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeInMillis);
         return calendar;
     }
 
-    private String getHoursAsString(Calendar calendar) {
+    private static String getHoursAsString(Calendar calendar) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        String hourStr;
+        String hourStr = String.valueOf(hour);
         if (hour < 10)
-            hourStr = "0" + String.valueOf(hour);
+            return "0" + hourStr;
         else
-            hourStr = String.valueOf(hour);
-        return hourStr;
+            return hourStr;
     }
 
-    private String getMinutesAsString(Calendar calendar) {
+    private static String getMinutesAsString(Calendar calendar) {
         int minute = calendar.get(Calendar.MINUTE);
-        String minuteStr;
+        String minuteStr = String.valueOf(minute);
         if (minute < 10)
-            minuteStr = "0" + String.valueOf(minute);
+            return "0" + minuteStr;
         else
-            minuteStr = String.valueOf(minute);
-        return minuteStr;
+            return minuteStr;
     }
 }

@@ -7,4 +7,6 @@ public interface MainFragmentView {
     void notifyItemRangeChanged(int positionStart, int itemCount);
 
     void notifyDataSetChanged();
+
+    void createFragment(long id);
 }

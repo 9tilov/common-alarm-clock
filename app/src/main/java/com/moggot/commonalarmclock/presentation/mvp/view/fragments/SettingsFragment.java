@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.android.debug.hv.ViewServer;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
@@ -105,6 +106,8 @@ public class SettingsFragment extends Fragment implements
             long id = getArguments().getLong(ARG_PARAM_ID);
             presenter.loadAlarm(id);
         }
+
+        ViewServer.get(getContext()).addWindow(getActivity());
     }
 
     @Override
@@ -116,7 +119,6 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         presenter.bindView(this);
-        mapDayButtonToCalendarDay(view);
         setListeners(view);
         presenter.setupViews();
     }
@@ -131,6 +133,7 @@ public class SettingsFragment extends Fragment implements
         checkBoxRepeate.setOnCheckedChangeListener((buttonView, isChecked) -> setCheckedRepeate(isChecked));
         btnMusic.setOnClickListener(v -> clickMusicButton(v, 1));
         btnSave.setOnClickListener(this::saveAlarm);
+        setListenersToDayButtons(view);
     }
 
     private void onCheckedChangedRadioGroup(int checkedRadioGroupID) {
@@ -175,7 +178,7 @@ public class SettingsFragment extends Fragment implements
 
     }
 
-    private void mapDayButtonToCalendarDay(View view) {
+    private void setListenersToDayButtons(View view) {
         this.tbDaysOfWeek = new SparseIntArray();
         tbDaysOfWeek.put(R.id.tbMonday, Calendar.MONDAY);
         tbDaysOfWeek.put(R.id.tbTuesday, Calendar.TUESDAY);

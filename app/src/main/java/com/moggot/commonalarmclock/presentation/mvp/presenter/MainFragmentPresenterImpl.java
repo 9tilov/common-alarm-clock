@@ -74,6 +74,11 @@ public class MainFragmentPresenterImpl implements MainFragmentPresenter {
     }
 
     @Override
+    public void openSettings(long id) {
+        view.createFragment(id);
+    }
+
+    @Override
     public void onItemChangeState(int position, boolean newState) {
         Alarm alarm = model.getAlarm(position);
         alarm.setState(newState);
