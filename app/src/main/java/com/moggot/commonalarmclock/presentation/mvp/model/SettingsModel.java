@@ -32,9 +32,13 @@ public interface SettingsModel {
 
     String getName();
 
-    void setMusic(Music music);
+    void setMusicType(int type);
 
-    int getMusicCode();
+    void setMusicPath(String path);
+
+    int getMusicType();
+
+    String getMusicPath();
 
     void setTomorrowDay();
 

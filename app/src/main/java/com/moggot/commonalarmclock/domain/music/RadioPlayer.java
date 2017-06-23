@@ -1,14 +1,13 @@
 package com.moggot.commonalarmclock.domain.music;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 
 import java.io.IOException;
 
-public class Radio extends Creator {
+public class RadioPlayer extends MusicPlayer {
 
-    public MediaPlayer create(Music music) {
-        MediaPlayer mediaPlayer = new MediaPlayer();
+    @Override
+    public MusicPlayer initMediaPlayer(Music music) {
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(music.getMusicURL());
@@ -16,6 +15,6 @@ public class Radio extends Creator {
             e.printStackTrace();
         }
         mediaPlayer.prepareAsync();
-        return mediaPlayer;
+        return this;
     }
 }

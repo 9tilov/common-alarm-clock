@@ -76,7 +76,9 @@ public class Alarm {
         return date;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setDate(@NotNull java.util.Date date) {
         this.date = date;
     }
@@ -86,7 +88,9 @@ public class Alarm {
         return requestCodes;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setRequestCodes(@NotNull String requestCodes) {
         this.requestCodes = requestCodes;
     }
@@ -120,7 +124,9 @@ public class Alarm {
         return musicPath;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setMusicPath(@NotNull String musicPath) {
         this.musicPath = musicPath;
     }
@@ -142,11 +148,6 @@ public class Alarm {
     }
 
     // KEEP METHODS - put your custom methods here
-
-    public void setMusic(Music music) {
-        this.musicType = music.getMusicType().getCode();
-        this.musicPath = music.getMusicURL();
-    }
 
     public SparseIntArray getRepeatAlarmIDs() {
         Type type = new TypeToken<SparseIntArray>() {

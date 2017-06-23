@@ -22,7 +22,8 @@ public interface SettingsFragmentView {
 
     void setRadioButtonAndMusicButton(int radioGroupID);
 
-    void startPlayingRadio();
+    void setOnMusicRadioButton();
 
-    void stopPlayingRadio();
+    void setOffMusicRadioButton();
+
 }

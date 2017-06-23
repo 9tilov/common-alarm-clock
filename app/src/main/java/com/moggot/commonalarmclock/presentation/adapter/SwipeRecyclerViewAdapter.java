@@ -92,7 +92,7 @@ public class SwipeRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
             case RADIO:
                 viewHolder.music.setImageResource(R.drawable.ic_radio);
                 break;
-            case DEFAULT_RINGTONE:
+            case RINGTONE:
                 viewHolder.music.setImageResource(R.drawable.ic_ringtone);
                 break;
             case MUSIC_FILE:

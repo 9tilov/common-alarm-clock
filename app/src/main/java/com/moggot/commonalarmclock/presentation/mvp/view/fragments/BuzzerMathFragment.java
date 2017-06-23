@@ -66,9 +66,8 @@ public class BuzzerMathFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        MathExample.createExamle();
         TextView etExample = (TextView) view.findViewById(R.id.tvMathExample);
-        etExample.setText(MathExample.getExampleString());
+        etExample.setText(MathExample.INSTANCE.create().getExampleString());
 
         final EditText etResult = (EditText) view.findViewById(R.id.etResult);
         etResult.requestFocus();

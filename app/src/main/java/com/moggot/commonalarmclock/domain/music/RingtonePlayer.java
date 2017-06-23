@@ -1,14 +1,13 @@
 package com.moggot.commonalarmclock.domain.music;
 
-import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 
 import java.io.IOException;
 
-public class Ringtone extends Creator {
+public class RingtonePlayer extends MusicPlayer {
 
-    public MediaPlayer create(Music music) {
-        MediaPlayer mediaPlayer = new MediaPlayer();
+    @Override
+    public MusicPlayer initMediaPlayer(Music music) {
         try {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             mediaPlayer.setDataSource(music.getMusicURL());
@@ -18,6 +17,6 @@ public class Ringtone extends Creator {
                 | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-        return mediaPlayer;
+        return this;
     }
 }

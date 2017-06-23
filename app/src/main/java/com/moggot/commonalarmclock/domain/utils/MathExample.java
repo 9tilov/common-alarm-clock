@@ -2,7 +2,8 @@ package com.moggot.commonalarmclock.domain.utils;
 
 import java.util.Random;
 
-public class MathExample {
+public enum MathExample {
+    INSTANCE;
 
     private static int num1, num2, num3, result;
 
@@ -16,27 +17,16 @@ public class MathExample {
         num3 = random.nextInt((MAX - MIN) + 1) + MIN;
     }
 
-    private static MathExample instance;
-
-    private MathExample() {
-        create();
-    }
-
-    private void create() {
+    public MathExample create() {
         result = num1 + num2 * num3;
+        return this;
     }
 
-    public static MathExample createExamle() {
-        if (instance == null)
-            instance = new MathExample();
-        return instance;
-    }
-
-    public static boolean checkResult(int userResult) {
+    public boolean checkResult(int userResult) {
         return (result == userResult);
     }
 
-    public static String getExampleString() {
+    public String getExampleString() {
         return String.valueOf(num1) + " + " + String.valueOf(num2) + " * " + String.valueOf(num3);
     }
 }

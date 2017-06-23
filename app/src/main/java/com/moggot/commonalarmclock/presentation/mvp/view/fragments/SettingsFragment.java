@@ -26,10 +26,10 @@ import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.presentation.animation.AnimationBounce;
+import com.moggot.commonalarmclock.presentation.animation.AnimationMusicRadioButton;
 import com.moggot.commonalarmclock.presentation.animation.AnimationSaveButton;
 import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.domain.music.Music;
-import com.moggot.commonalarmclock.domain.music.MusicPlayer;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.di.modules.MainScreenModule;
@@ -87,9 +87,6 @@ public class SettingsFragment extends Fragment implements
     @Inject
     NetworkConnectionChecker connectionChecker;
 
-    @Inject
-    MusicPlayer musicPlayer;
-
     public static SettingsFragment newInstance(long id) {
         SettingsFragment settingsFragment = new SettingsFragment();
         Bundle args = new Bundle();
@@ -106,7 +103,7 @@ public class SettingsFragment extends Fragment implements
 
         if (getArguments() != null) {
             long id = getArguments().getLong(ARG_PARAM_ID);
-            presenter.loadAlarm(id);
+            presenter.loadAlarmAndCreatePlayer(id);
         }
 
         ViewServer.get(getContext()).addWindow(getActivity());
@@ -127,25 +124,42 @@ public class SettingsFragment extends Fragment implements
 
     private void setListeners(View view) {
         ButterKnife.bind(this, view);
-        musicRadioGroup.setOnCheckedChangeListener((group, checkedId) -> onCheckedChangedRadioGroup(checkedId));
+        musicRadioGroup.setOnCheckedChangeListener((group, checkedId) -> onCheckedChangedRadioGroup(group));
         etName.addTextChangedListener(this);
         tvTime.setOnClickListener(v -> showTimerPickerDialog());
         checkBoxSnooze.setOnCheckedChangeListener((buttonView, isChecked) -> setCheckedSnooze(isChecked));
         checkBoxMath.setOnCheckedChangeListener((buttonView, isChecked) -> setCheckedMath(isChecked));
         checkBoxRepeate.setOnCheckedChangeListener((buttonView, isChecked) -> setCheckedRepeate(isChecked));
-        btnMusic.setOnClickListener(v -> clickMusicButton(v, 1));
+        btnMusic.setOnClickListener(this::clickMusicButton);
         btnSave.setOnClickListener(this::saveAlarm);
         setListenersToDayButtons(view);
     }
 
-    private void onCheckedChangedRadioGroup(int checkedRadioGroupID) {
-        if ((checkedRadioGroupID == R.id.rbFile) || (checkedRadioGroupID == R.id.rbRingtones)) {
-            if (musicPlayer.isPlaying())
-                musicPlayer.stopPlayingRadio();
-        } else
-            presenter.setMusic(new Music(RADIO, RADIO_URL));
+    private void onCheckedChangedRadioGroup(RadioGroup radioGroup) {
+        Music.MUSIC_TYPE type = radioGroupIndexToMusicType(radioGroup);
+        switch (type) {
+            case MUSIC_FILE:
+                presenter.stopPlaying();
+                break;
+            case RADIO:
+                Music music = new Music(RADIO, RADIO_URL);
+                presenter.setMusic(music);
+                break;
+            case RINGTONE:
+                presenter.stopPlaying();
+                break;
+            default:
+                break;
+        }
 
-        setMusicButtonDrawable(checkedRadioGroupID);
+        setMusicButtonDrawable(type);
+    }
+
+    private Music.MUSIC_TYPE radioGroupIndexToMusicType(RadioGroup radioGroup) throws NullPointerException {
+        int radioButtonId = radioGroup.getCheckedRadioButtonId();
+        View radioButton = ButterKnife.findById(getView(), radioButtonId);
+        int index = radioGroup.indexOfChild(radioButton);
+        return Music.MUSIC_TYPE.fromInteger(index);
     }
 
     private void showTimerPickerDialog() {
@@ -169,7 +183,11 @@ public class SettingsFragment extends Fragment implements
         presenter.setCheckedRepeate(isChecked);
     }
 
-    private void clickMusicButton(View view, int radioButtonID) {
+    private void clickMusicButton(View view) {
+        AnimationBounce animationBounce = new AnimationMusicRadioButton(getContext());
+        animationBounce.animate(view);
+
+        presenter.clickPlay();
     }
 
     private void saveAlarm(View view) {
@@ -177,7 +195,6 @@ public class SettingsFragment extends Fragment implements
 
         AnimationBounce animationBounce = new AnimationSaveButton(getContext());
         animationBounce.animate(view);
-
     }
 
     private void setListenersToDayButtons(View view) {
@@ -202,21 +219,21 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void setRadioButtonAndMusicButton(int radioGroupID) {
         ((RadioButton) musicRadioGroup.getChildAt(radioGroupID)).setChecked(true);
-        setMusicButtonDrawable(radioGroupID);
+        Music.MUSIC_TYPE type = radioGroupIndexToMusicType(musicRadioGroup);
+        setMusicButtonDrawable(type);
     }
 
     @Override
-    public void startPlayingRadio() {
-
+    public void setOnMusicRadioButton() {
+        btnMusic.setBackgroundResource(R.drawable.ic_radio_pressed);
     }
 
     @Override
-    public void stopPlayingRadio() {
-
+    public void setOffMusicRadioButton() {
+        btnMusic.setBackgroundResource(R.drawable.ic_radio);
     }
 
-    private void setMusicButtonDrawable(int radioGroupID) {
-        Music.MUSIC_TYPE type = Music.MUSIC_TYPE.fromInteger(radioGroupID);
+    private void setMusicButtonDrawable(Music.MUSIC_TYPE type) {
         switch (type) {
             case MUSIC_FILE:
                 btnMusic.setBackgroundResource(R.drawable.ic_music_file);
@@ -224,7 +241,7 @@ public class SettingsFragment extends Fragment implements
             case RADIO:
                 btnMusic.setBackgroundResource(R.drawable.ic_radio);
                 break;
-            case DEFAULT_RINGTONE:
+            case RINGTONE:
                 btnMusic.setBackgroundResource(R.drawable.ic_ringtone);
                 break;
             default:
@@ -290,9 +307,8 @@ public class SettingsFragment extends Fragment implements
     public void setName(String name) {
         etName.setText(name);
         etName.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
+            if (hasFocus)
                 etName.setSelection(etName.getText().length());
-            }
         });
     }
 
@@ -342,14 +358,14 @@ public class SettingsFragment extends Fragment implements
 //                                model.setMusic(music);
 //                            } else {
 //                                settingsView.showToastNoMusicFile();
-//                                settingsView.setMusicButton(Music.MUSIC_TYPE.DEFAULT_RINGTONE.getCode());
+//                                settingsView.setMusicButton(Music.MUSIC_TYPE.RINGTONE.getCode());
 //                            }
 //                        } catch (Exception e) {
-//                            Log.v("File select error");
+//                            Log.v("FilePlayer select error");
 //                        }
 //                    }
 //                } else
-//                    settingsView.setMusicButton(model.getMusicCode());
+//                    settingsView.setMusicButton(model.getMusicType());
                 break;
             case Consts.REQUEST_CODE_DEFAULT_RINGTONE:
                 if (resultCode == RESULT_OK) {
@@ -366,6 +382,6 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        musicPlayer.stopPlayingRadio();
+        presenter.stopPlaying();
     }
 }

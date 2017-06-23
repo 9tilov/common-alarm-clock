@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.data.alarm.Alarm;
-import com.moggot.commonalarmclock.domain.music.Music;
 import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
 
 import java.util.Calendar;
@@ -14,8 +13,8 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import static com.moggot.commonalarmclock.domain.music.Music.DEFAULT_RINGTONE_URL;
 import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RADIO;
+import static com.moggot.commonalarmclock.domain.music.Music.RADIO_URL;
 
 public class SettingsModelImpl implements SettingsModel {
 
@@ -44,7 +43,8 @@ public class SettingsModelImpl implements SettingsModel {
         alarm.setIsSnoozeEnable(false);
         alarm.setIsMathEnable(true);
         alarm.setName("");
-        alarm.setMusic(new Music(RADIO, DEFAULT_RINGTONE_URL));
+        alarm.setMusicType(RADIO.getCode());
+        alarm.setMusicPath(RADIO_URL);
         alarm.setState(true);
     }
 
@@ -154,13 +154,23 @@ public class SettingsModelImpl implements SettingsModel {
     }
 
     @Override
-    public void setMusic(Music music) {
-        alarm.setMusic(music);
+    public void setMusicType(int type) {
+        alarm.setMusicType(type);
     }
 
     @Override
-    public int getMusicCode() {
+    public void setMusicPath(String path) {
+        alarm.setMusicPath(path);
+    }
+
+    @Override
+    public int getMusicType() {
         return alarm.getMusicType();
+    }
+
+    @Override
+    public String getMusicPath() {
+        return alarm.getMusicPath();
     }
 
     @Override

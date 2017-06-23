@@ -74,7 +74,7 @@ public class BuzzerActivityPresenterImpl implements BuzzerActivityPresenter {
 
     @Override
     public void checkResult(int result) {
-        if (MathExample.checkResult(result))
+        if (MathExample.INSTANCE.checkResult(result))
             replaceFragment();
         else
             view.showToastIncorrectResult();

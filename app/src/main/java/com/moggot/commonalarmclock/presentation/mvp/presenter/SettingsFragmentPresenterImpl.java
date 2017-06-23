@@ -4,6 +4,8 @@ import android.text.Editable;
 
 import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.domain.music.Music;
+import com.moggot.commonalarmclock.domain.music.MusicPlayer;
+import com.moggot.commonalarmclock.domain.music.PlayerFactory;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModel;
@@ -27,6 +29,8 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     @Inject
     AlarmScheduler alarmScheduler;
 
+    private MusicPlayer musicPlayer;
+
     @Inject
     public SettingsFragmentPresenterImpl() {
         App.getInstance().getAppComponent().plus(new AlarmModule()).inject(this);
@@ -44,8 +48,13 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     }
 
     @Override
-    public void loadAlarm(long id) {
+    public void loadAlarmAndCreatePlayer(long id) {
         model.loadAlarm(id);
+        musicPlayer = PlayerFactory.create(getMusic());
+    }
+
+    private Music getMusic() {
+        return new Music(Music.MUSIC_TYPE.fromInteger(model.getMusicType()), model.getMusicPath());
     }
 
     @Override
@@ -56,7 +65,7 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
         view.setIsSnoozeEnable(model.getIsSnoozeEnable());
         view.setIsMathEnable(model.getIsMathEnable());
         view.setName(model.getName());
-        view.setRadioButtonAndMusicButton(model.getMusicCode());
+        view.setRadioButtonAndMusicButton(model.getMusicType());
     }
 
     @Override
@@ -67,6 +76,22 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     @Override
     public void afterTextChanged(Editable s) {
         model.setName(s.toString());
+    }
+
+    @Override
+    public void stopPlaying() {
+        musicPlayer.stop();
+    }
+
+    @Override
+    public void clickPlay() {
+        if (musicPlayer.isPlaying()) {
+            musicPlayer.stop();
+            view.setOffMusicRadioButton();
+        } else {
+            musicPlayer.start();
+            view.setOnMusicRadioButton();
+        }
     }
 
     public int getHour() {
@@ -123,6 +148,8 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
 
     @Override
     public void setMusic(Music music) {
-        model.setMusic(music);
+        model.setMusicType(music.getMusicType().getCode());
+        model.setMusicPath(music.getMusicURL());
+        musicPlayer.initMediaPlayer(music);
     }
 }

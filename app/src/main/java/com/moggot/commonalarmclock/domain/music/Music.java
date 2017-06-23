@@ -12,7 +12,7 @@ public class Music implements Parcelable {
     public enum MUSIC_TYPE {
         MUSIC_FILE(0),
         RADIO(1),
-        DEFAULT_RINGTONE(2);
+        RINGTONE(2);
 
         private final int code;
 
@@ -27,7 +27,7 @@ public class Music implements Parcelable {
                 case 1:
                     return RADIO;
                 case 2:
-                    return DEFAULT_RINGTONE;
+                    return RINGTONE;
                 default:
                     return RADIO;
             }
