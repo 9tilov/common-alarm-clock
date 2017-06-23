@@ -3,13 +3,13 @@ package com.moggot.commonalarmclock.presentation.mvp.presenter;
 import android.text.Editable;
 
 import com.moggot.commonalarmclock.data.DataBase;
-import com.moggot.commonalarmclock.music.Music;
+import com.moggot.commonalarmclock.domain.music.Music;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModel;
 import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModelImpl;
 import com.moggot.commonalarmclock.presentation.mvp.view.SettingsFragmentView;
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
 
 import java.util.Calendar;
 import java.util.Date;

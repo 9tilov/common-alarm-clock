@@ -35,19 +35,19 @@ public class BuzzerActivityPresenterImpl implements BuzzerActivityPresenter {
 
     private void createMathFragment() {
 //        FragmentTransaction ft = ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction();
-//        ft.add(R.id.frgmCont, MathFragment.newInstance());
+//        ft.add(R.id.frgmCont, BuzzerMathFragment.newInstance());
 //        ft.commit();
     }
 
     private void createCommonFragment() {
 //        FragmentTransaction ft = ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction();
-//        ft.add(R.id.frgmCont, CommonFragment.newInstance(model.getAlarmName()));
+//        ft.add(R.id.frgmCont, BuzzerCommonFragment.newInstance(model.getAlarmName()));
 //        ft.commit();
     }
 
     private void createSnoozeFragment() {
 //        FragmentTransaction ft = ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction();
-//        ft.add(R.id.frgmCont, SnoozeFragment.newInstance(model.getAlarmName()));
+//        ft.add(R.id.frgmCont, BuzzerSnoozeFragment.newInstance(model.getAlarmName()));
 //        ft.commit();
     }
 
@@ -83,9 +83,9 @@ public class BuzzerActivityPresenterImpl implements BuzzerActivityPresenter {
     private void replaceFragment() {
 //        FragmentTransaction ft = ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction();
 //        if (model.getIsSnoozeEnable())
-//            ft.add(R.id.frgmCont, SnoozeFragment.newInstance(model.getAlarmName()));
+//            ft.add(R.id.frgmCont, BuzzerSnoozeFragment.newInstance(model.getAlarmName()));
 //        else
-//            ft.add(R.id.frgmCont, CommonFragment.newInstance(model.getAlarmName()));
+//            ft.add(R.id.frgmCont, BuzzerCommonFragment.newInstance(model.getAlarmName()));
 //        ft.commit();
     }
 

@@ -2,7 +2,7 @@ package com.moggot.commonalarmclock.presentation.di.modules;
 
 import android.content.Context;
 
-import com.moggot.commonalarmclock.analytics.Analysis;
+import com.moggot.commonalarmclock.domain.analytics.Analysis;
 import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 
 import javax.inject.Singleton;

@@ -9,7 +9,7 @@ public class MainGenerator {
     private static final String PROJECT_DIR = System.getProperty("user.dir");
 
     public static void main(String[] args) {
-        Schema schema = new Schema(2, "com.moggot.commonalarmclock.alarm");
+        Schema schema = new Schema(2, "com.moggot.commonalarmclock.data.alarm");
         schema.enableKeepSectionsByDefault();
 
         addTables(schema);

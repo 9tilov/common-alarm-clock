@@ -2,7 +2,7 @@ package com.moggot.commonalarmclock.presentation.mvp.presenter;
 
 import android.text.Editable;
 
-import com.moggot.commonalarmclock.music.Music;
+import com.moggot.commonalarmclock.domain.music.Music;
 import com.moggot.commonalarmclock.presentation.mvp.common.BaseFragmentPresenter;
 import com.moggot.commonalarmclock.presentation.mvp.view.SettingsFragmentView;
 

@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.analytics.Analysis;
+import com.moggot.commonalarmclock.domain.analytics.Analysis;
 import com.moggot.commonalarmclock.data.SharedPreference;
 import com.moggot.commonalarmclock.presentation.di.App;
 

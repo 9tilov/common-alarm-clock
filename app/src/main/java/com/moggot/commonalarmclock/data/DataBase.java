@@ -6,10 +6,10 @@ import android.util.SparseIntArray;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.alarm.AlarmDao;
-import com.moggot.commonalarmclock.alarm.DaoMaster;
-import com.moggot.commonalarmclock.alarm.DaoSession;
+import com.moggot.commonalarmclock.data.alarm.Alarm;
+import com.moggot.commonalarmclock.data.alarm.AlarmDao;
+import com.moggot.commonalarmclock.data.alarm.DaoMaster;
+import com.moggot.commonalarmclock.data.alarm.DaoSession;
 import com.moggot.commonalarmclock.domain.utils.Log;
 
 import java.lang.reflect.Type;

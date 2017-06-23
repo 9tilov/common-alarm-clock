@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.adapter.SimpleItemTouchHelperCallback;
-import com.moggot.commonalarmclock.adapter.SwipeRecyclerViewAdapter;
-import com.moggot.commonalarmclock.animation.AnimationAddButton;
-import com.moggot.commonalarmclock.animation.AnimationBounce;
+import com.moggot.commonalarmclock.presentation.adapter.SimpleItemTouchHelperCallback;
+import com.moggot.commonalarmclock.presentation.adapter.SwipeRecyclerViewAdapter;
+import com.moggot.commonalarmclock.presentation.animation.AnimationAddButton;
+import com.moggot.commonalarmclock.presentation.animation.AnimationBounce;
 import com.moggot.commonalarmclock.domain.utils.ActivityUtils;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;

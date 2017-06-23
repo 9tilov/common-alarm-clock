@@ -5,17 +5,17 @@ import android.util.SparseIntArray;
 import com.google.gson.Gson;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.data.DataBase;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.music.Music;
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.data.alarm.Alarm;
+import com.moggot.commonalarmclock.domain.music.Music;
+import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
 
-import static com.moggot.commonalarmclock.music.Music.DEFAULT_RINGTONE_URL;
-import static com.moggot.commonalarmclock.music.Music.MUSIC_TYPE.RADIO;
+import static com.moggot.commonalarmclock.domain.music.Music.DEFAULT_RINGTONE_URL;
+import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RADIO;
 
 public class SettingsModelImpl implements SettingsModel {
 

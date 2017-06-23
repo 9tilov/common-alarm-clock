@@ -2,7 +2,7 @@ package com.moggot.commonalarmclock.presentation.mvp.model;
 
 import android.util.SparseIntArray;
 
-import com.moggot.commonalarmclock.music.Music;
+import com.moggot.commonalarmclock.domain.music.Music;
 
 import java.util.Date;
 

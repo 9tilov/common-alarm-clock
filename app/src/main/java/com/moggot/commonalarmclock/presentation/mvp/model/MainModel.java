@@ -1,6 +1,6 @@
 package com.moggot.commonalarmclock.presentation.mvp.model;
 
-import com.moggot.commonalarmclock.alarm.Alarm;
+import com.moggot.commonalarmclock.data.alarm.Alarm;
 
 public interface MainModel {
 

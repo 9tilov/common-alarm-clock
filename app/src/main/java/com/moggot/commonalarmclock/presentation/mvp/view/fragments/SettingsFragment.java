@@ -25,11 +25,11 @@ import com.android.debug.hv.ViewServer;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.animation.AnimationBounce;
-import com.moggot.commonalarmclock.animation.AnimationSaveButton;
+import com.moggot.commonalarmclock.presentation.animation.AnimationBounce;
+import com.moggot.commonalarmclock.presentation.animation.AnimationSaveButton;
 import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
-import com.moggot.commonalarmclock.music.Music;
-import com.moggot.commonalarmclock.music.MusicPlayer;
+import com.moggot.commonalarmclock.domain.music.Music;
+import com.moggot.commonalarmclock.domain.music.MusicPlayer;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.di.modules.MainScreenModule;
@@ -44,8 +44,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
-import static com.moggot.commonalarmclock.music.Music.MUSIC_TYPE.RADIO;
-import static com.moggot.commonalarmclock.music.Music.RADIO_URL;
+import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RADIO;
+import static com.moggot.commonalarmclock.domain.music.Music.RADIO_URL;
 
 public class SettingsFragment extends Fragment implements
         SettingsFragmentView, TextWatcher, View.OnClickListener {
@@ -326,7 +326,6 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 
         Log.v("requestCode = " + requestCode);
         switch (requestCode) {

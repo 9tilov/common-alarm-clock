@@ -2,9 +2,9 @@ package com.moggot.commonalarmclock.presentation.di.modules;
 
 import android.content.Context;
 
-import com.moggot.commonalarmclock.music.MusicPlayer;
+import com.moggot.commonalarmclock.domain.music.MusicPlayer;
 import com.moggot.commonalarmclock.presentation.di.scopes.AlarmScope;
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
 
 import dagger.Module;
 import dagger.Provides;

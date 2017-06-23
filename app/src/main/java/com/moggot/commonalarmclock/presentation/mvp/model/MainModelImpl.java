@@ -1,8 +1,8 @@
 package com.moggot.commonalarmclock.presentation.mvp.model;
 
 import com.moggot.commonalarmclock.data.DataBase;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.data.alarm.Alarm;
+import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.List;

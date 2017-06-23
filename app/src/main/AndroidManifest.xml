@@ -25,7 +25,7 @@
         </activity>
 
         <receiver
-            android:name=".AlarmManagerBroadcastReceiver"
+            android:name=".domain.utils.AlarmManagerBroadcastReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -33,9 +33,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.moggot.commonalarmclock.schedule.RestoreAlarmsAfterRebootService" />
+        <service android:name=".domain.schedule.RestoreAlarmsAfterRebootService" />
         <service
-            android:name=".music.MusicService"
+            android:name=".domain.music.MusicService"
             android:enabled="true" />
 
         <activity

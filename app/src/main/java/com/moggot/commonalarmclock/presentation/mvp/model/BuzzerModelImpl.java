@@ -5,9 +5,9 @@ import android.os.Vibrator;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.data.DataBase;
-import com.moggot.commonalarmclock.alarm.Alarm;
-import com.moggot.commonalarmclock.schedule.AlarmScheduler;
-import com.moggot.commonalarmclock.schedule.SnoozeAlarm;
+import com.moggot.commonalarmclock.data.alarm.Alarm;
+import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.domain.schedule.SnoozeAlarm;
 
 import java.util.Calendar;
 

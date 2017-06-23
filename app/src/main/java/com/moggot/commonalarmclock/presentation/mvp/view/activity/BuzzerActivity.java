@@ -8,15 +8,15 @@ import android.widget.Toast;
 
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.presentation.mvp.view.fragments.MathFragment;
-import com.moggot.commonalarmclock.presentation.mvp.view.fragments.SnoozeFragment;
+import com.moggot.commonalarmclock.presentation.mvp.view.fragments.BuzzerMathFragment;
+import com.moggot.commonalarmclock.presentation.mvp.view.fragments.BuzzerSnoozeFragment;
 import com.moggot.commonalarmclock.presentation.mvp.presenter.BuzzerActivityPresenter;
 import com.moggot.commonalarmclock.presentation.mvp.presenter.BuzzerActivityPresenterImpl;
 import com.moggot.commonalarmclock.presentation.mvp.view.BuzzerActivityView;
 
 public class BuzzerActivity extends AppCompatActivity implements BuzzerActivityView
-        , SnoozeFragment.SnoozeListener
-        , MathFragment.ResultListener {
+        , BuzzerSnoozeFragment.SnoozeListener
+        , BuzzerMathFragment.ResultListener {
 
     private static final String LOG_TAG = BuzzerActivity.class.getSimpleName();
 
