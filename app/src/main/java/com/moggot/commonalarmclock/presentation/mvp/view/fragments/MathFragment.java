@@ -12,19 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.moggot.commonalarmclock.MathExample;
+import com.moggot.commonalarmclock.domain.utils.MathExample;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.analytics.Analysis;
 
 public class MathFragment extends Fragment {
 
-    private final static String LOG_TAG = MathFragment.class.getSimpleName();
-
     private ResultListener listener;
     private Analysis analysis;
 
     public interface ResultListener {
-        void checkMathExample(MathExample example);
+        void checkResult(int result);
     }
 
     public MathFragment() {
@@ -68,10 +66,9 @@ public class MathFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        final MathExample example = createExample();
-
+        MathExample.createExamle();
         TextView etExample = (TextView) view.findViewById(R.id.tvMathExample);
-        etExample.setText(example.getNum1() + "+" + example.getNum2());
+        etExample.setText(MathExample.getExampleString());
 
         final EditText etResult = (EditText) view.findViewById(R.id.etResult);
         etResult.requestFocus();
@@ -79,26 +76,16 @@ public class MathFragment extends Fragment {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         Button btnResult = (Button) view.findViewById(R.id.btnResult);
-        btnResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(etResult);
-                if (!etResult.getText().toString().isEmpty())
-                    example.setResult(Integer.valueOf(etResult.getText().toString()));
-                listener.checkMathExample(example);
-            }
+        btnResult.setOnClickListener(v -> {
+            hideKeyboard(etResult);
+            if (!etResult.getText().toString().isEmpty())
+                listener.checkResult(Integer.valueOf(etResult.getText().toString()));
         });
     }
 
     private void hideKeyboard(EditText editText) {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
-
-    private MathExample createExample() {
-        MathExample example = new MathExample();
-        example.createExample();
-        return example;
     }
 
     @Override

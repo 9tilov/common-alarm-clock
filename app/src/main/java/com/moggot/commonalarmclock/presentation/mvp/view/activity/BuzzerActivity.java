@@ -7,7 +7,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.MathExample;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.presentation.mvp.view.fragments.MathFragment;
 import com.moggot.commonalarmclock.presentation.mvp.view.fragments.SnoozeFragment;
@@ -50,8 +49,8 @@ public class BuzzerActivity extends AppCompatActivity implements BuzzerActivityV
     }
 
     @Override
-    public void checkMathExample(MathExample example) {
-        presenter.checkMathExample(example);
+    public void checkResult(int result) {
+        presenter.checkResult(result);
     }
 
     private void setupViews() {

@@ -1,25 +1,8 @@
 package com.moggot.commonalarmclock.presentation.mvp.presenter;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-
-import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.presentation.mvp.view.activity.MainActivity;
-import com.moggot.commonalarmclock.MathExample;
-import com.moggot.commonalarmclock.R;
-import com.moggot.commonalarmclock.presentation.mvp.view.fragments.CommonFragment;
-import com.moggot.commonalarmclock.presentation.mvp.view.fragments.MathFragment;
-import com.moggot.commonalarmclock.presentation.mvp.view.fragments.SnoozeFragment;
-import com.moggot.commonalarmclock.music.Music;
-import com.moggot.commonalarmclock.music.MusicService;
+import com.moggot.commonalarmclock.domain.utils.MathExample;
 import com.moggot.commonalarmclock.presentation.mvp.view.BuzzerActivityView;
 import com.moggot.commonalarmclock.presentation.mvp.model.BuzzerModel;
-import com.moggot.commonalarmclock.presentation.mvp.model.BuzzerModelImpl;
-
-import static com.moggot.commonalarmclock.music.Music.MUSIC_TYPE.RADIO;
-import static com.moggot.commonalarmclock.music.Music.RADIO_URL;
 
 public class BuzzerActivityPresenterImpl implements BuzzerActivityPresenter {
 
@@ -90,8 +73,8 @@ public class BuzzerActivityPresenterImpl implements BuzzerActivityPresenter {
     }
 
     @Override
-    public void checkMathExample(MathExample example) {
-        if (example.isResultCorrect())
+    public void checkResult(int result) {
+        if (MathExample.checkResult(result))
             replaceFragment();
         else
             view.showToastIncorrectResult();

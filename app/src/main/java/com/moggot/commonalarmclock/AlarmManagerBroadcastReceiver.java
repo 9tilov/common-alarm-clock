@@ -10,8 +10,6 @@ import com.moggot.commonalarmclock.schedule.RestoreAlarmsAfterRebootService;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
-    private static final String LOG_TAG = AlarmManagerBroadcastReceiver.class.getSimpleName();
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
