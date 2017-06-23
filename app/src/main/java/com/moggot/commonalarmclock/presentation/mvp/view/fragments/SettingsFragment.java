@@ -10,6 +10,8 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -187,9 +189,8 @@ public class SettingsFragment extends Fragment implements
         tbDaysOfWeek.put(R.id.tbFriday, Calendar.FRIDAY);
         tbDaysOfWeek.put(R.id.tbSaturday, Calendar.SATURDAY);
         tbDaysOfWeek.put(R.id.tbSunday, Calendar.SUNDAY);
-        for (int i = 0; i < tbDaysOfWeek.size(); ++i) {
-            (view.findViewById(tbDaysOfWeek.keyAt(i))).setOnClickListener(this);
-        }
+        for (int i = 0; i < tbDaysOfWeek.size(); ++i)
+            ButterKnife.findById(view, tbDaysOfWeek.keyAt(i)).setOnClickListener(this);
     }
 
     @Override
@@ -312,6 +313,9 @@ public class SettingsFragment extends Fragment implements
 
     @Override
     public void onClick(View view) {
+        Animation bounce = AnimationUtils.loadAnimation(getContext(), R.anim.toggle_days);
+        view.startAnimation(bounce);
+
         boolean on = ((ToggleButton) view).isChecked();
         if (on)
             presenter.setDayOn(tbDaysOfWeek.get(view.getId()));
