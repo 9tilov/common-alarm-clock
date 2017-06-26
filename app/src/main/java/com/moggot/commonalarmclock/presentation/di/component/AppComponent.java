@@ -4,6 +4,7 @@ import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.di.modules.AppModule;
 import com.moggot.commonalarmclock.presentation.di.modules.DataModule;
 import com.moggot.commonalarmclock.presentation.di.modules.UtilsModule;
+import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModelImpl;
 import com.moggot.commonalarmclock.presentation.mvp.view.activity.MainActivity;
 import com.moggot.commonalarmclock.presentation.mvp.view.activity.tutorial.OnboardingActivity;
 
@@ -18,6 +19,8 @@ public interface AppComponent {
     void inject(OnboardingActivity activity);
 
     void inject(MainActivity activity);
+
+    void inject(SettingsModelImpl settingsModel);
 
     AlarmComponent plus(AlarmModule alarmModule);
 }

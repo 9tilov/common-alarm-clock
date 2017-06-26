@@ -7,13 +7,17 @@ import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.data.alarm.Alarm;
 import com.moggot.commonalarmclock.domain.schedule.AlarmScheduler;
+import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
+import com.moggot.commonalarmclock.presentation.di.App;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
 
+import static com.moggot.commonalarmclock.domain.music.Music.DEFAULT_RINGTONE_URL;
 import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RADIO;
+import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RINGTONE;
 import static com.moggot.commonalarmclock.domain.music.Music.RADIO_URL;
 
 public class SettingsModelImpl implements SettingsModel {
@@ -23,7 +27,12 @@ public class SettingsModelImpl implements SettingsModel {
     private AlarmScheduler alarmScheduler;
 
     @Inject
+    NetworkConnectionChecker connectionChecker;
+
+    @Inject
     public SettingsModelImpl(DataBase dataBase, AlarmScheduler alarmScheduler) {
+        App.getInstance().getAppComponent().inject(this);
+
         this.db = dataBase;
         this.alarmScheduler = alarmScheduler;
     }
@@ -43,8 +52,13 @@ public class SettingsModelImpl implements SettingsModel {
         alarm.setIsSnoozeEnable(false);
         alarm.setIsMathEnable(true);
         alarm.setName("");
-        alarm.setMusicType(RADIO.getCode());
-        alarm.setMusicPath(RADIO_URL);
+        if (connectionChecker.isNetworkAvailable()) {
+            alarm.setMusicType(RADIO.getCode());
+            alarm.setMusicPath(RADIO_URL);
+        } else {
+            alarm.setMusicType(RINGTONE.getCode());
+            alarm.setMusicPath(DEFAULT_RINGTONE_URL);
+        }
         alarm.setState(true);
     }
 

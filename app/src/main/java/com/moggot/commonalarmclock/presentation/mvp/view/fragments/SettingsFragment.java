@@ -2,6 +2,7 @@ package com.moggot.commonalarmclock.presentation.mvp.view.fragments;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -48,7 +49,7 @@ import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RADIO;
 import static com.moggot.commonalarmclock.domain.music.Music.RADIO_URL;
 
 public class SettingsFragment extends Fragment implements
-        SettingsFragmentView, TextWatcher, View.OnClickListener {
+        SettingsFragmentView, TextWatcher, View.OnClickListener, MediaPlayer.OnPreparedListener {
 
     private static final String ARG_PARAM_ID = "param_id";
 
@@ -103,7 +104,7 @@ public class SettingsFragment extends Fragment implements
 
         if (getArguments() != null) {
             long id = getArguments().getLong(ARG_PARAM_ID);
-            presenter.loadAlarmAndCreatePlayer(id);
+            presenter.loadAlarm(id);
         }
 
         ViewServer.get(getContext()).addWindow(getActivity());
@@ -143,7 +144,7 @@ public class SettingsFragment extends Fragment implements
                 break;
             case RADIO:
                 Music music = new Music(RADIO, RADIO_URL);
-                presenter.setMusic(music);
+                presenter.setMusic(music, this);
                 break;
             case RINGTONE:
                 presenter.stopPlaying();
@@ -383,5 +384,10 @@ public class SettingsFragment extends Fragment implements
     public void onDestroy() {
         super.onDestroy();
         presenter.stopPlaying();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
     }
 }

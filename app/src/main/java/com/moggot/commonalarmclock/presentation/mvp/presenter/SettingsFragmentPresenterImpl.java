@@ -1,11 +1,11 @@
 package com.moggot.commonalarmclock.presentation.mvp.presenter;
 
+import android.media.MediaPlayer;
 import android.text.Editable;
 
 import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.domain.music.Music;
 import com.moggot.commonalarmclock.domain.music.MusicPlayer;
-import com.moggot.commonalarmclock.domain.music.PlayerFactory;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModel;
@@ -29,7 +29,8 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     @Inject
     AlarmScheduler alarmScheduler;
 
-    private MusicPlayer musicPlayer;
+    @Inject
+    MusicPlayer musicPlayer;
 
     @Inject
     public SettingsFragmentPresenterImpl() {
@@ -48,13 +49,8 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     }
 
     @Override
-    public void loadAlarmAndCreatePlayer(long id) {
+    public void loadAlarm(long id) {
         model.loadAlarm(id);
-        musicPlayer = PlayerFactory.create(getMusic());
-    }
-
-    private Music getMusic() {
-        return new Music(Music.MUSIC_TYPE.fromInteger(model.getMusicType()), model.getMusicPath());
     }
 
     @Override
@@ -147,9 +143,9 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     }
 
     @Override
-    public void setMusic(Music music) {
+    public void setMusic(Music music, MediaPlayer.OnPreparedListener listener) {
         model.setMusicType(music.getMusicType().getCode());
         model.setMusicPath(music.getMusicURL());
-        musicPlayer.initMediaPlayer(music);
+        musicPlayer.init(music, listener);
     }
 }

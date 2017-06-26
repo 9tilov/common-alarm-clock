@@ -6,18 +6,24 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 
 import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.presentation.di.App;
+import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
+
+import javax.inject.Inject;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener {
 
-    private MusicPlayer musicPlayer = null;
     private boolean isServiceStopped = false;
+
+    @Inject
+    MusicPlayer musicPlayer;
 
     public int onStartCommand(Intent intent, int flags, int startID) {
 
-        Music music = intent.getParcelableExtra(Consts.EXTRA_MUSIC);
+        App.getInstance().getAppComponent().plus(new AlarmModule()).inject(this);
 
-        musicPlayer = PlayerFactory.create(music);
-        musicPlayer.setListener(this);
+        Music music = intent.getParcelableExtra(Consts.EXTRA_MUSIC);
+        musicPlayer.init(music, this);
 
         return super.onStartCommand(intent, flags, startID);
     }
