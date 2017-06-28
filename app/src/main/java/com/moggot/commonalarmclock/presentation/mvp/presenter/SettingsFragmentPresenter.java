@@ -9,7 +9,7 @@ import com.moggot.commonalarmclock.presentation.mvp.view.SettingsFragmentView;
 
 public interface SettingsFragmentPresenter extends BaseFragmentPresenter<SettingsFragmentView> {
 
-    void loadAlarmAndCreatePlayer(long id);
+    void loadAlarm(long id);
 
     void setupViews();
 

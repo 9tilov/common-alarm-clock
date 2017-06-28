@@ -50,9 +50,8 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter,
     }
 
     @Override
-    public void loadAlarmAndCreatePlayer(long id) {
+    public void loadAlarm(long id) {
         model.loadAlarm(id);
-        musicPlayer.create(new Music(Music.MUSIC_TYPE.fromInteger(model.getMusicType()), model.getMusicPath()), this);
     }
 
     @Override
@@ -151,6 +150,7 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter,
     public void setMusic(Music music) {
         model.setMusicType(music.getMusicType().getCode());
         model.setMusicPath(music.getMusicURL());
+        musicPlayer.create(music, this);
     }
 
     @Override

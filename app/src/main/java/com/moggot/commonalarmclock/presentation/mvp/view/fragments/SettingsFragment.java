@@ -118,7 +118,7 @@ public class SettingsFragment extends Fragment implements
 
         if (getArguments() != null) {
             long id = getArguments().getLong(ARG_PARAM_ID);
-            presenter.loadAlarmAndCreatePlayer(id);
+            presenter.loadAlarm(id);
         }
 
         ViewServer.get(getContext()).addWindow(getActivity());
@@ -149,19 +149,24 @@ public class SettingsFragment extends Fragment implements
         btnSave.setOnClickListener(this::saveAlarm);
         setListenersToDayButtons(view);
 
-       setProgressBar();
+        setProgressBar();
     }
 
     private void onCheckedChangedRadioGroup(RadioGroup radioGroup) {
         Music.MUSIC_TYPE type = radioGroupIndexToMusicType(radioGroup);
 
         if (type == RADIO) {
-            if (!connectionChecker.isNetworkAvailable())
+            Music music;
+            if (!connectionChecker.isNetworkAvailable()) {
                 radioGroup.check(getRadioButtonIDFromMusicType());
-            else {
-                Music music = new Music(RADIO, RADIO_URL);
-                presenter.setMusic(music);
-            }
+                music = new Music(RINGTONE, DEFAULT_RINGTONE_URL);
+            } else
+                music = new Music(RADIO, RADIO_URL);
+            presenter.setMusic(music);
+        } else if (type == RINGTONE) {
+            presenter.stopPlaying();
+            Music music = new Music(RINGTONE, DEFAULT_RINGTONE_URL);
+            presenter.setMusic(music);
         } else
             presenter.stopPlaying();
 
