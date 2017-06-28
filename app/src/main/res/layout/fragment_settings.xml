@@ -259,8 +259,17 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/ic_radio"
-                        android:visibility="gone"
-                        android:onClick="onClickMusic" />
+                        android:onClick="onClickMusic"
+                        android:visibility="gone" />
+
+                    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/spin_kit"
+                        style="@style/SpinKitView.Small.Circle"
+                        android:layout_width="@dimen/btn_music_icons"
+                        android:layout_height="@dimen/btn_music_icons"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        app:SpinKit_Color="@color/colorAccent" />
 
                 </RelativeLayout>
             </LinearLayout>

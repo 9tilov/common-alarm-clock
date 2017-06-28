@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.android.debug.hv.ViewServer;
+import com.github.ybq.android.spinkit.style.Circle;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.moggot.commonalarmclock.Consts;
 import com.moggot.commonalarmclock.R;
@@ -88,6 +90,9 @@ public class SettingsFragment extends Fragment implements
     @BindView(R.id.btnMusic)
     Button btnMusic;
 
+    @BindView(R.id.spin_kit)
+    ProgressBar progressBar;
+
     @BindView(R.id.btnSaveAlarm)
     ImageView btnSave;
 
@@ -143,6 +148,8 @@ public class SettingsFragment extends Fragment implements
         btnMusic.setOnClickListener(this::clickMusicButton);
         btnSave.setOnClickListener(this::saveAlarm);
         setListenersToDayButtons(view);
+
+       setProgressBar();
     }
 
     private void onCheckedChangedRadioGroup(RadioGroup radioGroup) {
@@ -258,6 +265,11 @@ public class SettingsFragment extends Fragment implements
             ButterKnife.findById(view, tbDaysOfWeek.keyAt(i)).setOnClickListener(this);
     }
 
+    private void setProgressBar() {
+        Circle circle = new Circle();
+        progressBar.setIndeterminateDrawable(circle);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -284,6 +296,7 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void setMusicBtnVisible() {
         btnMusic.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void setMusicButtonDrawable(Music.MUSIC_TYPE type) {
