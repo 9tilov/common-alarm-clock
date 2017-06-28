@@ -25,8 +25,7 @@ public abstract class AnimationBounce {
     }
 
     private void initAnimation() {
-        double animationDuration = 0.5 * 1000;
-        animation.setDuration((long) animationDuration);
+        animation.setDuration(500);
 
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.50, 15);
         animation.setInterpolator(interpolator);

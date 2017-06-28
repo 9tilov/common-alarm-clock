@@ -33,6 +33,8 @@ public interface SettingsFragmentPresenter extends BaseFragmentPresenter<Setting
 
     void setMusic(Music music, MediaPlayer.OnPreparedListener listener);
 
+    Music getMusic();
+
     void afterTextChanged(Editable s);
 
     void stopPlaying();

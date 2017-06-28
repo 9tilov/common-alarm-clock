@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
@@ -16,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -24,6 +26,7 @@ import android.widget.ToggleButton;
 
 import com.android.debug.hv.ViewServer;
 import com.moggot.commonalarmclock.Consts;
+import com.moggot.commonalarmclock.domain.music.MusicService;
 import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.presentation.animation.AnimationBounce;
@@ -80,7 +83,7 @@ public class SettingsFragment extends Fragment implements
     Button btnMusic;
 
     @BindView(R.id.btnSaveAlarm)
-    Button btnSave;
+    ImageView btnSave;
 
     @Inject
     SettingsFragmentPresenter presenter;
@@ -138,13 +141,18 @@ public class SettingsFragment extends Fragment implements
 
     private void onCheckedChangedRadioGroup(RadioGroup radioGroup) {
         Music.MUSIC_TYPE type = radioGroupIndexToMusicType(radioGroup);
+
         switch (type) {
             case MUSIC_FILE:
                 presenter.stopPlaying();
                 break;
             case RADIO:
-                Music music = new Music(RADIO, RADIO_URL);
-                presenter.setMusic(music, this);
+                if (!connectionChecker.isNetworkAvailable()) {
+                    radioGroup.check(getRadioButtonIDFromMusicType());
+                } else {
+                    Music music = new Music(RADIO, RADIO_URL);
+                    presenter.setMusic(music, this);
+                }
                 break;
             case RINGTONE:
                 presenter.stopPlaying();
@@ -154,6 +162,20 @@ public class SettingsFragment extends Fragment implements
         }
 
         setMusicButtonDrawable(type);
+    }
+
+    private int getRadioButtonIDFromMusicType() {
+        Music.MUSIC_TYPE type = presenter.getMusic().getMusicType();
+        switch (type) {
+            case MUSIC_FILE:
+                return R.id.rbFile;
+            case RADIO:
+                return R.id.rbRadio;
+            case RINGTONE:
+                return R.id.rbRingtones;
+            default:
+                return R.id.rbRadio;
+        }
     }
 
     private Music.MUSIC_TYPE radioGroupIndexToMusicType(RadioGroup radioGroup) throws NullPointerException {
@@ -193,9 +215,7 @@ public class SettingsFragment extends Fragment implements
 
     private void saveAlarm(View view) {
         presenter.saveAlarm();
-
-        AnimationBounce animationBounce = new AnimationSaveButton(getContext());
-        animationBounce.animate(view);
+        ((FragmentActivity) getContext()).getSupportFragmentManager().popBackStack();
     }
 
     private void setListenersToDayButtons(View view) {
@@ -225,12 +245,17 @@ public class SettingsFragment extends Fragment implements
     }
 
     @Override
-    public void setOnMusicRadioButton() {
+    public void startPlayingRadio() {
+        Intent radioIntent = new Intent(getContext(), MusicService.class);
+        radioIntent.putExtra(Consts.EXTRA_MUSIC, new Music(RADIO, RADIO_URL));
+        getContext().startService(radioIntent);
         btnMusic.setBackgroundResource(R.drawable.ic_radio_pressed);
     }
 
     @Override
-    public void setOffMusicRadioButton() {
+    public void stopPlayingRadio() {
+        Intent radioIntent = new Intent(getContext(), MusicService.class);
+        getContext().stopService(radioIntent);
         btnMusic.setBackgroundResource(R.drawable.ic_radio);
     }
 

@@ -187,10 +187,10 @@
                 style="@style/TextEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="@string/alarm_name"
-                android:background="@android:color/transparent"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="20"
@@ -282,14 +282,15 @@
             android:layout_height="1dp"
             android:background="@color/separator" />
 
-        <Button
+        <ImageView
             android:id="@+id/btnSaveAlarm"
             android:layout_width="@dimen/save_btn_size"
             android:layout_height="@dimen/save_btn_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_save"
-            android:onClick="onClickSave" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onClickSave"
+            android:src="@drawable/ic_save" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -5,7 +5,6 @@ import android.text.Editable;
 
 import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.domain.music.Music;
-import com.moggot.commonalarmclock.domain.music.MusicPlayer;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModel;
@@ -22,6 +21,7 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
 
     private SettingsFragmentView view;
     private SettingsModel model;
+    private boolean isPlaying;
 
     @Inject
     DataBase dataBase;
@@ -30,11 +30,9 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     AlarmScheduler alarmScheduler;
 
     @Inject
-    MusicPlayer musicPlayer;
-
-    @Inject
     public SettingsFragmentPresenterImpl() {
         App.getInstance().getAppComponent().plus(new AlarmModule()).inject(this);
+        this.isPlaying = false;
         setModel();
     }
 
@@ -76,17 +74,18 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
 
     @Override
     public void stopPlaying() {
-        musicPlayer.stop();
+        if (isPlaying)
+            view.stopPlayingRadio();
     }
 
     @Override
     public void clickPlay() {
-        if (musicPlayer.isPlaying()) {
-            musicPlayer.stop();
-            view.setOffMusicRadioButton();
+        if (isPlaying) {
+            view.stopPlayingRadio();
+            isPlaying = false;
         } else {
-            musicPlayer.start();
-            view.setOnMusicRadioButton();
+            view.startPlayingRadio();
+            isPlaying = true;
         }
     }
 
@@ -146,6 +145,11 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     public void setMusic(Music music, MediaPlayer.OnPreparedListener listener) {
         model.setMusicType(music.getMusicType().getCode());
         model.setMusicPath(music.getMusicURL());
-        musicPlayer.init(music, listener);
     }
+
+    @Override
+    public Music getMusic() {
+        return new Music(Music.MUSIC_TYPE.fromInteger(model.getMusicType()), model.getMusicPath());
+    }
+
 }

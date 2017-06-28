@@ -10,7 +10,10 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.moggot.commonalarmclock.R;
 import com.moggot.commonalarmclock.presentation.adapter.SimpleItemTouchHelperCallback;
@@ -18,6 +21,7 @@ import com.moggot.commonalarmclock.presentation.adapter.SwipeRecyclerViewAdapter
 import com.moggot.commonalarmclock.presentation.animation.AnimationAddButton;
 import com.moggot.commonalarmclock.presentation.animation.AnimationBounce;
 import com.moggot.commonalarmclock.domain.utils.ActivityUtils;
+import com.moggot.commonalarmclock.presentation.animation.MyBounceInterpolator;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.di.modules.MainScreenModule;
@@ -29,6 +33,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.moggot.commonalarmclock.Consts.NO_ID;
+
 public class MainFragment extends Fragment implements MainFragmentView {
 
     @Inject
@@ -37,7 +43,7 @@ public class MainFragment extends Fragment implements MainFragmentView {
     private SwipeRecyclerViewAdapter adapter;
 
     @BindView(R.id.btnAddAlarm)
-    Button btnAdd;
+    ImageView btnAdd;
 
     @BindView(R.id.alarmRecyclerView)
     RecyclerView recyclerView;
@@ -79,8 +85,13 @@ public class MainFragment extends Fragment implements MainFragmentView {
     }
 
     private void addAlarm(View view) {
-        AnimationBounce animationBounce = new AnimationAddButton(getContext());
-        animationBounce.animate(view);
+        openSettings();
+    }
+
+    private void openSettings() {
+        SettingsFragment settingsFragment = SettingsFragment.newInstance(NO_ID);
+        FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
+        ActivityUtils.replaceFragmentInActivity(fragmentManager, settingsFragment, R.id.root_frame);
     }
 
     @Override

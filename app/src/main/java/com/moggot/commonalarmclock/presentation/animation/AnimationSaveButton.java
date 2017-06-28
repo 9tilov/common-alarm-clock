@@ -11,6 +11,6 @@ public class AnimationSaveButton extends AnimationBounce {
 
     @Override
     protected void animationAction() {
-        ((FragmentActivity) context).getSupportFragmentManager().popBackStack();
+
     }
 }
