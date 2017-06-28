@@ -5,6 +5,7 @@ import android.text.Editable;
 
 import com.moggot.commonalarmclock.data.DataBase;
 import com.moggot.commonalarmclock.domain.music.Music;
+import com.moggot.commonalarmclock.domain.music.MusicPlayer;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.mvp.model.SettingsModel;
@@ -17,11 +18,10 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter {
+public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter, MediaPlayer.OnPreparedListener {
 
     private SettingsFragmentView view;
     private SettingsModel model;
-    private boolean isPlaying;
 
     @Inject
     DataBase dataBase;
@@ -30,9 +30,12 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     AlarmScheduler alarmScheduler;
 
     @Inject
+    MusicPlayer musicPlayer;
+
+    @Inject
     public SettingsFragmentPresenterImpl() {
         App.getInstance().getAppComponent().plus(new AlarmModule()).inject(this);
-        this.isPlaying = false;
+
         setModel();
     }
 
@@ -47,8 +50,9 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     }
 
     @Override
-    public void loadAlarm(long id) {
+    public void loadAlarmAndCreatePlayer(long id) {
         model.loadAlarm(id);
+        musicPlayer.create(new Music(Music.MUSIC_TYPE.fromInteger(model.getMusicType()), model.getMusicPath()), this);
     }
 
     @Override
@@ -74,18 +78,20 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
 
     @Override
     public void stopPlaying() {
-        if (isPlaying)
-            view.stopPlayingRadio();
+        if (musicPlayer.isPlaying()) {
+            musicPlayer.stop();
+            view.setBtnRadioOff();
+        }
     }
 
     @Override
-    public void clickPlay() {
-        if (isPlaying) {
-            view.stopPlayingRadio();
-            isPlaying = false;
+    public void startStopPlayingRadio() {
+        if (musicPlayer.isPlaying()) {
+            view.setBtnRadioOff();
+            musicPlayer.pause();
         } else {
-            view.startPlayingRadio();
-            isPlaying = true;
+            view.setBtnRadioOn();
+            musicPlayer.start();
         }
     }
 
@@ -142,7 +148,7 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
     }
 
     @Override
-    public void setMusic(Music music, MediaPlayer.OnPreparedListener listener) {
+    public void setMusic(Music music) {
         model.setMusicType(music.getMusicType().getCode());
         model.setMusicPath(music.getMusicURL());
     }
@@ -152,4 +158,8 @@ public class SettingsFragmentPresenterImpl implements SettingsFragmentPresenter 
         return new Music(Music.MUSIC_TYPE.fromInteger(model.getMusicType()), model.getMusicPath());
     }
 
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        view.setMusicBtnVisible();
+    }
 }

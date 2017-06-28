@@ -23,7 +23,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         App.getInstance().getAppComponent().plus(new AlarmModule()).inject(this);
 
         Music music = intent.getParcelableExtra(Consts.EXTRA_MUSIC);
-        musicPlayer.init(music, this);
+        musicPlayer.create(music, this);
 
         return super.onStartCommand(intent, flags, startID);
     }

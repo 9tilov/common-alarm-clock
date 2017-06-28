@@ -10,37 +10,26 @@ public class MusicPlayer {
 
     private MediaPlayer mediaPlayer;
 
-    public void init(Music music, MediaPlayer.OnPreparedListener listener) {
+    public void create(Music music, MediaPlayer.OnPreparedListener listener) {
         mediaPlayer = new MediaPlayer();
         switch (music.getMusicType()) {
             case RADIO:
-                initRadio(music);
+                createRadioPlayer(music);
                 break;
             case RINGTONE:
-                initRingtone(music);
+                createRingtonePlayer(music);
                 break;
             case MUSIC_FILE:
-                initMusicFile(music);
+                createMusicFilePlayer(music);
                 break;
             default:
-                initRadio(music);
+                createRadioPlayer(music);
                 break;
         }
         mediaPlayer.setOnPreparedListener(listener);
     }
 
-    private void releaseMP() {
-        if (mediaPlayer != null) {
-            try {
-                mediaPlayer.release();
-                mediaPlayer = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void initRadio(Music music) {
+    private void createRadioPlayer(Music music) {
         try {
             mediaPlayer.setDataSource(music.getMusicURL());
         } catch (IOException e) {
@@ -50,7 +39,7 @@ public class MusicPlayer {
         mediaPlayer.prepareAsync();
     }
 
-    private void initRingtone(Music music) {
+    private void createRingtonePlayer(Music music) {
         try {
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             mediaPlayer.setDataSource(music.getMusicURL());
@@ -61,7 +50,7 @@ public class MusicPlayer {
         }
     }
 
-    private void initMusicFile(Music music) {
+    private void createMusicFilePlayer(Music music) {
         try {
             mediaPlayer.setDataSource(music.getMusicURL());
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -77,10 +66,24 @@ public class MusicPlayer {
             mediaPlayer.start();
     }
 
+    public void pause() {
+        mediaPlayer.pause();
+    }
+
     public void stop() {
-        if (isPlaying())
-            mediaPlayer.stop();
+        mediaPlayer.stop();
         releaseMP();
+    }
+
+    private void releaseMP() {
+        if (mediaPlayer != null) {
+            try {
+                mediaPlayer.release();
+                mediaPlayer = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean isPlaying() {

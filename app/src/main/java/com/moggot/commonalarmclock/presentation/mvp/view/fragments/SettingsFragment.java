@@ -1,8 +1,10 @@
 package com.moggot.commonalarmclock.presentation.mvp.view.fragments;
 
 import android.app.TimePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,18 +24,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.android.debug.hv.ViewServer;
+import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.moggot.commonalarmclock.Consts;
-import com.moggot.commonalarmclock.domain.music.MusicService;
-import com.moggot.commonalarmclock.domain.utils.Log;
 import com.moggot.commonalarmclock.R;
+import com.moggot.commonalarmclock.domain.music.Music;
+import com.moggot.commonalarmclock.domain.utils.FileCheker;
+import com.moggot.commonalarmclock.domain.utils.Log;
+import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
 import com.moggot.commonalarmclock.presentation.animation.AnimationBounce;
 import com.moggot.commonalarmclock.presentation.animation.AnimationMusicRadioButton;
-import com.moggot.commonalarmclock.presentation.animation.AnimationSaveButton;
-import com.moggot.commonalarmclock.domain.utils.NetworkConnectionChecker;
-import com.moggot.commonalarmclock.domain.music.Music;
 import com.moggot.commonalarmclock.presentation.di.App;
 import com.moggot.commonalarmclock.presentation.di.modules.AlarmModule;
 import com.moggot.commonalarmclock.presentation.di.modules.MainScreenModule;
@@ -48,11 +51,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
+import static com.moggot.commonalarmclock.domain.music.Music.DEFAULT_RINGTONE_URL;
+import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.MUSIC_FILE;
 import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RADIO;
+import static com.moggot.commonalarmclock.domain.music.Music.MUSIC_TYPE.RINGTONE;
 import static com.moggot.commonalarmclock.domain.music.Music.RADIO_URL;
 
 public class SettingsFragment extends Fragment implements
-        SettingsFragmentView, TextWatcher, View.OnClickListener, MediaPlayer.OnPreparedListener {
+        SettingsFragmentView, TextWatcher, View.OnClickListener {
 
     private static final String ARG_PARAM_ID = "param_id";
 
@@ -107,7 +113,7 @@ public class SettingsFragment extends Fragment implements
 
         if (getArguments() != null) {
             long id = getArguments().getLong(ARG_PARAM_ID);
-            presenter.loadAlarm(id);
+            presenter.loadAlarmAndCreatePlayer(id);
         }
 
         ViewServer.get(getContext()).addWindow(getActivity());
@@ -142,24 +148,15 @@ public class SettingsFragment extends Fragment implements
     private void onCheckedChangedRadioGroup(RadioGroup radioGroup) {
         Music.MUSIC_TYPE type = radioGroupIndexToMusicType(radioGroup);
 
-        switch (type) {
-            case MUSIC_FILE:
-                presenter.stopPlaying();
-                break;
-            case RADIO:
-                if (!connectionChecker.isNetworkAvailable()) {
-                    radioGroup.check(getRadioButtonIDFromMusicType());
-                } else {
-                    Music music = new Music(RADIO, RADIO_URL);
-                    presenter.setMusic(music, this);
-                }
-                break;
-            case RINGTONE:
-                presenter.stopPlaying();
-                break;
-            default:
-                break;
-        }
+        if (type == RADIO) {
+            if (!connectionChecker.isNetworkAvailable())
+                radioGroup.check(getRadioButtonIDFromMusicType());
+            else {
+                Music music = new Music(RADIO, RADIO_URL);
+                presenter.setMusic(music);
+            }
+        } else
+            presenter.stopPlaying();
 
         setMusicButtonDrawable(type);
     }
@@ -210,7 +207,37 @@ public class SettingsFragment extends Fragment implements
         AnimationBounce animationBounce = new AnimationMusicRadioButton(getContext());
         animationBounce.animate(view);
 
-        presenter.clickPlay();
+        switch (musicRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.rbFile:
+                openFileBrowser();
+                break;
+            case R.id.rbRadio:
+                presenter.startStopPlayingRadio();
+                break;
+            case R.id.rbRingtones:
+                openRingtonDialog();
+                break;
+            default:
+                presenter.startStopPlayingRadio();
+                break;
+        }
+    }
+
+    private void openFileBrowser() {
+        Intent target = FileUtils.createGetContentIntent();
+        Intent intent = Intent.createChooser(target, getContext().getString(R.string.app_name));
+        try {
+            startActivityForResult(intent, Consts.REQUEST_CODE_FILE_CHOSER);
+        } catch (ActivityNotFoundException e) {
+        }
+    }
+
+    private void openRingtonDialog() {
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+        startActivityForResult(intent, Consts.REQUEST_CODE_DEFAULT_RINGTONE);
     }
 
     private void saveAlarm(View view) {
@@ -245,18 +272,18 @@ public class SettingsFragment extends Fragment implements
     }
 
     @Override
-    public void startPlayingRadio() {
-        Intent radioIntent = new Intent(getContext(), MusicService.class);
-        radioIntent.putExtra(Consts.EXTRA_MUSIC, new Music(RADIO, RADIO_URL));
-        getContext().startService(radioIntent);
+    public void setBtnRadioOn() {
         btnMusic.setBackgroundResource(R.drawable.ic_radio_pressed);
     }
 
     @Override
-    public void stopPlayingRadio() {
-        Intent radioIntent = new Intent(getContext(), MusicService.class);
-        getContext().stopService(radioIntent);
+    public void setBtnRadioOff() {
         btnMusic.setBackgroundResource(R.drawable.ic_radio);
+    }
+
+    @Override
+    public void setMusicBtnVisible() {
+        btnMusic.setVisibility(View.VISIBLE);
     }
 
     private void setMusicButtonDrawable(Music.MUSIC_TYPE type) {
@@ -368,51 +395,53 @@ public class SettingsFragment extends Fragment implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Log.v("requestCode = " + requestCode);
+        Music music = presenter.getMusic();
         switch (requestCode) {
             case Consts.REQUEST_CODE_FILE_CHOSER:
-//                if (resultCode == RESULT_OK) {
-//                    if (data != null) {
-//                        // Get the URI of the selected file
-//                        final Uri uri = data.getData();
-//                        try {
-//                            // Get the file g_path from the URI
-//                            String path = FileUtils.getPath(getContext(), uri);
-//                            if (MusicFile.checkExtension(path)) {
-//                                music.setMusicFile(path);
-//                                model.setMusic(music);
-//                            } else {
-//                                settingsView.showToastNoMusicFile();
-//                                settingsView.setMusicButton(Music.MUSIC_TYPE.RINGTONE.getCode());
-//                            }
-//                        } catch (Exception e) {
-//                            Log.v("FilePlayer select error");
-//                        }
-//                    }
-//                } else
-//                    settingsView.setMusicButton(model.getMusicType());
+                if (resultCode == RESULT_OK) {
+                    if (data != null) {
+                        // Get the URI of the selected file
+                        final Uri uri = data.getData();
+                        try {
+                            // Get the file g_path from the URI
+                            String path = FileUtils.getPath(getContext(), uri);
+                            if (FileCheker.checkExtension(path))
+                                music.setMusic(MUSIC_FILE, path);
+                            else {
+                                music.setMusic(RINGTONE, DEFAULT_RINGTONE_URL);
+                                musicRadioGroup.check(R.id.rbRingtones);
+                                incorrectFileFormat();
+                            }
+                        } catch (Exception e) {
+                            Log.v("FilePlayer select error");
+                        }
+                    }
+                } else {
+                    music.setMusic(RINGTONE, DEFAULT_RINGTONE_URL);
+                    musicRadioGroup.check(R.id.rbRingtones);
+                }
                 break;
             case Consts.REQUEST_CODE_DEFAULT_RINGTONE:
                 if (resultCode == RESULT_OK) {
-//                    Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-//                    if (uri != null) {
-//                        music.setDefaultRingtone(uri.toString());
-//                        model.setMusic(music);
-//                    }
-                }
+                    Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    if (uri != null) {
+                        music.setMusic(RINGTONE, uri.toString());
+                    }
+                } else
+                    music.setMusic(RINGTONE, DEFAULT_RINGTONE_URL);
                 break;
         }
+        presenter.setMusic(music);
+    }
+
+    private void incorrectFileFormat() {
+        Toast.makeText(getContext(), R.string.not_music_file,
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.stopPlaying();
-    }
-
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        mp.start();
     }
 }

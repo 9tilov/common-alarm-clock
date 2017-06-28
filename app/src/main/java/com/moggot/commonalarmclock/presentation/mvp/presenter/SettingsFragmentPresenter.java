@@ -9,7 +9,7 @@ import com.moggot.commonalarmclock.presentation.mvp.view.SettingsFragmentView;
 
 public interface SettingsFragmentPresenter extends BaseFragmentPresenter<SettingsFragmentView> {
 
-    void loadAlarm(long id);
+    void loadAlarmAndCreatePlayer(long id);
 
     void setupViews();
 
@@ -31,7 +31,7 @@ public interface SettingsFragmentPresenter extends BaseFragmentPresenter<Setting
 
     void setCheckedMath(boolean isChecked);
 
-    void setMusic(Music music, MediaPlayer.OnPreparedListener listener);
+    void setMusic(Music music);
 
     Music getMusic();
 
@@ -39,6 +39,6 @@ public interface SettingsFragmentPresenter extends BaseFragmentPresenter<Setting
 
     void stopPlaying();
 
-    void clickPlay();
+    void startStopPlayingRadio();
 
 }

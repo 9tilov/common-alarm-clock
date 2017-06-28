@@ -35,6 +35,7 @@
                 style="@style/TextTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:text="@string/default_time" />
 
@@ -258,6 +259,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/ic_radio"
+                        android:visibility="gone"
                         android:onClick="onClickMusic" />
 
                 </RelativeLayout>

@@ -255,6 +255,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/ic_radio"
+                        android:visibility="gone"
                         android:onClick="onClickMusic" />
 
                 </RelativeLayout>
@@ -278,14 +279,15 @@
             android:layout_height="match_parent"
             android:background="@color/separator" />
 
-        <Button
+        <ImageView
             android:id="@+id/btnSaveAlarm"
             android:layout_width="@dimen/save_btn_size"
             android:layout_height="@dimen/save_btn_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_save"
-            android:onClick="onClickSave" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onClickSave"
+            android:src="@drawable/ic_save" />
 
     </RelativeLayout>
 

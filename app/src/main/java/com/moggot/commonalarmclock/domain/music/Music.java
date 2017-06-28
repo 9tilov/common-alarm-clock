@@ -46,6 +46,11 @@ public class Music implements Parcelable {
         this.musicURL = path;
     }
 
+    public void setMusic(MUSIC_TYPE type, String path) {
+        this.musicType = type;
+        this.musicURL = path;
+    }
+
     public MUSIC_TYPE getMusicType() {
         return musicType;
     }

@@ -28,7 +28,6 @@
     <string name="default_ringtones">Рингтоны</string>
     <string name="incorrect_result">Неправильный ответ</string>
     <string name="select_tone">Выберите мелодию</string>
-
     <string name="not_music_file">Это не музыкальный файл</string>
 
     <string name="dialog_title_remove">Удалить будильник?</string>
